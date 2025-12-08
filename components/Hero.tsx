@@ -155,7 +155,7 @@ const Hero: React.FC = () => {
             Réserver mon appel découverte
           </a>
           <a
-            href="mailto:contact@aura-formation.com"
+            href="#team"
             className="w-full sm:w-auto px-8 py-4 border border-slate-700 hover:border-secondary text-gray-300 hover:text-white rounded-full font-semibold text-lg transition-colors bg-white/5 backdrop-blur-sm"
           >
             Découvrir la team AURA

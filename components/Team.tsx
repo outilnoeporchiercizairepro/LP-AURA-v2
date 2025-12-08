@@ -50,7 +50,7 @@ const Team: React.FC = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-3">
             L'Équipe
             <img
-              src="/gemini_generated_image_wcctnwwcctnwwcct_-_modifie.png"
+              src="/gemini_generated_image_9pxw7w9pxw7w9pxw.png"
               alt="AURA"
               className="h-12 md:h-16 w-auto inline-block"
             />

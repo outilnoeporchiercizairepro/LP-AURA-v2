@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
           <div className="flex-shrink-0 cursor-pointer">
             <a href="#" className="flex items-center gap-2">
               <img
-                src="/gemini_generated_image_wcctnwwcctnwwcct_-_modifie.png"
+                src="/gemini_generated_image_9pxw7w9pxw7w9pxw.png"
                 alt="AURA"
                 className="h-10 w-auto"
               />

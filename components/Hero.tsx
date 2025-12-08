@@ -148,7 +148,7 @@ const Hero: React.FC = () => {
             href="#pricing"
             className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
           >
-            Rejoindre la formation AURA
+            Réserver mon appel découverte
           </a>
           <a
             href="mailto:contact@aura-formation.com"

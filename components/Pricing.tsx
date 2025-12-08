@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 
 const Pricing: React.FC = () => {
   const features = [
-    "12 semaines de formation intensive",
+    "Plus de 50h de cours structurés",
+    "Exercices pratiques et projets concrets",
+    "Channels Discord actifs et réactifs",
+    "Calls de groupe réguliers avec la team",
     "Accès à vie aux replays et mises à jour",
-    "4 experts dédiés pour répondre à tes questions",
-    "Communauté Discord privée & entraide",
-    "Templates Notion, n8n et code prêts à l'emploi",
-    "Sessions Live Q&A hebdomadaires"
+    "Templates Notion, n8n et code prêts à l'emploi"
   ];
 
   return (
@@ -37,8 +37,8 @@ const Pricing: React.FC = () => {
           {/* Top border accent */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
           
-          <h3 className="text-2xl font-bold text-white mb-2">Parcours complet AURA</h3>
-          <p className="text-gray-400 mb-8">La formation de référence pour les opérateurs IA.</p>
+          <h3 className="text-2xl font-bold text-white mb-2">Académie AURA</h3>
+          <p className="text-gray-400 mb-8">Une académie complète avec cours, exercices, communauté et accompagnement live.</p>
 
           <div className="grid md:grid-cols-2 gap-y-4 gap-x-8 text-left max-w-2xl mx-auto mb-10">
             {features.map((feat, idx) => (
@@ -52,13 +52,13 @@ const Pricing: React.FC = () => {
           </div>
 
           <div className="bg-slate-900/50 rounded-2xl p-6 mb-8 border border-slate-800/50">
-             <p className="text-slate-300 text-sm mb-1 uppercase tracking-wide font-medium">Prix de la formation</p>
-             <p className="text-3xl font-bold text-white">Sur candidature</p>
-             <p className="text-sm text-gray-500 mt-2">Investissement sur devis après appel de qualification.</p>
+             <p className="text-slate-300 text-sm mb-1 uppercase tracking-wide font-medium">Étape 1 : Appel de découverte</p>
+             <p className="text-3xl font-bold text-white">Gratuit</p>
+             <p className="text-sm text-gray-500 mt-2">Un échange avec la team AURA pour valider ton profil et ta motivation.</p>
           </div>
 
           <button className="w-full md:w-auto px-12 py-5 bg-gradient-to-r from-primary to-primary-hover hover:to-primary text-white rounded-full font-bold text-lg transition-all shadow-[0_0_25px_rgba(234,75,113,0.3)] hover:shadow-[0_0_40px_rgba(234,75,113,0.5)] transform hover:-translate-y-1">
-            Candidater à AURA
+            Réserver mon appel découverte
           </button>
           
           <p className="mt-6 text-xs text-gray-500">

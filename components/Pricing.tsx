@@ -57,9 +57,14 @@ const Pricing: React.FC = () => {
              <p className="text-sm text-gray-500 mt-2">Un échange avec la team AURA pour valider ton profil et ta motivation.</p>
           </div>
 
-          <button className="w-full md:w-auto px-12 py-5 bg-gradient-to-r from-primary to-primary-hover hover:to-primary text-white rounded-full font-bold text-lg transition-all shadow-[0_0_25px_rgba(234,75,113,0.3)] hover:shadow-[0_0_40px_rgba(234,75,113,0.5)] transform hover:-translate-y-1">
+          <a
+            href="https://calendly.com/aura-academie/15min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block w-full md:w-auto px-12 py-5 bg-gradient-to-r from-primary to-primary-hover hover:to-primary text-white rounded-full font-bold text-lg transition-all shadow-[0_0_25px_rgba(234,75,113,0.3)] hover:shadow-[0_0_40px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+          >
             Réserver mon appel découverte
-          </button>
+          </a>
           
           <p className="mt-6 text-xs text-gray-500">
             Places limitées pour garantir la qualité du suivi.

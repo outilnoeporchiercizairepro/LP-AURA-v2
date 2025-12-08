@@ -45,12 +45,12 @@ const Benefits: React.FC = () => {
               <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/10 blur-[80px] rounded-full pointer-events-none" />
               <ul className="space-y-6">
                 {skills.map((skill, idx) => (
-                  <motion.li 
+                  <motion.li
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
-                    key={idx} 
+                    key={idx}
                     className="flex items-start gap-4"
                   >
                     <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
@@ -58,6 +58,22 @@ const Benefits: React.FC = () => {
                   </motion.li>
                 ))}
               </ul>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+                className="mt-8"
+              >
+                <a
+                  href="https://calendly.com/aura-academie/15min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-block text-center px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+                >
+                  Réserver mon appel découverte
+                </a>
+              </motion.div>
             </div>
           </motion.div>
 

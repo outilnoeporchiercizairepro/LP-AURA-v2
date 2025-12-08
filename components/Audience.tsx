@@ -79,6 +79,23 @@ const Audience: React.FC = () => {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* CTA Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <a
+            href="https://calendly.com/aura-academie/15min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+          >
+            Réserver mon appel découverte
+          </a>
+        </motion.div>
       </div>
     </section>
   );

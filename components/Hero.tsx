@@ -64,11 +64,12 @@ const Hero: React.FC = () => {
           <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden">
             <video
               src={videoUrl}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
               poster=""
+              playsInline
             />
-            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/30 transition-colors">
-               <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
+            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/30 transition-colors pointer-events-none">
+               <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300 pointer-events-none">
                   <Play className="w-8 h-8 text-white fill-white ml-1" />
                </div>
                <p className="mt-4 text-sm font-medium text-white uppercase tracking-widest">Vidéo de présentation</p>
@@ -104,7 +105,8 @@ const Hero: React.FC = () => {
                     src={videoUrl}
                     controls
                     autoPlay
-                    className="w-full h-full"
+                    playsInline
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </motion.div>

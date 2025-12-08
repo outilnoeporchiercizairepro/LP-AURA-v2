@@ -1,7 +1,6 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { User, Linkedin, Twitter } from 'lucide-react';
 
 const Team: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -12,28 +11,28 @@ const Team: React.FC = () => {
     {
       name: "Lionel",
       role: "Mindset & Productivité",
-      desc: "Opérateur d'élite",
+      desc: "Expert en développement personnel et optimisation cognitive. Il transforme ta manière de penser et de travailler pour atteindre des performances d'élite.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765225265429-2emt8w.png",
       color: "from-primary/20 to-primary/5"
     },
     {
       name: "Baptiste",
       role: "Infra & Marketing",
-      desc: "Architecte Système",
+      desc: "Architecte des infrastructures cloud et stratégies marketing. Il te montre comment déployer à grande échelle et attirer tes premiers clients.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224896655-ru45nc.jpeg",
       color: "from-secondary/20 to-secondary/5"
     },
     {
       name: "Noé",
       role: "Déploiement & Biz",
-      desc: "Closer & Stratège",
+      desc: "Spécialiste du closing et de la stratégie commerciale. Il t'apprend à vendre tes solutions IA et à développer ton activité rapidement.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226175618-b7yhs6.png",
       color: "from-primary/20 to-primary/5"
     },
     {
       name: "Imrane",
       role: "Ingénieur Full-stack",
-      desc: "Builder IA",
+      desc: "Développeur expert en IA et automatisation. Il te guide dans la création d'applications IA robustes et la mise en production de tes projets.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226180802-v4ll0w.png",
       color: "from-secondary/20 to-secondary/5"
     }
@@ -154,27 +153,21 @@ const Team: React.FC = () => {
                 {/* Contenu Texte */}
                 <div className="absolute inset-0 p-6 flex flex-col justify-end transform transition-transform duration-300">
                   <motion.div>
-                     <p className="text-primary font-bold tracking-widest text-xs uppercase mb-1 drop-shadow-md">{member.desc}</p>
                      <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-md">{member.name}</h3>
-                     <p className="text-gray-300 text-sm drop-shadow-md">{member.role}</p>
+                     <p className="text-primary font-bold tracking-wide text-sm mb-3 drop-shadow-md">{member.role}</p>
                   </motion.div>
-                  
-                  {/* Réseaux Sociaux (Apparaissent au survol) */}
-                  <motion.div 
+
+                  {/* Description détaillée (Apparaît au survol) */}
+                  <motion.div
                     initial={{ opacity: 0, height: 0 }}
-                    animate={{ 
+                    animate={{
                         opacity: isHovered ? 1 : 0,
                         height: isHovered ? 'auto' : 0,
-                        marginTop: isHovered ? 12 : 0
+                        marginTop: isHovered ? 8 : 0
                     }}
-                    className="flex gap-3 overflow-hidden"
+                    className="overflow-hidden"
                   >
-                     <div className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-sm transition-colors">
-                        <Twitter size={18}/>
-                     </div>
-                     <div className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-sm transition-colors">
-                        <Linkedin size={18}/>
-                     </div>
+                     <p className="text-gray-200 text-sm leading-relaxed drop-shadow-md">{member.desc}</p>
                   </motion.div>
                 </div>
                 
@@ -204,14 +197,9 @@ const Team: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
               
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                <p className="text-xs font-bold text-primary uppercase tracking-widest mb-2">{member.role}</p>
                 <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
-                <p className="text-gray-400 text-sm line-clamp-2 mb-4">{member.desc}</p>
-                
-                <div className="flex gap-4">
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors"><Twitter size={20} /></a>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors"><Linkedin size={20} /></a>
-                </div>
+                <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3">{member.role}</p>
+                <p className="text-gray-300 text-sm leading-relaxed">{member.desc}</p>
               </div>
             </motion.div>
           ))}

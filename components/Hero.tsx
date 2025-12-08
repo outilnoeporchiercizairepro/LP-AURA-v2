@@ -1,8 +1,11 @@
-import React from 'react';
-import { Server, Zap, Brain, Briefcase, Play } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { Server, Zap, Brain, Briefcase, Play, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Hero: React.FC = () => {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const videoUrl = 'https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/videos/public/1765224757661-nj0g0t.mp4';
+
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden">
       {/* Background Glows */}
@@ -49,28 +52,65 @@ const Hero: React.FC = () => {
           entouré de 4 experts complémentaires.
         </motion.p>
 
-        {/* Video Placeholder */}
-        <motion.div 
+        {/* Video Preview */}
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
           className="mt-12 w-full max-w-4xl relative group cursor-pointer"
+          onClick={() => setIsVideoOpen(true)}
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden">
-            {/* Placeholder Content */}
-            <div className="absolute inset-0 bg-slate-800/50 flex flex-col items-center justify-center">
+          <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden">
+            <video
+              src={videoUrl}
+              className="w-full h-full object-cover"
+              poster=""
+            />
+            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/30 transition-colors">
                <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
                   <Play className="w-8 h-8 text-white fill-white ml-1" />
                </div>
-               <p className="mt-4 text-sm font-medium text-gray-400 uppercase tracking-widest">Vidéo de présentation</p>
-            </div>
-            {/* Fake UI elements for tech feel */}
-            <div className="absolute bottom-4 left-4 right-4 h-1 bg-white/10 rounded-full overflow-hidden">
-               <div className="w-1/3 h-full bg-primary/50"></div>
+               <p className="mt-4 text-sm font-medium text-white uppercase tracking-widest">Vidéo de présentation</p>
             </div>
           </div>
         </motion.div>
+
+        {/* Video Modal */}
+        <AnimatePresence>
+          {isVideoOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
+              onClick={() => setIsVideoOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.9 }}
+                className="relative w-full max-w-5xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setIsVideoOpen(false)}
+                  className="absolute -top-12 right-0 p-2 text-white hover:text-primary transition-colors"
+                >
+                  <X className="w-8 h-8" />
+                </button>
+                <div className="aspect-video rounded-xl overflow-hidden bg-black">
+                  <video
+                    src={videoUrl}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Bullet Points */}
         <motion.div 

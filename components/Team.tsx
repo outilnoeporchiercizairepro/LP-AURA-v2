@@ -41,14 +41,19 @@ const Team: React.FC = () => {
   return (
     <section id="team" className="py-24 bg-[#020617] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            L'Équipe <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-3">
+            L'Équipe
+            <img
+              src="/gemini_generated_image_wcctnwwcctnwwcct_-_modifie.png"
+              alt="AURA"
+              className="h-12 md:h-16 w-auto inline-block"
+            />
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             4 experts aux compétences complémentaires pour vous accompagner de A à Z.

@@ -158,7 +158,7 @@ const Hero: React.FC = () => {
             href="mailto:contact@aura-formation.com"
             className="w-full sm:w-auto px-8 py-4 border border-slate-700 hover:border-secondary text-gray-300 hover:text-white rounded-full font-semibold text-lg transition-colors bg-white/5 backdrop-blur-sm"
           >
-            Parler avec un expert
+            Découvrir la team AURA
           </a>
         </motion.div>
       </div>

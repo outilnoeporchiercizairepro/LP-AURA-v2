@@ -1,9 +1,18 @@
-import React from 'react';
-import { Server, Zap, Brain, Briefcase } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Server, Zap, Brain, Briefcase, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
   const videoUrl = 'https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/videos/public/1765224757661-nj0g0t.mp4';
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayClick = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
 
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden">
@@ -61,12 +70,26 @@ const Hero: React.FC = () => {
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
           <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden">
             <video
+              ref={videoRef}
               src={videoUrl}
               className="w-full h-full object-cover"
               poster=""
               playsInline
               controls
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
             />
+            {!isPlaying && (
+              <div
+                className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center cursor-pointer group-hover:bg-black/30 transition-colors"
+                onClick={handlePlayClick}
+              >
+                <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
+                  <Play className="w-10 h-10 text-white fill-white ml-1" />
+                </div>
+                <p className="mt-4 text-sm font-medium text-white uppercase tracking-widest">Vidéo de présentation</p>
+              </div>
+            )}
           </div>
         </motion.div>
 

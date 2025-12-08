@@ -27,14 +27,14 @@ const Team: React.FC = () => {
       name: "Noé",
       role: "Déploiement & Biz",
       desc: "Closer & Stratège",
-      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765225268182-ahasfc.png",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226175618-b7yhs6.png",
       color: "from-primary/20 to-primary/5"
     },
     {
       name: "Imrane",
       role: "Ingénieur Full-stack",
       desc: "Builder IA",
-      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224899786-vxbr.jpeg",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226180802-v4ll0w.png",
       color: "from-secondary/20 to-secondary/5"
     }
   ];

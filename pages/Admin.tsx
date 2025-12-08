@@ -3,6 +3,7 @@ import { Upload, X, Image as ImageIcon, Video, Loader2, CheckCircle, AlertCircle
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
 
 interface UploadedFile {
   name: string;
@@ -14,6 +15,7 @@ interface UploadedFile {
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
+  const { signOut } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState<string>('');
@@ -22,6 +24,11 @@ const Admin: React.FC = () => {
   const [success, setSuccess] = useState<string>('');
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/login');
+  };
 
   useEffect(() => {
     loadExistingFiles();
@@ -173,13 +180,22 @@ const Admin: React.FC = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white">
             Panneau <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Admin</span>
           </h1>
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
-          >
-            <Home className="w-4 h-4" />
-            Retour au site
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
+            >
+              <Home className="w-4 h-4" />
+              Retour au site
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Déconnexion
+            </button>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">

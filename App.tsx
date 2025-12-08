@@ -10,6 +10,7 @@ import Comparison from './components/Comparison';
 import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import MediaUpload from './components/MediaUpload';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
         <Team />
         <Benefits />
         <Comparison />
+        <MediaUpload />
         <Pricing />
         <FAQ />
       </main>

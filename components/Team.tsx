@@ -13,28 +13,28 @@ const Team: React.FC = () => {
       name: "Lionel",
       role: "Mindset & Productivité",
       desc: "Opérateur d'élite",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765225265429-2emt8w.png",
       color: "from-primary/20 to-primary/5"
     },
     {
       name: "Baptiste",
       role: "Infra & Marketing",
       desc: "Architecte Système",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224896655-ru45nc.jpeg",
       color: "from-secondary/20 to-secondary/5"
     },
     {
       name: "Noé",
       role: "Déploiement & Biz",
       desc: "Closer & Stratège",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765225268182-ahasfc.png",
       color: "from-primary/20 to-primary/5"
     },
     {
       name: "Imrane",
       role: "Ingénieur Full-stack",
       desc: "Builder IA",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224899786-vxbr.jpeg",
       color: "from-secondary/20 to-secondary/5"
     }
   ];

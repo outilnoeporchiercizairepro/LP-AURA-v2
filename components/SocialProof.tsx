@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Star, Quote } from 'lucide-react';
 
@@ -20,56 +20,31 @@ const SocialProof: React.FC = () => {
     { name: "Emma R.", role: "Designer reconvertie", text: "Je pensais qu'il fallait être développeur depuis 10 ans. Faux. Lionel m'a montré que le mindset compte plus que les années d'XP. Mon premier projet facturé 2800€." }
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  // Duplicate reviews for infinite loop
+  const duplicatedReviews = [...writtenReviews, ...writtenReviews];
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (isMobile) {
-        setCurrentIndex((prev) => (prev >= writtenReviews.length - 1 ? 0 : prev + 1));
-      } else {
-        const totalPages = Math.ceil(writtenReviews.length / 3);
-        setCurrentIndex((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
-      }
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [isMobile]);
-
-  const goToPrevious = () => {
-    if (isMobile) {
-      setCurrentIndex((prev) => (prev <= 0 ? writtenReviews.length - 1 : prev - 1));
-    } else {
-      const totalPages = Math.ceil(writtenReviews.length / 3);
-      setCurrentIndex((prev) => (prev <= 0 ? totalPages - 1 : prev - 1));
-    }
-  };
-
-  const goToNext = () => {
-    if (isMobile) {
-      setCurrentIndex((prev) => (prev >= writtenReviews.length - 1 ? 0 : prev + 1));
-    } else {
-      const totalPages = Math.ceil(writtenReviews.length / 3);
-      setCurrentIndex((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
-    }
-  };
-
-  const handleDragEnd = (event: any, info: any) => {
-    const threshold = 50;
-    if (info.offset.x > threshold) {
-      goToPrevious();
-    } else if (info.offset.x < -threshold) {
-      goToNext();
-    }
-  };
-
-  const totalDots = isMobile ? writtenReviews.length : Math.ceil(writtenReviews.length / 3);
+  const ReviewCard = ({ review }: { review: typeof writtenReviews[0] }) => (
+    <div className="flex-shrink-0 w-[90vw] md:w-[400px] px-3">
+      <div className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative h-full">
+        <Quote className="w-8 h-8 text-primary/20 mb-4" />
+        <div className="flex gap-1 mb-4">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+          ))}
+        </div>
+        <p className="text-gray-300 mb-6 leading-relaxed min-h-[120px]">"{review.text}"</p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
+            {review.name.charAt(0)}
+          </div>
+          <div>
+            <p className="text-white font-semibold text-sm">{review.name}</p>
+            <p className="text-gray-500 text-xs">{review.role}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section id="reviews" className="py-24 bg-[#020617] relative">
@@ -135,94 +110,30 @@ const SocialProof: React.FC = () => {
           ))}
         </div>
 
-        {/* Written Reviews Carousel */}
-        <div className="relative overflow-hidden">
+        {/* Written Reviews Infinite Carousel */}
+        <div className="relative overflow-hidden -mx-4">
           <motion.div
-            drag={isMobile ? "x" : false}
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragEnd={handleDragEnd}
+            className="flex"
             animate={{
-              x: isMobile ? `-${currentIndex * 100}%` : `-${currentIndex * 100}%`
+              x: ["0%", "-50%"],
             }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className={`flex ${isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 60,
+                ease: "linear",
+              },
+            }}
           >
-            {isMobile ? (
-              writtenReviews.map((review, idx) => (
-                <div
-                  key={idx}
-                  className="w-full flex-shrink-0 px-2"
-                >
-                  <div className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative">
-                    <Quote className="w-8 h-8 text-primary/20 mb-4" />
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      ))}
-                    </div>
-                    <p className="text-gray-300 mb-6 leading-relaxed min-h-[120px]">"{review.text}"</p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
-                        {review.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold text-sm">{review.name}</p>
-                        <p className="text-gray-500 text-xs">{review.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              Array.from({ length: Math.ceil(writtenReviews.length / 3) }).map((_, pageIdx) => (
-                <div
-                  key={pageIdx}
-                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-3 gap-6 px-2"
-                >
-                  {writtenReviews.slice(pageIdx * 3, pageIdx * 3 + 3).map((review, idx) => (
-                    <div
-                      key={`${pageIdx}-${idx}`}
-                      className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative"
-                    >
-                      <Quote className="w-8 h-8 text-primary/20 mb-4" />
-                      <div className="flex gap-1 mb-4">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                        ))}
-                      </div>
-                      <p className="text-gray-300 mb-6 leading-relaxed min-h-[120px]">"{review.text}"</p>
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
-                          {review.name.charAt(0)}
-                        </div>
-                        <div>
-                          <p className="text-white font-semibold text-sm">{review.name}</p>
-                          <p className="text-gray-500 text-xs">{review.role}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))
-            )}
+            {duplicatedReviews.map((review, idx) => (
+              <ReviewCard key={idx} review={review} />
+            ))}
           </motion.div>
 
-          {/* Dots Indicators */}
-          <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: totalDots }).map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === currentIndex
-                    ? 'w-8 bg-primary'
-                    : 'w-2 bg-slate-700 hover:bg-slate-600'
-                }`}
-                aria-label={`Aller à la page ${idx + 1}`}
-              />
-            ))}
-          </div>
+          {/* Gradient overlays for fade effect */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020617] to-transparent pointer-events-none z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none z-10" />
         </div>
 
         {/* CTA Button */}

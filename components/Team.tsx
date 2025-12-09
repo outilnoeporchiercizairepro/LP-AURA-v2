@@ -32,7 +32,7 @@ const Team: React.FC = () => {
     {
       name: "Imrane",
       role: "Ingénieur IA et Cloud",
-      desc: "Développeur expert en IA et automatisation. Il te guide dans la création d'applications IA robustes et la mise en production de tes projets.",
+      desc: "Développeur expert en IA et automatisation. Co-Fondateur de VeliosAI, il te guide dans la création d'applications IA robustes et la mise en production de tes projets.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226180802-v4ll0w.png",
       color: "from-secondary/20 to-secondary/5"
     }

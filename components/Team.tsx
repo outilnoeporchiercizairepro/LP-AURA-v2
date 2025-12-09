@@ -192,7 +192,7 @@ const Team: React.FC = () => {
                           e.stopPropagation();
                           setFlippedIndex(index);
                         }}
-                        className="mt-4 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                        className="mt-4 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium rounded-lg hover:bg-white/20 transition-all"
                       >
                         En savoir plus sur {member.name}
                       </motion.button>
@@ -306,7 +306,7 @@ const Team: React.FC = () => {
 
                       <button
                         onClick={() => setFlippedIndex(idx)}
-                        className="mt-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg shadow-lg"
+                        className="mt-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium rounded-lg hover:bg-white/20 transition-all"
                       >
                         En savoir plus sur {member.name}
                       </button>

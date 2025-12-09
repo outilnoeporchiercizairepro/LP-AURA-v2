@@ -23,8 +23,8 @@ const Benefits: React.FC = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Ce que tu sais faire après <span className="text-secondary">AURA</span>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight flex items-center gap-3 flex-wrap">
+              Ce que tu sais faire après <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="inline h-10 md:h-14" />
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-8">
 Tu ne te contenteras plus d’utiliser des outils. Tu sauras, rapidement, comment construire des systèmes qui se vendent plusieurs milliers d’euros depuis n’importe où.

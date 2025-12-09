@@ -8,7 +8,7 @@ const Benefits: React.FC = () => {
     "Déployer tes apps sur un serveur privé avec une base de données dédiée",
     "Créer des automatisations complexes via n8n",
     "Structurer une offre IA vendable et trouver des clients",
-    "Utiliser le VibeCoding pour créer des applications personnalisées",
+    "Utiliser le VibeCoding pour créer des applications personnalisées (sans savoir coder)",
     "Comprendre en profondeur tout l'écosystème de l'IA"
   ];
 

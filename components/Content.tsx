@@ -165,11 +165,11 @@ const Content: React.FC = () => {
 
                     {hoveredIndex === idx && (
                       <motion.div
-                        layoutId={`hover-${activeTab}`}
                         className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary rounded-r-full"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0, scaleY: 0 }}
+                        animate={{ opacity: 1, scaleY: 1 }}
+                        exit={{ opacity: 0, scaleY: 0 }}
+                        transition={{ duration: 0.2 }}
                       />
                     )}
                   </motion.div>

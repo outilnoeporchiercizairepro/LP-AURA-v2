@@ -45,13 +45,13 @@ const Content: React.FC = () => {
     {
       name: "Vibe Coding & IA",
       items: [
-        { title: "Partie 1 : Introduction au VibeCoding", description: "Découvre ce qu'est le VibeCoding, cette approche révolutionnaire du développement assisté par IA. Comprends ce que tu peux construire et comment coder 10x plus vite avec cette méthodologie." },
-        { title: "Partie 2 : Les Bases du Développement pour le VibeCoding", description: "Maîtrise les fondamentaux essentiels : JSON pour structurer les données, les API pour faire communiquer tes outils, et les langages clés comme JavaScript et Python." },
-        { title: "Partie 3 : Le Prompting", description: "Apprends l'art du prompting pour communiquer efficacement avec l'IA. Construis des prompts puissants, comprends les différents modèles IA et optimise tes interactions avec les agents." },
-        { title: "Partie 4 : Cursor", description: "Maîtrise Cursor, l'éditeur de code révolutionnaire avec IA intégrée. Présentation complète de l'outil et réalisation d'un projet concret pour développer avec l'IA comme copilote." },
-        { title: "Partie 5 : Lovable / Bolt / Replit", description: "Découvre les plateformes no-code et low-code leaders : Lovable pour créer des sites web complets, Bolt pour des applications rapides et Replit pour le développement collaboratif en ligne." },
-        { title: "Partie 6 : Coder avec les LLM", description: "Exploite la puissance des grands modèles de langage : Claude pour la réflexion complexe, Codex pour la génération de code avancée et Copilot pour l'assistance en temps réel." },
-        { title: "Partie 7 : Déploiement et hébergement", description: "Apprends à mettre tes applications en production : hébergement depuis les plateformes de VibeCoding, déploiement à partir du code source et gestion de versions avec GitHub." }
+        { title: "Introduction au VibeCoding", description: "Découvre ce qu'est le VibeCoding, cette approche révolutionnaire du développement assisté par IA. Comprends ce que tu peux construire et comment coder 10x plus vite avec cette méthodologie." },
+        { title: "Les Bases du Développement pour le VibeCoding", description: "Maîtrise les fondamentaux essentiels : JSON pour structurer les données, les API pour faire communiquer tes outils, et les langages clés comme JavaScript et Python." },
+        { title: "Le Prompting", description: "Apprends l'art du prompting pour communiquer efficacement avec l'IA. Construis des prompts puissants, comprends les différents modèles IA et optimise tes interactions avec les agents." },
+        { title: "Cursor", description: "Maîtrise Cursor, l'éditeur de code révolutionnaire avec IA intégrée. Présentation complète de l'outil et réalisation d'un projet concret pour développer avec l'IA comme copilote." },
+        { title: "Lovable / Bolt / Replit", description: "Découvre les plateformes no-code et low-code leaders : Lovable pour créer des sites web complets, Bolt pour des applications rapides et Replit pour le développement collaboratif en ligne." },
+        { title: "Coder avec les LLM", description: "Exploite la puissance des grands modèles de langage : Claude pour la réflexion complexe, Codex pour la génération de code avancée et Copilot pour l'assistance en temps réel." },
+        { title: "Déploiement et hébergement", description: "Apprends à mettre tes applications en production : hébergement depuis les plateformes de VibeCoding, déploiement à partir du code source et gestion de versions avec GitHub." }
       ]
     },
     {

@@ -6,7 +6,7 @@ const Benefits: React.FC = () => {
   const skills = [
     "Concevoir une infrastructure IA (Interface, Base de Données, Automatisations)",
     "Déployer tes apps sur un serveur privé avec une base de données dédiée",
-    "Créer des automatisations complexes (n8n) de bout en bout",
+    "Créer des automatisations complexes via n8n",
     "Structurer une offre IA vendable et trouver des clients",
     "Maîtriser le prompt engineering avancé",
     "Intégrer des modèles Open Source (Llama, Mistral)"

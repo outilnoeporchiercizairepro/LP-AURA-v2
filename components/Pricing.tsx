@@ -97,7 +97,7 @@ const Pricing: React.FC = () => {
             rel="noopener noreferrer"
             className="relative inline-block w-full md:w-auto px-12 py-5 bg-gradient-to-r from-primary to-primary-hover hover:to-primary text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_25px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_40px_rgba(234,75,113,0.6)]"
           >
-            <span className="relative z-10">Réserver mon appel découverte</span>
+            <span className="relative z-10">Réserver mon appel</span>
             <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
           </a>
           

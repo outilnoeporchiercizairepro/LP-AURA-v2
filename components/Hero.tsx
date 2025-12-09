@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 leading-tight"
         >
-          AURA : Devenez opérateur IA <br className="hidden md:block" />
+          AURA : Devenez créateur d’infrastructures IA et créez votre propre liberté. <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary">
             complet en 12 semaines
           </span>

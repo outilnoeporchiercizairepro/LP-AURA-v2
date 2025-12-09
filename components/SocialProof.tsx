@@ -16,7 +16,7 @@ const SocialProof: React.FC = () => {
     { name: "Julie B.", role: "Consultante IA", text: "Avant AURA, je regardais l'IA de loin. Aujourd'hui, je facture 5k€ par mission d'intégration. La formation m'a donné les compétences techniques ET commerciales." },
     { name: "Alexandre P.", role: "Ex-Marketeur", text: "J'ai pivoté complètement. De marketeur à dev IA en 3 mois. Mon premier client m'a payé 4500€ pour automatiser son acquisition. Je suis libre maintenant." },
     { name: "Camille T.", role: "Entrepreneur", text: "Les sessions business avec Noé m'ont ouvert les yeux. Je vendais trop bas, j'avais le syndrome de l'imposteur. Maintenant je sais positionner mes offres à leur juste valeur." },
-    { name: "David M.", role: "Lead Dev", text: "Le réseau AURA vaut déjà la formation. J'ai trouvé mes premiers clients via la communauté. On se serre les coudes, on partage nos contrats." },
+    { name: "David M.", role: "Étudiant en Immobilier", text: "Le réseau AURA vaut déjà la formation. J'ai trouvé mes premiers clients via la communauté. On se serre les coudes, on partage nos contrats." },
     { name: "Emma R.", role: "Designer reconvertie", text: "Je pensais qu'il fallait être développeur depuis 10 ans. Faux. Lionel m'a montré que le mindset compte plus que les années d'XP. Mon premier projet facturé 2800€." }
   ];
 

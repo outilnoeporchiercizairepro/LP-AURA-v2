@@ -20,23 +20,28 @@ const SocialProof: React.FC = () => {
     { name: "Emma R.", role: "Designer reconvertie", text: "Je pensais qu'il fallait être développeur depuis 10 ans. Faux. Lionel m'a montré que le mindset compte plus que les années d'XP. Mon premier projet facturé 2800€." }
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerView = 3;
-  const maxIndex = Math.max(0, writtenReviews.length - itemsPerView);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(writtenReviews.length / itemsPerPage);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+      setCurrentPage((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [maxIndex]);
+  }, [totalPages]);
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+    setCurrentPage((prev) => (prev <= 0 ? totalPages - 1 : prev - 1));
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    setCurrentPage((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
+  };
+
+  const getCurrentPageReviews = () => {
+    const start = currentPage * itemsPerPage;
+    return writtenReviews.slice(start, start + itemsPerPage);
   };
 
   return (
@@ -78,16 +83,19 @@ const SocialProof: React.FC = () => {
 
         {/* Written Reviews Carousel */}
         <div className="relative">
-          <div className="overflow-hidden">
+          <AnimatePresence mode="wait">
             <motion.div
-              className="flex gap-6"
-              animate={{ x: `-${currentIndex * (100 / itemsPerView)}%` }}
+              key={currentPage}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6"
             >
-              {writtenReviews.map((review, idx) => (
-                <motion.div
-                  key={idx}
-                  className="min-w-full md:min-w-[calc(33.333%-16px)] p-8 rounded-2xl bg-surface/50 border border-slate-800 relative flex-shrink-0"
+              {getCurrentPageReviews().map((review, idx) => (
+                <div
+                  key={`${currentPage}-${idx}`}
+                  className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative"
                 >
                   <Quote className="w-8 h-8 text-primary/20 mb-4" />
                   <div className="flex gap-1 mb-4">
@@ -105,22 +113,22 @@ const SocialProof: React.FC = () => {
                       <p className="text-gray-500 text-xs">{review.role}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
-          </div>
+          </AnimatePresence>
 
           {/* Navigation Buttons */}
           <button
             onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full bg-surface border border-slate-700 hover:border-primary flex items-center justify-center text-white hover:text-primary transition-all shadow-lg hover:shadow-primary/20 z-10"
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full bg-surface border border-slate-700 hover:border-primary items-center justify-center text-white hover:text-primary transition-all shadow-lg hover:shadow-primary/20 z-10"
             aria-label="Avis précédent"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-surface border border-slate-700 hover:border-primary flex items-center justify-center text-white hover:text-primary transition-all shadow-lg hover:shadow-primary/20 z-10"
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-surface border border-slate-700 hover:border-primary items-center justify-center text-white hover:text-primary transition-all shadow-lg hover:shadow-primary/20 z-10"
             aria-label="Avis suivant"
           >
             <ChevronRight className="w-6 h-6" />
@@ -128,12 +136,12 @@ const SocialProof: React.FC = () => {
 
           {/* Dots Indicators */}
           <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
+            {Array.from({ length: totalPages }).map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentIndex(idx)}
+                onClick={() => setCurrentPage(idx)}
                 className={`h-2 rounded-full transition-all ${
-                  idx === currentIndex
+                  idx === currentPage
                     ? 'w-8 bg-primary'
                     : 'w-2 bg-slate-700 hover:bg-slate-600'
                 }`}

@@ -20,66 +20,45 @@ const Content: React.FC = () => {
     {
       name: "Roadmap Aura",
       items: [
-        { title: "Introduction", description: "Découvre les fondamentaux de la formation et la philosophie AURA pour devenir un opérateur IA complet." },
-        { title: "Mindset de l'Early Adopter", description: "Développe la mentalité des pionniers qui réussissent dans l'IA et adoptent les nouvelles technologies avant tout le monde." },
-        { title: "Choisir sa compétence IA", description: "Identifie la compétence IA qui correspond le mieux à ton profil et à tes objectifs professionnels." },
-        { title: "Infrastructure IA (bases théoriques)", description: "Comprends les fondations techniques de l'IA : modèles, architectures, coûts et bonnes pratiques." },
-        { title: "Automatisation (bases théoriques)", description: "Maîtrise les concepts clés de l'automatisation pour optimiser tes processus et ceux de tes clients." },
-        { title: "Choix de la niche", description: "Définis ton positionnement unique sur le marché de l'IA pour te démarquer de la concurrence." },
-        { title: "Apprentissage de la compétence", description: "Plonge dans l'apprentissage pratique de ta compétence choisie avec des exercices concrets." },
-        { title: "Audit d'entreprise", description: "Apprends à auditer les besoins d'une entreprise pour proposer des solutions IA pertinentes." },
-        { title: "Setup de l'image de marque", description: "Construis ton identité professionnelle et ta présence en ligne pour attirer tes clients idéaux." },
-        { title: "Networking & Réseau d'affaires", description: "Développe ton réseau professionnel et apprends à créer des opportunités business durables." },
-        { title: "Offer, Closing & Onboarding Client", description: "Structure ton offre, convertis tes prospects et embarque tes premiers clients de manière professionnelle." },
-        { title: "Unboarding Client", description: "Gère la fin de mission de façon élégante pour maximiser les recommandations et les reconductions." },
-        { title: "Fiscalité & Juridique", description: "Comprends les aspects légaux et fiscaux pour sécuriser ton activité d'opérateur IA." }
+        { title: "Fondations & Mindset", description: "Découvre les fondamentaux de la formation AURA et développe la mentalité des pionniers qui réussissent dans l'IA. Apprends à adopter les nouvelles technologies avant tout le monde." },
+        { title: "Choix Stratégiques", description: "Identifie ta compétence IA idéale et définis ton positionnement unique sur le marché. Comprends les fondations techniques : modèles, architectures, coûts et automatisation." },
+        { title: "Apprentissage Pratique", description: "Plonge dans l'apprentissage concret de ta compétence avec des exercices réels. Apprends à auditer les besoins d'une entreprise pour proposer des solutions IA pertinentes." },
+        { title: "Image de Marque & Réseau", description: "Construis ton identité professionnelle et ta présence en ligne. Développe un réseau d'affaires solide et crée des opportunités business durables." },
+        { title: "Business & Closing", description: "Structure ton offre, convertis tes prospects et embarque tes premiers clients de manière professionnelle. Gère la fin de mission pour maximiser les recommandations." },
+        { title: "Légal & Fiscal", description: "Comprends les aspects légaux et fiscaux pour sécuriser ton activité d'opérateur IA et développer sereinement ton business." }
       ]
     },
     {
       name: "Infrastructure IA & Automatisation",
       items: [
-        { title: "N8n de débutant à expert", description: "Maîtrise n8n de zéro jusqu'aux workflows les plus complexes avec des cas d'usage réels." },
-        { title: "Automatisations IA avancées", description: "Crée des automatisations intelligentes qui combinent plusieurs IA et outils pour maximiser l'impact." },
-        { title: "Création d'interfaces personnalisées pour IA", description: "Développe des interfaces sur-mesure pour rendre tes solutions IA accessibles et intuitives." },
-        { title: "Intégration de bases de données (SQL / NoSQL / Vector DB)", description: "Connecte tes systèmes IA à des bases de données performantes pour gérer l'information à grande échelle." },
-        { title: "Déploiement chez un client", description: "Déploie tes solutions chez un client en production avec les bonnes pratiques de sécurité et de maintenance." },
-        { title: "Use Case complet : création d'un système IA de A à Z", description: "Réalise un projet complet de bout en bout : de la conception au déploiement d'un système IA professionnel." }
+        { title: "Maîtrise de N8n", description: "Maîtrise n8n de zéro jusqu'aux workflows les plus complexes avec des cas d'usage réels et pratiques." },
+        { title: "Automatisations Avancées", description: "Crée des automatisations intelligentes qui combinent plusieurs IA et outils pour maximiser l'impact de tes solutions." },
+        { title: "Interfaces & UX IA", description: "Développe des interfaces sur-mesure pour rendre tes solutions IA accessibles, intuitives et professionnelles." },
+        { title: "Bases de Données", description: "Connecte tes systèmes IA à des bases de données performantes (SQL, NoSQL, Vector DB) pour gérer l'information à grande échelle." },
+        { title: "Déploiement Production", description: "Déploie tes solutions chez un client en production avec les bonnes pratiques de sécurité et de maintenance professionnelle." },
+        { title: "Projet Complet A-Z", description: "Réalise un projet complet de bout en bout : de la conception au déploiement d'un système IA professionnel fonctionnel." }
       ]
     },
     {
       name: "Vibe Coding & Développement",
       items: [
-        { title: "Introduction au Vibe Coding", description: "Découvre cette approche moderne du développement assisté par IA pour coder 10x plus vite." },
-        { title: "Apprentissage du développement moderne", description: "Maîtrise les bases du développement web moderne nécessaires pour créer des applications IA complètes." },
-        { title: "Utilisation de Cursor et outils IA pour coder", description: "Exploite la puissance de Cursor et des assistants IA pour accélérer ton développement." },
-        { title: "Compréhension des langages (JS/TS, Python, Node, etc.)", description: "Comprends les langages essentiels utilisés dans l'écosystème IA et savoir quand les utiliser." },
-        { title: "MCP Server et protocoles modernes", description: "Implémente des serveurs MCP et comprends les protocoles de communication modernes pour l'IA." },
-        { title: "Création d'infrastructures IA personnalisées", description: "Construis des architectures IA sur-mesure adaptées aux besoins spécifiques de tes clients." },
-        { title: "Développement de micro-SaaS IA", description: "Lance ton propre micro-SaaS IA en utilisant les compétences acquises tout au long de la formation." },
-        { title: "Fondamentaux IA avancés (RAG, Reasoning, Fine-tuning)", description: "Maîtrise les techniques avancées comme le RAG, le reasoning et le fine-tuning pour des solutions IA premium." }
+        { title: "Intro au Vibe Coding", description: "Découvre cette approche moderne du développement assisté par IA pour coder 10x plus vite et créer des applications complètes." },
+        { title: "Dev Moderne & Outils IA", description: "Maîtrise les bases du développement web moderne et exploite Cursor et les assistants IA pour accélérer ton développement." },
+        { title: "Langages & Protocoles", description: "Comprends les langages essentiels (JS/TS, Python, Node) et implémente des serveurs MCP avec les protocoles modernes pour l'IA." },
+        { title: "Infrastructures Custom", description: "Construis des architectures IA sur-mesure adaptées aux besoins spécifiques de tes clients et projets." },
+        { title: "Micro-SaaS IA", description: "Lance ton propre micro-SaaS IA en utilisant toutes les compétences acquises tout au long de la formation." },
+        { title: "IA Avancée", description: "Maîtrise les techniques avancées comme le RAG, le reasoning et le fine-tuning pour des solutions IA premium et différenciantes." }
       ]
     },
     {
       name: "Live Coaching de Groupe & Espace Communautaire",
       items: [
-        { title: "Sessions de Coaching Hebdomadaires", description: "Participe à des sessions live avec la team AURA pour progresser rapidement et rester motivé." },
-        { title: "Appels de groupe en direct", description: "Rejoins les calls de groupe pour échanger avec les autres membres et apprendre collectivement." },
-        { title: "Travail sur cas réels et accompagnement personnalisé", description: "Bénéficie d'un accompagnement personnalisé sur tes projets et défis concrets." },
-        { title: "Résolution de Problèmes Techniques", description: "Obtiens de l'aide en live pour débloquer tes problèmes techniques et avancer sans friction." },
-        { title: "Débogage en live", description: "Résous tes bugs en temps réel avec l'aide des experts AURA et de la communauté." },
-        { title: "Accompagnement sur les projets des membres", description: "Reçois du feedback et des conseils sur tes projets pour les amener au niveau supérieur." },
-        { title: "Analyse de Cas IA & Automatisation", description: "Étudie des cas réels d'implémentation IA et automatisation pour enrichir ta compréhension." },
-        { title: "Études de cas réels analysés en direct", description: "Décortique des projets IA réels pour comprendre les décisions techniques et business." },
-        { title: "Accès Communautaire Discord", description: "Rejoins un Discord actif avec des channels dédiés pour chaque sujet et une communauté soudée." },
-        { title: "Channels thématiques (IA, N8n, dev, projets)", description: "Accède à des espaces spécialisés pour approfondir chaque domaine avec d'autres passionnés." },
-        { title: "Support entre membres", description: "Entraide-toi avec les autres membres pour progresser plus vite et créer des synergies." },
-        { title: "Ressources & Updates Hebdomadaires", description: "Reçois chaque semaine de nouvelles ressources, templates et updates pour rester à la pointe." },
-        { title: "Nouveaux prompts", description: "Accède régulièrement à de nouveaux prompts optimisés pour maximiser tes résultats avec l'IA." },
-        { title: "Nouveaux workflows N8n", description: "Télécharge des workflows n8n prêts à l'emploi et personnalisables pour tes projets." },
-        { title: "Nouveaux modules ou updates IA", description: "Bénéficie des mises à jour continues du contenu avec les dernières innovations IA." },
-        { title: "Accountability & Progress Tracking", description: "Reste accountable grâce au suivi de progression et aux objectifs partagés avec la communauté." },
-        { title: "Suivi de progression", description: "Visualise ton avancement dans la formation et identifie les prochaines étapes à franchir." },
-        { title: "Objectifs hebdomadaires", description: "Fixe et atteins des objectifs hebdomadaires pour maintenir un rythme constant de progression." }
+        { title: "Coaching Live Hebdo", description: "Participe à des sessions live et des appels de groupe avec la team AURA pour progresser rapidement, échanger et rester motivé." },
+        { title: "Support & Accompagnement", description: "Bénéficie d'un accompagnement personnalisé sur tes projets, résous tes bugs en temps réel et obtiens de l'aide pour débloquer tes défis techniques." },
+        { title: "Études de Cas Réels", description: "Analyse des cas réels d'implémentation IA et automatisation. Décortique des projets concrets pour comprendre les décisions techniques et business." },
+        { title: "Communauté Discord", description: "Rejoins un Discord actif avec des channels thématiques (IA, N8n, dev, projets) et une communauté soudée pour s'entraider et progresser ensemble." },
+        { title: "Ressources Hebdo", description: "Reçois chaque semaine de nouvelles ressources, prompts optimisés, workflows n8n prêts à l'emploi et les dernières updates IA." },
+        { title: "Suivi de Progression", description: "Reste accountable grâce au suivi de progression, visualise ton avancement et fixe des objectifs hebdomadaires pour maintenir un rythme constant." }
       ]
     }
   ];
@@ -145,80 +124,142 @@ const Content: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="max-w-5xl mx-auto"
+              className="max-w-6xl mx-auto"
             >
-              <div className="relative">
-                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary"></div>
+              <div className="relative py-8">
+                <svg className="absolute inset-0 w-full h-full hidden md:block" style={{ zIndex: 0 }}>
+                  <defs>
+                    <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#EA4B71" />
+                      <stop offset="50%" stopColor="#F39C12" />
+                      <stop offset="100%" stopColor="#EA4B71" />
+                    </linearGradient>
+                  </defs>
+                  {tabs[activeTab].items.length > 0 && (
+                    <path
+                      d={(() => {
+                        const items = tabs[activeTab].items;
+                        const cols = 3;
+                        let path = '';
 
-                <div className="space-y-8 md:space-y-12">
+                        items.forEach((_, idx) => {
+                          const row = Math.floor(idx / cols);
+                          const col = idx % cols;
+                          const isReversedRow = row % 2 === 1;
+                          const actualCol = isReversedRow ? cols - 1 - col : col;
+
+                          const x = (actualCol * (100 / (cols - 1))) + '%';
+                          const y = (row * 180 + 80) + 'px';
+
+                          if (idx === 0) {
+                            path += `M ${x} ${y}`;
+                          } else {
+                            path += ` L ${x} ${y}`;
+                          }
+                        });
+
+                        return path;
+                      })()}
+                      stroke="url(#pathGradient)"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="8 4"
+                      opacity="0.4"
+                    />
+                  )}
+                </svg>
+
+                <div className="relative" style={{ minHeight: `${Math.ceil(tabs[activeTab].items.length / 3) * 180}px` }}>
+                  {tabs[activeTab].items.map((item, idx) => {
+                    const cols = 3;
+                    const row = Math.floor(idx / cols);
+                    const col = idx % cols;
+                    const isReversedRow = row % 2 === 1;
+                    const actualCol = isReversedRow ? cols - 1 - col : col;
+
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.1, duration: 0.5 }}
+                        className="absolute hidden md:block"
+                        style={{
+                          left: `${actualCol * (100 / (cols - 1))}%`,
+                          top: `${row * 180}px`,
+                          transform: 'translateX(-50%)',
+                          width: '280px'
+                        }}
+                        onMouseEnter={() => setHoveredIndex(idx)}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                      >
+                        <div className="flex flex-col items-center">
+                          <motion.div
+                            className={`w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-2xl mb-4 transition-all duration-300 ${
+                              hoveredIndex === idx
+                                ? 'bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/50 scale-110'
+                                : 'bg-gradient-to-br from-primary/50 to-secondary/50'
+                            }`}
+                            whileHover={{ scale: 1.2, rotate: 5 }}
+                          >
+                            <span className="text-white">{idx + 1}</span>
+                          </motion.div>
+
+                          <div className={`text-center p-6 rounded-2xl border transition-all duration-300 ${
+                            hoveredIndex === idx
+                              ? 'bg-surface/90 border-primary/40 shadow-lg shadow-primary/10'
+                              : 'bg-surface/50 border-slate-800'
+                          }`}>
+                            <h3 className={`font-bold text-lg mb-3 transition-colors ${
+                              hoveredIndex === idx ? 'text-white' : 'text-gray-200'
+                            }`}>
+                              {item.title}
+                            </h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                <div className="md:hidden space-y-6 mt-8">
                   {tabs[activeTab].items.map((item, idx) => (
                     <motion.div
                       key={idx}
-                      initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05, duration: 0.5 }}
-                      className={`relative flex items-center ${
-                        idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                      } flex-row`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex gap-4"
                       onMouseEnter={() => setHoveredIndex(idx)}
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
-                      <div className={`hidden md:block w-1/2 ${idx % 2 === 0 ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
-                        {idx % 2 === 0 && (
-                          <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 + 0.2 }}
-                          >
-                            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                          </motion.div>
-                        )}
-                      </div>
+                      <motion.div
+                        className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${
+                          hoveredIndex === idx
+                            ? 'bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/50'
+                            : 'bg-gradient-to-br from-primary/50 to-secondary/50'
+                        }`}
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <span className="text-white">{idx + 1}</span>
+                      </motion.div>
 
-                      <div className="absolute left-8 md:left-1/2 -ml-3 md:-ml-4 z-10">
-                        <motion.div
-                          className={`w-6 h-6 md:w-8 md:h-8 rounded-full border-4 border-background transition-all duration-300 ${
-                            hoveredIndex === idx
-                              ? 'bg-gradient-to-r from-primary to-secondary scale-125 shadow-lg shadow-primary/50'
-                              : 'bg-gradient-to-r from-primary/50 to-secondary/50'
-                          }`}
-                          whileHover={{ scale: 1.3 }}
-                        >
-                          {hoveredIndex === idx && (
-                            <motion.div
-                              initial={{ scale: 0, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              className="w-full h-full flex items-center justify-center"
-                            >
-                              <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                            </motion.div>
-                          )}
-                        </motion.div>
-                      </div>
-
-                      <div className={`md:hidden w-full pl-20 pr-4`}>
-                        <motion.div
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.05 + 0.2 }}
-                        >
-                          <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
-                        </motion.div>
-                      </div>
-
-                      <div className={`hidden md:block w-1/2 ${idx % 2 === 1 ? 'pl-12 text-left' : 'pr-12 text-right'}`}>
-                        {idx % 2 === 1 && (
-                          <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 + 0.2 }}
-                          >
-                            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                          </motion.div>
-                        )}
+                      <div className={`flex-1 p-5 rounded-2xl border transition-all duration-300 ${
+                        hoveredIndex === idx
+                          ? 'bg-surface/90 border-primary/40 shadow-lg'
+                          : 'bg-surface/50 border-slate-800'
+                      }`}>
+                        <h3 className={`font-bold text-lg mb-2 transition-colors ${
+                          hoveredIndex === idx ? 'text-white' : 'text-gray-200'
+                        }`}>
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
+                          {item.description}
+                        </p>
                       </div>
                     </motion.div>
                   ))}

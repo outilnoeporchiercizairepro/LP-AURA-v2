@@ -58,7 +58,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-2 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed"
         >
-          Un parcours intensif pour maîtriser l’IA, l’automatisation, le déploiement et le business, 
+          Une roadmap claire pour maîtriser l’IA, l’automatisation, le déploiement et le business, 
           entouré de 4 experts complémentaires.
         </motion.p>
 

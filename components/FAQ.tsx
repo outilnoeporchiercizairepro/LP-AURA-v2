@@ -21,10 +21,6 @@ const FAQ: React.FC = () => {
     {
       q: "Est-ce que vous m'aidez à trouver des clients ?",
       a: "Le module Business (Pilier 3) est dédié à ça. On t'apprend à structurer ton offre, à pricer et à closer tes premiers clients corporate."
-    },
-    {
-      q: "Y a-t-il un suivi après les 12 semaines ?",
-      a: "Tu gardes l'accès à la communauté et aux ressources à vie. Le réseau que tu construis ici te suivra tout au long de ta carrière."
     }
   ];
 

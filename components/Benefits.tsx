@@ -27,8 +27,8 @@ const Benefits: React.FC = () => {
               Ce que tu sais faire après <span className="text-secondary">AURA</span>
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-8">
-              Tu ne seras plus un simple utilisateur d'outils. Tu deviendras un architecte capable de construire des solutions souveraines, scalables et rentables. 
-              On ne parle pas de gadgets, mais de compétences techniques hard-core monétisables.
+Tu ne te contenteras plus d’utiliser des outils. Tu sauras construire des systèmes qui se vendent plusieurs milliers d’euros, en quelques jours, depuis n’importe où.
+Des architectures souveraines, scalables et rentables qui te rendent libre, parce que tu peux les créer vite… et les vendre cher.
             </p>
             <a href="#content" className="text-primary hover:text-primary-hover font-semibold transition-colors flex items-center gap-2 group">
               Voir le programme détaillé <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

@@ -126,150 +126,54 @@ const Content: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="max-w-6xl mx-auto"
             >
-              <div className="relative py-8">
-                <svg className="absolute inset-0 w-full h-full hidden md:block" style={{ zIndex: 0 }}>
-                  <defs>
-                    <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#EA4B71" />
-                      <stop offset="50%" stopColor="#F39C12" />
-                      <stop offset="100%" stopColor="#EA4B71" />
-                    </linearGradient>
-                  </defs>
-                  {tabs[activeTab].items.length > 0 && (
-                    <path
-                      d={(() => {
-                        const items = tabs[activeTab].items;
-                        const cols = 3;
-                        let path = '';
-
-                        items.forEach((_, idx) => {
-                          const row = Math.floor(idx / cols);
-                          const col = idx % cols;
-                          const isReversedRow = row % 2 === 1;
-                          const actualCol = isReversedRow ? cols - 1 - col : col;
-
-                          const x = (actualCol * (100 / (cols - 1))) + '%';
-                          const y = (row * 180 + 80) + 'px';
-
-                          if (idx === 0) {
-                            path += `M ${x} ${y}`;
-                          } else {
-                            path += ` L ${x} ${y}`;
-                          }
-                        });
-
-                        return path;
-                      })()}
-                      stroke="url(#pathGradient)"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeDasharray="8 4"
-                      opacity="0.4"
-                    />
-                  )}
-                </svg>
-
-                <div className="relative" style={{ minHeight: `${Math.ceil(tabs[activeTab].items.length / 3) * 180}px` }}>
-                  {tabs[activeTab].items.map((item, idx) => {
-                    const cols = 3;
-                    const row = Math.floor(idx / cols);
-                    const col = idx % cols;
-                    const isReversedRow = row % 2 === 1;
-                    const actualCol = isReversedRow ? cols - 1 - col : col;
-
-                    return (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.1, duration: 0.5 }}
-                        className="absolute hidden md:block"
-                        style={{
-                          left: `${actualCol * (100 / (cols - 1))}%`,
-                          top: `${row * 180}px`,
-                          transform: 'translateX(-50%)',
-                          width: '280px'
-                        }}
-                        onMouseEnter={() => setHoveredIndex(idx)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                      >
-                        <div className="flex flex-col items-center">
-                          <motion.div
-                            className={`w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-2xl mb-4 transition-all duration-300 ${
-                              hoveredIndex === idx
-                                ? 'bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/50 scale-110'
-                                : 'bg-gradient-to-br from-primary/50 to-secondary/50'
-                            }`}
-                            whileHover={{ scale: 1.2, rotate: 5 }}
-                          >
-                            <span className="text-white">{idx + 1}</span>
-                          </motion.div>
-
-                          <div className={`text-center p-6 rounded-2xl border transition-all duration-300 ${
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {tabs[activeTab].items.map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1, duration: 0.5 }}
+                    onMouseEnter={() => setHoveredIndex(idx)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                  >
+                    <div className="h-full">
+                      <div className="flex items-center gap-3 mb-4">
+                        <motion.div
+                          className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center font-bold text-lg md:text-xl transition-all duration-300 ${
                             hoveredIndex === idx
-                              ? 'bg-surface/90 border-primary/40 shadow-lg shadow-primary/10'
-                              : 'bg-surface/50 border-slate-800'
-                          }`}>
-                            <h3 className={`font-bold text-lg mb-3 transition-colors ${
-                              hoveredIndex === idx ? 'text-white' : 'text-gray-200'
-                            }`}>
-                              {item.title}
-                            </h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+                              ? 'bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/50'
+                              : 'bg-gradient-to-br from-primary/50 to-secondary/50'
+                          }`}
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                        >
+                          <span className="text-white">{idx + 1}</span>
+                        </motion.div>
+                        <div className="h-0.5 flex-1 bg-gradient-to-r from-primary/30 to-transparent" />
+                      </div>
 
-                <div className="md:hidden space-y-6 mt-8">
-                  {tabs[activeTab].items.map((item, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex gap-4"
-                      onMouseEnter={() => setHoveredIndex(idx)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                      <motion.div
-                        className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${
-                          hoveredIndex === idx
-                            ? 'bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/50'
-                            : 'bg-gradient-to-br from-primary/50 to-secondary/50'
-                        }`}
-                        whileHover={{ scale: 1.1 }}
-                      >
-                        <span className="text-white">{idx + 1}</span>
-                      </motion.div>
-
-                      <div className={`flex-1 p-5 rounded-2xl border transition-all duration-300 ${
+                      <div className={`h-full p-6 rounded-2xl border transition-all duration-300 ${
                         hoveredIndex === idx
-                          ? 'bg-surface/90 border-primary/40 shadow-lg'
-                          : 'bg-surface/50 border-slate-800'
+                          ? 'bg-surface/90 border-primary/40 shadow-xl shadow-primary/10 scale-[1.02]'
+                          : 'bg-surface/60 border-slate-800 hover:border-slate-700'
                       }`}>
-                        <h3 className={`font-bold text-lg mb-2 transition-colors ${
+                        <h3 className={`font-bold text-lg md:text-xl mb-3 transition-colors ${
                           hoveredIndex === idx ? 'text-white' : 'text-gray-200'
                         }`}>
                           {item.title}
                         </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">
                           {item.description}
                         </p>
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.6 }}
                 className="mt-16 text-center"
               >
                 <a

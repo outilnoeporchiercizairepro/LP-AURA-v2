@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Benefits: React.FC = () => {
   const skills = [
-    "Concevoir une architecture IA moderne (RAG, agents, APIs)",
+    "Concevoir une infrastructure IA moderne (RAG, agents, APIs)",
     "Déployer tes apps sur un VPS avec une base de données robuste",
     "Automatiser tes workflows (n8n / Make) de bout en bout",
     "Structurer une offre IA vendable et trouver des clients",

@@ -95,17 +95,17 @@ const SocialProof: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="mb-16 text-center"
         >
-          <div className="inline-block px-8 md:px-12 py-6 rounded-2xl bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 border-2 border-primary/40 shadow-2xl shadow-primary/20 backdrop-blur-sm relative overflow-hidden">
+          <div className="inline-block px-4 sm:px-8 md:px-12 py-5 sm:py-6 rounded-2xl bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 border-2 border-primary/40 shadow-2xl shadow-primary/20 backdrop-blur-sm relative overflow-hidden max-w-full">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 animate-pulse"></div>
             <div className="relative z-10">
-              <p className="text-sm md:text-base font-semibold text-primary mb-2 uppercase tracking-wider">
+              <p className="text-xs sm:text-sm md:text-base font-semibold text-primary mb-2 uppercase tracking-wider">
                 Résultats Prouvés
               </p>
-              <p className="text-xl md:text-3xl font-black text-white leading-tight">
+              <p className="text-lg sm:text-xl md:text-3xl font-black text-white leading-tight">
                 <span className="text-primary">+150 élèves</span> ont vendu leur 1ère infrastructure
               </p>
-              <p className="text-lg md:text-2xl font-bold text-white mt-2">
-                en <span className="text-secondary">moins de 2 mois</span> pour au minimum <span className="text-primary text-2xl md:text-3xl">2000€</span>
+              <p className="text-base sm:text-lg md:text-2xl font-bold text-white mt-2">
+                en <span className="text-secondary">moins de 2 mois</span> pour au minimum <span className="text-primary text-xl sm:text-2xl md:text-3xl">2000€</span>
               </p>
               <p className="text-xs md:text-sm text-gray-400 mt-3 font-medium">
                 Rejoins-les avant qu'il ne soit trop tard

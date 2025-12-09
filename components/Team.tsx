@@ -143,9 +143,11 @@ const Team: React.FC = () => {
                 className="rounded-3xl shadow-2xl overflow-hidden border border-slate-700/50 bg-slate-900 group"
               >
                 {/* Image */}
-                <img 
-                  src={member.image} 
-                  alt={member.name} 
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
                 />
                 
@@ -192,9 +194,11 @@ const Team: React.FC = () => {
               key={idx} 
               className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-slate-800"
             >
-              <img 
-                src={member.image} 
-                alt={member.name} 
+              <img
+                src={member.image}
+                alt={member.name}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />

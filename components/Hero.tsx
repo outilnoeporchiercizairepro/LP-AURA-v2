@@ -78,6 +78,7 @@ const Hero: React.FC = () => {
               poster=""
               playsInline
               controls
+              preload="metadata"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             />

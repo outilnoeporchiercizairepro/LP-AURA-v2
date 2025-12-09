@@ -69,7 +69,7 @@ const Content: React.FC = () => {
   };
 
   return (
-    <section id="content" className="py-24 bg-background relative overflow-hidden">
+    <section id="content" className="py-24 bg-[#020617] relative overflow-hidden">
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
 

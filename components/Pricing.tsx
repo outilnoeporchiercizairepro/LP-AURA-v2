@@ -61,7 +61,7 @@ const Pricing: React.FC = () => {
                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
                      <span className="text-primary font-bold text-sm">1</span>
                    </div>
-                   <p className="text-gray-300 text-sm md:text-base">Ton Success Manager analyse précisément ta situation actuelle.</p>
+                   <p className="text-gray-300 text-sm md:text-base">Un membre de la team AURA analyse précisément ta situation actuelle.</p>
                  </div>
                  <div className="flex gap-3">
                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">

@@ -126,20 +126,25 @@ const Content: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="max-w-6xl mx-auto"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
                 {tabs[activeTab].items.map((item, idx) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.5 }}
+                    className="flex flex-col"
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
-                    <div className="h-full">
-                      <div className="flex items-center gap-3 mb-4">
+                    <div className={`relative p-6 md:p-8 rounded-2xl border transition-all duration-300 ${
+                      hoveredIndex === idx
+                        ? 'bg-surface/90 border-primary/40 shadow-xl shadow-primary/20'
+                        : 'bg-surface/60 border-slate-800'
+                    }`}>
+                      <div className="absolute -top-4 left-6">
                         <motion.div
-                          className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center font-bold text-lg md:text-xl transition-all duration-300 ${
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-xl transition-all duration-300 ${
                             hoveredIndex === idx
                               ? 'bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/50'
                               : 'bg-gradient-to-br from-primary/50 to-secondary/50'
@@ -148,20 +153,15 @@ const Content: React.FC = () => {
                         >
                           <span className="text-white">{idx + 1}</span>
                         </motion.div>
-                        <div className="h-0.5 flex-1 bg-gradient-to-r from-primary/30 to-transparent" />
                       </div>
 
-                      <div className={`h-full p-6 rounded-2xl border transition-all duration-300 ${
-                        hoveredIndex === idx
-                          ? 'bg-surface/90 border-primary/40 shadow-xl shadow-primary/10 scale-[1.02]'
-                          : 'bg-surface/60 border-slate-800 hover:border-slate-700'
-                      }`}>
-                        <h3 className={`font-bold text-lg md:text-xl mb-3 transition-colors ${
+                      <div className="mt-6">
+                        <h3 className={`font-bold text-xl mb-3 transition-colors ${
                           hoveredIndex === idx ? 'text-white' : 'text-gray-200'
                         }`}>
                           {item.title}
                         </h3>
-                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">
+                        <p className="text-gray-400 leading-relaxed">
                           {item.description}
                         </p>
                       </div>

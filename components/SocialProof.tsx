@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Play, Star, Quote } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   // Placeholders for video testimonials
@@ -66,15 +66,6 @@ const SocialProof: React.FC = () => {
       goToPrevious();
     } else if (info.offset.x < -threshold) {
       goToNext();
-    }
-  };
-
-  const getCurrentPageReviews = () => {
-    if (isMobile) {
-      return [writtenReviews[currentIndex]];
-    } else {
-      const start = currentIndex * 3;
-      return writtenReviews.slice(start, start + 3);
     }
   };
 
@@ -145,61 +136,77 @@ const SocialProof: React.FC = () => {
         </div>
 
         {/* Written Reviews Carousel */}
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              drag={isMobile ? "x" : false}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
-              onDragEnd={handleDragEnd}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-grab active:cursor-grabbing"
-            >
-              {getCurrentPageReviews().map((review, idx) => (
+        <div className="relative overflow-hidden">
+          <motion.div
+            drag={isMobile ? "x" : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            animate={{
+              x: isMobile ? `-${currentIndex * 100}%` : `-${currentIndex * 100}%`
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className={`flex ${isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}
+          >
+            {isMobile ? (
+              writtenReviews.map((review, idx) => (
                 <div
-                  key={`${currentIndex}-${idx}`}
-                  className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative"
+                  key={idx}
+                  className="w-full flex-shrink-0 px-2"
                 >
-                  <Quote className="w-8 h-8 text-primary/20 mb-4" />
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    ))}
-                  </div>
-                  <p className="text-gray-300 mb-6 leading-relaxed min-h-[120px]">"{review.text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
-                      {review.name.charAt(0)}
+                  <div className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative">
+                    <Quote className="w-8 h-8 text-primary/20 mb-4" />
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                      ))}
                     </div>
-                    <div>
-                      <p className="text-white font-semibold text-sm">{review.name}</p>
-                      <p className="text-gray-500 text-xs">{review.role}</p>
+                    <p className="text-gray-300 mb-6 leading-relaxed min-h-[120px]">"{review.text}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
+                        {review.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-white font-semibold text-sm">{review.name}</p>
+                        <p className="text-gray-500 text-xs">{review.role}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation Buttons */}
-          <button
-            onClick={goToPrevious}
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full bg-surface border border-slate-700 hover:border-primary items-center justify-center text-white hover:text-primary transition-all shadow-lg hover:shadow-primary/20 z-10"
-            aria-label="Avis précédent"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
-            onClick={goToNext}
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-surface border border-slate-700 hover:border-primary items-center justify-center text-white hover:text-primary transition-all shadow-lg hover:shadow-primary/20 z-10"
-            aria-label="Avis suivant"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
+              ))
+            ) : (
+              Array.from({ length: Math.ceil(writtenReviews.length / 3) }).map((_, pageIdx) => (
+                <div
+                  key={pageIdx}
+                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-3 gap-6 px-2"
+                >
+                  {writtenReviews.slice(pageIdx * 3, pageIdx * 3 + 3).map((review, idx) => (
+                    <div
+                      key={`${pageIdx}-${idx}`}
+                      className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative"
+                    >
+                      <Quote className="w-8 h-8 text-primary/20 mb-4" />
+                      <div className="flex gap-1 mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                        ))}
+                      </div>
+                      <p className="text-gray-300 mb-6 leading-relaxed min-h-[120px]">"{review.text}"</p>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">
+                          {review.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold text-sm">{review.name}</p>
+                          <p className="text-gray-500 text-xs">{review.role}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))
+            )}
+          </motion.div>
 
           {/* Dots Indicators */}
           <div className="flex justify-center gap-2 mt-8">

@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from '../components/Hero';
 import Audience from '../components/Audience';
 import SocialProof from '../components/SocialProof';
-import Pillars from '../components/Pillars';
 import Team from '../components/Team';
 import Benefits from '../components/Benefits';
 import Content from '../components/Content';
@@ -16,7 +15,6 @@ const Home: React.FC = () => {
       <Hero />
       <Audience />
       <SocialProof />
-      <Pillars />
       <Team />
       <Benefits />
       <Content />

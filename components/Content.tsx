@@ -36,7 +36,7 @@ const Content: React.FC = () => {
       items: [
         { title: "Maîtrise de n8n", description: "Maîtrise n8n de zéro jusqu'aux workflows les plus complexes avec des cas d'usage réels et pratiques." },
         { title: "Automatisations Avancées", description: "Crée des automatisations intelligentes qui combinent plusieurs IA et outils pour maximiser l'impact de tes solutions." },
-        { title: "Interfaces & UX IA", description: "Développe des interfaces sur-mesure pour rendre tes solutions IA accessibles, intuitives et professionnelles." },
+        { title: "Interfaces IA", description: "Développe des interfaces sur-mesure pour rendre tes solutions IA accessibles, intuitives et professionnelles." },
         { title: "Bases de Données", description: "Connecte tes systèmes IA à des bases de données performantes (SQL, NoSQL, Vector DB) pour gérer l'information à grande échelle." },
         { title: "Déploiement Production", description: "Déploie tes solutions chez un client en production avec les bonnes pratiques de sécurité et de maintenance professionnelle." },
         { title: "Projet Complet A-Z", description: "Réalise un projet complet de bout en bout : de la conception au déploiement d'un système IA professionnel fonctionnel." }

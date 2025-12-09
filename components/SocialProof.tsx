@@ -102,7 +102,7 @@ const SocialProof: React.FC = () => {
                 Résultats Prouvés
               </p>
               <p className="text-lg sm:text-xl md:text-3xl font-black text-white leading-tight">
-                <span className="text-primary">+150 élèves</span> ont vendu leur 1ère infrastructure
+                <span className="text-primary">+20 élèves</span> ont vendu leur 1ère infrastructure
               </p>
               <p className="text-base sm:text-lg md:text-2xl font-bold text-white mt-2">
                 en <span className="text-secondary">moins de 2 mois</span> pour au minimum <span className="text-primary text-xl sm:text-2xl md:text-3xl">2000€</span>

@@ -58,7 +58,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-2 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed"
         >
-          Une formation 360° : IA, automatisation, déploiement… et la compétence clé que personne ne t’enseigne : vendre.
+          Une formation 360° : IA, automatisation, déploiement… et la compétence clé que personne ne t’enseigne :   vendre.
         </motion.p>
 
         {/* Video Preview */}

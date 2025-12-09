@@ -8,7 +8,7 @@ const SocialProof: React.FC = () => {
 
   // Placeholders for written reviews
   const writtenReviews = [
-    { name: "Marc D.", role: "Développeur Full-Stack", text: "J'ai vendu ma première infra à 3200€. Ça m'a largement remboursé le coût de la formation et j'ai pu commencer à scale mon activité." },
+    { name: "Marc D.", role: "Étudiant en Droit", text: "J'ai vendu ma première infra à 3200€. Ça m'a largement remboursé le coût de la formation et j'ai pu commencer à scale mon activité." },
     { name: "Sophie L.", role: "Freelance Automation", text: "Je savais faire des workflows n8n mais je savais pas comment les vendre. La stratégie commerciale de Noé m'a permis de trouver des clients rapidement." },
     { name: "Thomas R.", role: "Développeur Freelance", text: "J'ai rentabilisé la formation en 3 semaines en signant mon premier contrat d'agent IA. Le ROI est juste dingue." },
     { name: "Sarah M.", role: "Fondatrice d'Agence", text: "L'approche de Lionel sur le mindset a tout changé. Je ne vends plus du temps, je vends de la valeur. Mes tarifs ont doublé." },

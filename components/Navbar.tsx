@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Programme', href: '#pillars' },
+    { name: 'Programme', href: '#content' },
     { name: 'Résultats', href: '#benefits' },
     { name: 'Avis', href: '#reviews' }, // Updated link
     { name: 'Équipe', href: '#team' },

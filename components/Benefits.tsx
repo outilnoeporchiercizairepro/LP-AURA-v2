@@ -30,7 +30,7 @@ const Benefits: React.FC = () => {
               Tu ne seras plus un simple utilisateur d'outils. Tu deviendras un architecte capable de construire des solutions souveraines, scalables et rentables. 
               On ne parle pas de gadgets, mais de compétences techniques hard-core monétisables.
             </p>
-            <a href="#pricing" className="text-primary hover:text-primary-hover font-semibold transition-colors flex items-center gap-2 group">
+            <a href="#content" className="text-primary hover:text-primary-hover font-semibold transition-colors flex items-center gap-2 group">
               Voir le programme détaillé <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>

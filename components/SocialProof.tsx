@@ -12,7 +12,7 @@ const SocialProof: React.FC = () => {
     { name: "Sophie L.", role: "Freelance Automation", text: "Je savais faire des workflows n8n mais je savais pas comment les vendre. La stratégie commerciale de Noé m'a permis de trouver des clients rapidement." },
     { name: "Thomas R.", role: "Développeur Freelance", text: "J'ai rentabilisé la formation en 3 semaines en signant mon premier contrat d'agent IA. Le ROI est juste dingue." },
     { name: "Sarah M.", role: "Fondatrice d'Agence", text: "L'approche de Lionel sur le mindset a tout changé. Je ne vends plus du temps, je vends de la valeur. Mes tarifs ont doublé." },
-    { name: "Kevin L.", role: "CTO Startup", text: "La partie infra de Baptiste est du niveau de ce qu'on voit en grande entreprise. Solide. J'ai pu déployer des agents en production dès la semaine 4." },
+    { name: "Kevin L.", role: "Étudiant en Marketing", text: "La partie infra de Baptiste est du niveau de ce qu'on voit en grande entreprise. Solide. J'ai pu déployer des agents en production dès la semaine 4." },
     { name: "Julie B.", role: "Consultante IA", text: "Avant AURA, je regardais l'IA de loin. Aujourd'hui, je facture 5k€ par mission d'intégration. La formation m'a donné les compétences techniques ET commerciales." },
     { name: "Alexandre P.", role: "Ex-Marketeur", text: "J'ai pivoté complètement. De marketeur à dev IA en 3 mois. Mon premier client m'a payé 4500€ pour automatiser son acquisition. Je suis libre maintenant." },
     { name: "Camille T.", role: "Entrepreneur", text: "Les sessions business avec Noé m'ont ouvert les yeux. Je vendais trop bas, j'avais le syndrome de l'imposteur. Maintenant je sais positionner mes offres à leur juste valeur." },

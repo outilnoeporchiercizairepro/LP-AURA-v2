@@ -49,7 +49,7 @@ const FAQ: React.FC = () => {
           Toutes les réponses à tes interrogations
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="max-w-3xl mx-auto space-y-4 mb-12">
           {faqs.map((faq, idx) => (
             <motion.div
               initial={{ opacity: 0, y: 20 }}

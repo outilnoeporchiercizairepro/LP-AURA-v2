@@ -24,7 +24,7 @@ const Team: React.FC = () => {
     },
     {
       name: "Noé",
-      role: "Déploiement & Vente",
+      role: "Spécialiste Déploiement & Vente",
       desc: "Spécialiste du closing et de la stratégie commerciale. Il t'apprend à vendre tes solutions IA et à développer ton activité rapidement.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226175618-b7yhs6.png",
       color: "from-primary/20 to-primary/5"

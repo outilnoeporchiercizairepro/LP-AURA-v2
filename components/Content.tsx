@@ -45,12 +45,14 @@ const Content: React.FC = () => {
     {
       name: "Vibe Coding & IA",
       items: [
-        { title: "Intro au Vibe Coding", description: "Découvre cette approche moderne du développement assisté par IA pour coder 10x plus vite et créer des applications complètes." },
-        { title: "Dev Moderne & Outils IA", description: "Maîtrise les bases du développement web moderne et exploite Cursor et les assistants IA pour accélérer ton développement." },
-        { title: "Langages & Protocoles", description: "Comprends les langages essentiels (JS/TS, Python, Node) et implémente des serveurs MCP avec les protocoles modernes pour l'IA." },
-        { title: "Infrastructures Custom", description: "Construis des architectures IA sur-mesure adaptées aux besoins spécifiques de tes clients et projets." },
-        { title: "Micro-SaaS IA", description: "Lance ton propre micro-SaaS IA en utilisant toutes les compétences acquises tout au long de la formation." },
-        { title: "IA Avancée", description: "Maîtrise les techniques avancées comme le RAG, le reasoning et le fine-tuning pour des solutions IA premium et différenciantes." }
+        { title: "JSON & API - Fondations techniques", description: "Maîtrise le format JSON pour structurer les données dans tes workflows N8N et comprends comment faire communiquer Lovable, N8N et les IA via les API." },
+        { title: "Le Prompting - Communiquer avec l'IA", description: "Découvre l'art du prompting et construis des prompts efficaces. Comprends les modèles IA et les différents agents pour maximiser la qualité de tes outputs." },
+        { title: "Vibe Coding - Principes fondamentaux", description: "Découvre ce qu'est le Vibe Coding, ce que tu peux construire avec cette approche, les outils essentiels et les langages clés pour développer 10x plus vite." },
+        { title: "Cursor - Développement assisté par IA", description: "Maîtrise Cursor pour coder avec l'IA comme copilote. Présentation complète de l'outil et réalisation d'un projet concret pour mettre en pratique." },
+        { title: "Lovable - Création d'applications web", description: "Découvre Lovable et crée un site web complet sans coder. Apprends à utiliser cette plateforme pour livrer des projets clients rapidement." },
+        { title: "Replit - Développement en ligne", description: "Présentation de Replit et création d'une application web complète. Utilise cet environnement de développement cloud pour prototyper et déployer tes projets." },
+        { title: "Coder avec les LLM - Claude, Codex, Copilot", description: "Maîtrise les différents LLM pour le développement : Claude pour la réflexion complexe, Codex pour la génération de code et Copilot pour l'assistance en temps réel." },
+        { title: "Déploiement et hébergement", description: "Apprends à déployer tes applications : hébergement depuis les apps de Vibe Coding, déploiement à partir du code source et gestion de versions avec GitHub." }
       ]
     },
     {

@@ -51,10 +51,44 @@ const Pricing: React.FC = () => {
             ))}
           </div>
 
-          <div className="bg-slate-900/50 rounded-2xl p-6 mb-8 border border-slate-800/50">
-             <p className="text-slate-300 text-sm mb-1 uppercase tracking-wide font-medium">Étape 1 : Appel de découverte</p>
-             <p className="text-3xl font-bold text-white">Gratuit</p>
-             <p className="text-sm text-gray-500 mt-2">Un échange avec la team AURA pour valider ton profil et ta motivation.</p>
+          <div className="bg-slate-900/50 rounded-2xl p-8 mb-8 border border-slate-800/50 text-left">
+             <h4 className="text-xl font-bold text-white mb-4">Un appel de 30 minutes pour faire le point sur ta situation et déterminer si une collaboration est pertinente.</h4>
+
+             <div className="mb-6">
+               <p className="text-secondary font-semibold mb-4 text-lg">Déroulé de l'appel :</p>
+               <div className="space-y-4">
+                 <div className="flex gap-3">
+                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
+                     <span className="text-primary font-bold text-sm">1</span>
+                   </div>
+                   <p className="text-gray-300 text-sm md:text-base">Ton Success Manager analyse précisément ta situation actuelle.</p>
+                 </div>
+                 <div className="flex gap-3">
+                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
+                     <span className="text-primary font-bold text-sm">2</span>
+                   </div>
+                   <p className="text-gray-300 text-sm md:text-base">Il te présente l'accompagnement, ce que tu vas recevoir et comment cela s'applique à ton cas.</p>
+                 </div>
+                 <div className="flex gap-3">
+                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
+                     <span className="text-primary font-bold text-sm">3</span>
+                   </div>
+                   <p className="text-gray-300 text-sm md:text-base">Tu décides si tu veux avancer et si tu es prêt à commencer.</p>
+                 </div>
+                 <div className="flex gap-3">
+                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
+                     <span className="text-primary font-bold text-sm">4</span>
+                   </div>
+                   <p className="text-gray-300 text-sm md:text-base">Si ton profil correspond et qu'il reste une place, tu peux rejoindre la communauté immédiatement.</p>
+                 </div>
+               </div>
+             </div>
+
+             <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+               <p className="text-xs md:text-sm text-gray-400 italic">
+                 <span className="font-semibold text-secondary">Note :</span> Ce n'est pas un appel de vente déguisé. C'est un échange transparent pour voir si AURA est le bon levier pour ta croissance.
+               </p>
+             </div>
           </div>
 
           <a

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface AccordionItem {
   title: string;
@@ -144,96 +144,69 @@ const Content: React.FC = () => {
           </div>
 
           {/* Tab Content with Accordions */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="max-w-4xl mx-auto"
-            >
-              <div className="space-y-3">
-                {tabs[activeTab].items.map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.03 }}
-                    className={`rounded-2xl bg-surface/80 backdrop-blur-sm border overflow-hidden transition-all duration-300 ${
-                      openIndex === idx
-                        ? 'border-primary/30 shadow-lg shadow-primary/5'
-                        : 'border-slate-800 hover:border-slate-700'
-                    }`}
-                  >
-                    <button
-                      onClick={() => toggle(idx)}
-                      className="w-full flex items-center justify-between p-5 md:p-6 text-left focus:outline-none group"
-                    >
-                      <div className="flex items-center gap-4 flex-1">
-                        <div
-                          className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
-                            openIndex === idx
-                              ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                              : 'bg-white/5 text-gray-400 group-hover:bg-white/10'
-                          }`}
-                        >
-                          {(idx + 1).toString().padStart(2, '0')}
-                        </div>
-                        <span
-                          className={`font-semibold text-base md:text-lg transition-colors ${
-                            openIndex === idx ? 'text-white' : 'text-gray-300 group-hover:text-white'
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                      </div>
-                      <ChevronDown
-                        className={`flex-shrink-0 w-5 h-5 transition-all duration-300 ${
-                          openIndex === idx ? 'rotate-180 text-primary' : 'text-gray-500 group-hover:text-gray-400'
-                        }`}
-                      />
-                    </button>
-
-                    <AnimatePresence>
-                      {openIndex === idx && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-5 md:px-6 pb-5 md:pb-6 pl-16 md:pl-20">
-                            <div className="border-l-2 border-primary/20 pl-6">
-                              <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* CTA Button at bottom of content */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="mt-12 text-center"
-              >
-                <a
-                  href="https://calendly.com/aura-academie/15min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-3">
+              {tabs[activeTab].items.map((item, idx) => (
+                <div
+                  key={`${activeTab}-${idx}`}
+                  className={`rounded-2xl bg-surface/80 backdrop-blur-sm border overflow-hidden transition-all duration-300 ${
+                    openIndex === idx
+                      ? 'border-primary/30 shadow-lg shadow-primary/5'
+                      : 'border-slate-800 hover:border-slate-700'
+                  }`}
                 >
-                  Réserver mon appel découverte
-                </a>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
+                  <button
+                    onClick={() => toggle(idx)}
+                    className="w-full flex items-center justify-between p-5 md:p-6 text-left focus:outline-none group"
+                  >
+                    <div className="flex items-center gap-4 flex-1">
+                      <div
+                        className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                          openIndex === idx
+                            ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                            : 'bg-white/5 text-gray-400 group-hover:bg-white/10'
+                        }`}
+                      >
+                        {(idx + 1).toString().padStart(2, '0')}
+                      </div>
+                      <span
+                        className={`font-semibold text-base md:text-lg transition-colors ${
+                          openIndex === idx ? 'text-white' : 'text-gray-300 group-hover:text-white'
+                        }`}
+                      >
+                        {item.title}
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={`flex-shrink-0 w-5 h-5 transition-all duration-300 ${
+                        openIndex === idx ? 'rotate-180 text-primary' : 'text-gray-500 group-hover:text-gray-400'
+                      }`}
+                    />
+                  </button>
+
+                  {openIndex === idx && (
+                    <div className="px-5 md:px-6 pb-5 md:pb-6 pl-16 md:pl-20">
+                      <div className="border-l-2 border-primary/20 pl-6">
+                        <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Button at bottom of content */}
+            <div className="mt-12 text-center">
+              <a
+                href="https://calendly.com/aura-academie/15min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+              >
+                Réserver mon appel découverte
+              </a>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

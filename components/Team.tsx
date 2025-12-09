@@ -18,7 +18,7 @@ const Team: React.FC = () => {
     {
       name: "Baptiste",
       role: "Expert IA & Automatisation",
-      desc: "Architecte des infrastructures IA. Co-Fondateur de VeliosAI, il vous apprend à créer des systèmes IA robustes de A à Z.",
+      desc: "Architecte des infrastructures IA. Co-Fondateur de VeliosAI, il vous apprend à créer des systèmes IA scalables et robustes de A à Z.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224896655-ru45nc.jpeg",
       color: "from-secondary/20 to-secondary/5"
     },

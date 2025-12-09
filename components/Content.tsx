@@ -84,7 +84,7 @@ const Content: React.FC = () => {
             Contenu de la formation <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-            Des modules structuré et complet pour maîtriser toutes les facettes de l'IA opérationnelle
+            Des modules structurés et complets pour maîtriser toutes les facettes de l'IA opérationnelle
           </p>
         </motion.div>
 

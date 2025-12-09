@@ -47,7 +47,7 @@ const Hero: React.FC = () => {
         >
           Maîtrisez les infrastructures IA. <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary">
-             Créez votre propre liberté.
+             Passe à 5k/mois.
           </span>
         </motion.h1>
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import Hero from '../components/Hero';
-import Audience from '../components/Audience';
 import SocialProof from '../components/SocialProof';
 import Team from '../components/Team';
 import Benefits from '../components/Benefits';
@@ -13,7 +12,6 @@ const Home: React.FC = () => {
   return (
     <>
       <Hero />
-      <Audience />
       <SocialProof />
       <Team />
       <Benefits />

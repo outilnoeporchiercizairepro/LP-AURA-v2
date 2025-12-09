@@ -121,7 +121,7 @@ const SocialProof: React.FC = () => {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 60,
+                duration: 30,
                 ease: "linear",
               },
             }}

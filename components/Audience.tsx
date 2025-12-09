@@ -51,10 +51,10 @@ const Audience: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            AURA s’adresse à ceux qui veulent <span className="text-secondary">passer en production</span>
+            AURA s'adresse à ceux qui veulent <span className="text-secondary">changer de vie</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Fini les POCs qui dorment dans un tiroir. Ici, on construit pour le monde réel avec une approche professionnelle.
+            L'IA arrive. La vague est là. On cherche des personnes motivées qui veulent se bouger, pas des spectateurs qui regardent passer les opportunités.
           </p>
         </motion.div>
 

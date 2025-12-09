@@ -34,7 +34,7 @@ const Content: React.FC = () => {
     {
       name: "Infrastructure IA & Automatisation",
       items: [
-        { title: "Maîtrise de N8n", description: "Maîtrise n8n de zéro jusqu'aux workflows les plus complexes avec des cas d'usage réels et pratiques." },
+        { title: "Maîtrise de n8n", description: "Maîtrise n8n de zéro jusqu'aux workflows les plus complexes avec des cas d'usage réels et pratiques." },
         { title: "Automatisations Avancées", description: "Crée des automatisations intelligentes qui combinent plusieurs IA et outils pour maximiser l'impact de tes solutions." },
         { title: "Interfaces & UX IA", description: "Développe des interfaces sur-mesure pour rendre tes solutions IA accessibles, intuitives et professionnelles." },
         { title: "Bases de Données", description: "Connecte tes systèmes IA à des bases de données performantes (SQL, NoSQL, Vector DB) pour gérer l'information à grande échelle." },

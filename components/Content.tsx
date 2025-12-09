@@ -20,12 +20,15 @@ const Content: React.FC = () => {
     {
       name: "Roadmap Aura",
       items: [
-        { title: "Fondations & Mindset", description: "Découvre les fondamentaux de la formation et développe la mentalité des pionniers qui réussissent dans l'IA. Apprends à adopter les nouvelles technologies avant tout le monde." },
-        { title: "Choix Stratégiques", description: "Identifie ta compétence IA idéale et définis ton positionnement unique sur le marché. Comprends les fondations techniques : modèles, architectures, coûts et automatisation." },
-        { title: "Apprentissage Pratique", description: "Plonge dans l'apprentissage concret de ta compétence avec des exercices réels. Apprends à auditer les besoins d'une entreprise pour proposer des solutions IA pertinentes." },
-        { title: "Image de Marque & Réseau", description: "Construis ton identité professionnelle et ta présence en ligne. Développe un réseau d'affaires solide et crée des opportunités business durables." },
-        { title: "Business & Closing", description: "Structure ton offre, convertis tes prospects et embarque tes premiers clients de manière professionnelle. Gère la fin de mission pour maximiser les recommandations." },
-        { title: "Légal & Fiscal", description: "Comprends les aspects légaux et fiscaux pour sécuriser ton activité d'opérateur IA et développer sereinement ton business." }
+        { title: "Introduction - Apprentissage d'une compétence IA", description: "Découvre les fondamentaux de l'IA et comment choisir la compétence IA qui te correspond. Développe la mentalité des pionniers qui réussissent avec l'IA avant tout le monde." },
+        { title: "Avant de savoir vendre", description: "Comprends les prérequis essentiels avant de te lancer : mindset entrepreneurial, bases techniques et compréhension du marché de l'IA. Pose des fondations solides pour réussir." },
+        { title: "Choisir une niche", description: "Identifie ta niche IA idéale et définis ton positionnement unique sur le marché. Analyse la demande, la concurrence et trouve ton angle différenciant pour te démarquer." },
+        { title: "Obtenir des clients", description: "Maîtrise les stratégies d'acquisition client efficaces : prospection LinkedIn, networking, cold email et création de contenu. Génère un flux constant d'opportunités qualifiées." },
+        { title: "Image de marque", description: "Construis ton identité professionnelle et ta présence en ligne. Crée un personal branding impactant qui attire naturellement tes clients idéaux et te positionne en expert." },
+        { title: "Offres et prix", description: "Structure des offres IA irrésistibles et définir une tarification premium adaptée à la valeur que tu apportes. Apprends à packager tes compétences pour maximiser tes revenus." },
+        { title: "Closing", description: "Convertis tes prospects en clients payants avec des techniques de closing éthiques et efficaces. Gère les objections et conclus des ventes à forte valeur ajoutée." },
+        { title: "Onboarding / Déploiement", description: "Embarque tes clients de manière professionnelle et déploie tes solutions IA en production. Assure une mise en place réussie qui génère des résultats mesurables rapidement." },
+        { title: "Fiscalité et juridique", description: "Comprends les aspects légaux et fiscaux pour sécuriser ton activité d'opérateur IA. Structure ton business de manière optimale et développe sereinement en toute légalité." }
       ]
     },
     {

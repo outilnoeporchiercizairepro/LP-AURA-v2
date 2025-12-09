@@ -49,7 +49,7 @@ const Team: React.FC = () => {
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-3 flex-wrap">
             L'Équipe
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A855F7] to-[#3B82F6] font-extrabold">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-extrabold">
               AURA
             </span>
           </h2>

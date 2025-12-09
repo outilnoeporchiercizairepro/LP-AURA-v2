@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
         
         <div className="text-center md:text-left">
-          <h2 className="text-2xl font-bold text-white tracking-widest uppercase mb-2">AURA</h2>
+          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary tracking-widest uppercase mb-2">AURA</h2>
           <p className="text-gray-500 text-sm">Formation IA Avancée pour opérateurs d'élite.</p>
         </div>
 

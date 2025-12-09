@@ -20,7 +20,7 @@ const Content: React.FC = () => {
     {
       name: "Roadmap Aura",
       items: [
-        { title: "Fondations & Mindset", description: "Découvre les fondamentaux de la formation AURA et développe la mentalité des pionniers qui réussissent dans l'IA. Apprends à adopter les nouvelles technologies avant tout le monde." },
+        { title: "Fondations & Mindset", description: "Découvre les fondamentaux de la formation et développe la mentalité des pionniers qui réussissent dans l'IA. Apprends à adopter les nouvelles technologies avant tout le monde." },
         { title: "Choix Stratégiques", description: "Identifie ta compétence IA idéale et définis ton positionnement unique sur le marché. Comprends les fondations techniques : modèles, architectures, coûts et automatisation." },
         { title: "Apprentissage Pratique", description: "Plonge dans l'apprentissage concret de ta compétence avec des exercices réels. Apprends à auditer les besoins d'une entreprise pour proposer des solutions IA pertinentes." },
         { title: "Image de Marque & Réseau", description: "Construis ton identité professionnelle et ta présence en ligne. Développe un réseau d'affaires solide et crée des opportunités business durables." },

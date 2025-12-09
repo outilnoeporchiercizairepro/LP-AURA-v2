@@ -17,7 +17,7 @@ const Comparison: React.FC = () => {
           >
             <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
               <XCircle className="text-primary w-8 h-8" />
-              AURA n'est pas pour toi si...
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span> n'est pas pour toi si...
             </h3>
             <ul className="space-y-5 text-gray-400">
               <li className="flex gap-4 items-start">
@@ -49,7 +49,7 @@ const Comparison: React.FC = () => {
           >
             <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
               <CheckCircle className="text-secondary w-8 h-8" />
-              AURA est pour toi si...
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span> est pour toi si...
             </h3>
             <ul className="space-y-5 text-gray-300">
               <li className="flex gap-4 items-start">

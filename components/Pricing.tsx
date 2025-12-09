@@ -24,7 +24,7 @@ const Pricing: React.FC = () => {
            viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-12">
-            Comment rejoindre <span className="text-primary">AURA</span>
+            Comment rejoindre <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span>
           </h2>
         </motion.div>
 
@@ -37,7 +37,7 @@ const Pricing: React.FC = () => {
           {/* Top border accent */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
           
-          <h3 className="text-2xl font-bold text-white mb-2">Académie AURA</h3>
+          <h3 className="text-2xl font-bold text-white mb-2">Académie <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span></h3>
           <p className="text-gray-400 mb-8">Une académie complète avec cours, exercices, communauté et accompagnement live.</p>
 
           <div className="grid md:grid-cols-2 gap-y-4 gap-x-8 text-left max-w-2xl mx-auto mb-10">

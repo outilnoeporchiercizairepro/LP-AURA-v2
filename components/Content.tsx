@@ -94,25 +94,18 @@ const Content: React.FC = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          <div className="flex flex-wrap justify-center gap-2 mb-16 bg-surface/50 backdrop-blur-sm p-2 rounded-2xl border border-slate-800">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
             {tabs.map((tab, idx) => (
               <button
                 key={idx}
                 onClick={() => handleTabChange(idx)}
-                className={`relative px-6 py-3 rounded-xl font-semibold text-sm md:text-base transition-all duration-300 ${
+                className={`relative px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                   activeTab === idx
-                    ? 'text-white bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30'
-                    : 'text-gray-400 hover:text-gray-300 hover:bg-white/5'
+                    ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20'
+                    : 'text-gray-400 hover:text-gray-300 bg-slate-900/40 hover:bg-slate-900/60 border border-slate-800/50'
                 }`}
               >
-                {tab.name}
-                {activeTab === idx && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
+                <span className="relative z-10">{tab.name}</span>
               </button>
             ))}
           </div>
@@ -124,48 +117,61 @@ const Content: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="max-w-6xl mx-auto"
+              className="max-w-5xl mx-auto"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <div className="space-y-3">
                 {tabs[activeTab].items.map((item, idx) => (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1, duration: 0.5 }}
-                    className="flex flex-col h-full"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05, duration: 0.4 }}
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                  >
-                    <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 bg-slate-900/80 backdrop-blur-sm h-full flex flex-col ${
+                    className={`group relative p-5 rounded-xl border transition-all duration-300 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 ${
                       hoveredIndex === idx
-                        ? 'border-primary shadow-xl shadow-primary/20'
+                        ? 'border-primary/40 shadow-lg shadow-primary/10 translate-x-2'
                         : 'border-slate-800/50'
-                    }`}>
-                      <div className="mb-6">
-                        <motion.div
-                          className={`inline-flex w-16 h-16 rounded-2xl items-center justify-center font-bold text-3xl transition-all duration-300 ${
-                            hoveredIndex === idx
-                              ? 'bg-gradient-to-br from-[#E83E8C] via-[#A855F7] to-[#3B82F6] shadow-lg shadow-primary/50'
-                              : 'bg-gradient-to-br from-[#E83E8C]/80 via-[#A855F7]/80 to-[#3B82F6]/80'
-                          }`}
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <span className="text-white">{idx + 1}</span>
-                        </motion.div>
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                        hoveredIndex === idx
+                          ? 'bg-gradient-to-br from-primary to-secondary text-white'
+                          : 'bg-slate-800/50 text-gray-400'
+                      }`}>
+                        {idx + 1}
                       </div>
 
-                      <div>
-                        <h3 className={`font-bold text-2xl mb-3 transition-colors ${
-                          hoveredIndex === idx ? 'text-white' : 'text-white'
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-bold text-lg mb-1.5 transition-colors ${
+                          hoveredIndex === idx ? 'text-white' : 'text-gray-200'
                         }`}>
                           {item.title}
                         </h3>
-                        <p className="text-gray-400 leading-relaxed text-base">
+                        <p className="text-gray-400 text-sm leading-relaxed">
                           {item.description}
                         </p>
                       </div>
+
+                      <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        hoveredIndex === idx ? 'bg-primary/20' : 'bg-transparent'
+                      }`}>
+                        <CheckCircle2 className={`w-4 h-4 transition-all duration-300 ${
+                          hoveredIndex === idx ? 'text-primary opacity-100' : 'text-gray-600 opacity-50'
+                        }`} />
+                      </div>
                     </div>
+
+                    {hoveredIndex === idx && (
+                      <motion.div
+                        layoutId={`hover-${activeTab}`}
+                        className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary rounded-r-full"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      />
+                    )}
                   </motion.div>
                 ))}
               </div>
@@ -173,8 +179,8 @@ const Content: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="mt-16 text-center"
+                transition={{ delay: 0.4 }}
+                className="mt-12 text-center"
               >
                 <a
                   href="https://calendly.com/aura-academie/15min"

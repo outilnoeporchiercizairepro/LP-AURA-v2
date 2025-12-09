@@ -133,11 +133,11 @@ const Content: React.FC = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.5 }}
-                    className="flex flex-col"
+                    className="flex flex-col h-full"
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
-                    <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 bg-slate-900/80 backdrop-blur-sm ${
+                    <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 bg-slate-900/80 backdrop-blur-sm h-full flex flex-col ${
                       hoveredIndex === idx
                         ? 'border-primary shadow-xl shadow-primary/20'
                         : 'border-slate-800/50'

@@ -37,6 +37,11 @@ const Comparison: React.FC = () => {
                 <span>Tu es pas prêt à investir sur toi-même pour changer de vie.</span>
               </li>
             </ul>
+            <div className="mt-8">
+              <button className="w-full px-6 py-3 bg-slate-800 hover:bg-slate-700 text-gray-400 rounded-full font-semibold transition-all border border-red-500/20">
+                Ce n'est pas pour moi
+              </button>
+            </div>
           </motion.div>
 
           {/* Positive Column */}
@@ -69,6 +74,16 @@ const Comparison: React.FC = () => {
                 <span>Tu veux rejoindre une communauté d'élite bienveillante.</span>
               </li>
             </ul>
+            <div className="mt-8">
+              <a
+                href="https://calendly.com/aura-academie/15min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full px-6 py-3 bg-green-600 hover:bg-green-500 text-white text-center rounded-full font-bold transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)] transform hover:-translate-y-1"
+              >
+                Je suis prêt, je réserve mon appel
+              </a>
+            </div>
           </motion.div>
 
         </div>
@@ -79,16 +94,27 @@ const Comparison: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
+          <div className="mb-4">
+            <p className="text-red-500 font-bold text-lg mb-2 animate-pulse">
+              ⚠️ PLACES LIMITÉES - Seulement 15 places disponibles ce mois-ci
+            </p>
+            <p className="text-gray-400 text-sm">
+              Ne laisse pas passer cette opportunité de transformer ta vie avec l'IA
+            </p>
+          </div>
           <a
             href="https://calendly.com/aura-academie/15min"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+            className="inline-block px-10 py-5 bg-gradient-to-r from-primary to-secondary hover:from-primary-hover hover:to-secondary text-white rounded-full font-bold text-xl transition-all shadow-[0_0_30px_rgba(234,75,113,0.4)] hover:shadow-[0_0_50px_rgba(234,75,113,0.6)] transform hover:-translate-y-1 hover:scale-105"
           >
-            Réserver mon appel découverte
+            Je réserve ma place maintenant 🚀
           </a>
+          <p className="text-gray-500 text-xs mt-4">
+            Les autres prennent déjà de l'avance. Et toi ?
+          </p>
         </motion.div>
       </div>
     </section>

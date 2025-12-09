@@ -34,7 +34,7 @@ const Comparison: React.FC = () => {
               </li>
               <li className="flex gap-4 items-start">
                 <span className="text-primary font-bold mt-1">•</span>
-                <span>Tu as peur de la ligne de commande ou du code.</span>
+                <span>Tu es pas prêt à investir sur toi-même pour changer de vie.</span>
               </li>
             </ul>
           </motion.div>

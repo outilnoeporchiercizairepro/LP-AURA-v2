@@ -20,35 +20,71 @@ const SocialProof: React.FC = () => {
     { name: "Emma R.", role: "Designer reconvertie", text: "Je pensais qu'il fallait être développeur depuis 10 ans. Faux. Lionel m'a montré que le mindset compte plus que les années d'XP. Mon premier projet facturé 2800€." }
   ];
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3;
-  const totalPages = Math.ceil(writtenReviews.length / itemsPerPage);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentPage((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
-    }, 5000);
+      if (isMobile) {
+        setCurrentIndex((prev) => (prev >= writtenReviews.length - 1 ? 0 : prev + 1));
+      } else {
+        const totalPages = Math.ceil(writtenReviews.length / 3);
+        setCurrentIndex((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
+      }
+    }, 10000);
     return () => clearInterval(interval);
-  }, [totalPages]);
+  }, [isMobile]);
 
   const goToPrevious = () => {
-    setCurrentPage((prev) => (prev <= 0 ? totalPages - 1 : prev - 1));
+    if (isMobile) {
+      setCurrentIndex((prev) => (prev <= 0 ? writtenReviews.length - 1 : prev - 1));
+    } else {
+      const totalPages = Math.ceil(writtenReviews.length / 3);
+      setCurrentIndex((prev) => (prev <= 0 ? totalPages - 1 : prev - 1));
+    }
   };
 
   const goToNext = () => {
-    setCurrentPage((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
+    if (isMobile) {
+      setCurrentIndex((prev) => (prev >= writtenReviews.length - 1 ? 0 : prev + 1));
+    } else {
+      const totalPages = Math.ceil(writtenReviews.length / 3);
+      setCurrentIndex((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
+    }
+  };
+
+  const handleDragEnd = (event: any, info: any) => {
+    const threshold = 50;
+    if (info.offset.x > threshold) {
+      goToPrevious();
+    } else if (info.offset.x < -threshold) {
+      goToNext();
+    }
   };
 
   const getCurrentPageReviews = () => {
-    const start = currentPage * itemsPerPage;
-    return writtenReviews.slice(start, start + itemsPerPage);
+    if (isMobile) {
+      return [writtenReviews[currentIndex]];
+    } else {
+      const start = currentIndex * 3;
+      return writtenReviews.slice(start, start + 3);
+    }
   };
+
+  const totalDots = isMobile ? writtenReviews.length : Math.ceil(writtenReviews.length / 3);
 
   return (
     <section id="reviews" className="py-24 bg-[#020617] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -58,6 +94,20 @@ const SocialProof: React.FC = () => {
             Ils sont passés à l'action
           </h2>
           <p className="text-gray-400">Rejoins une communauté de bâtisseurs.</p>
+        </motion.div>
+
+        {/* Stats Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12 text-center"
+        >
+          <div className="inline-block px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
+            <p className="text-lg md:text-xl font-bold text-white">
+              +150 formés et qui ont vendu leur première infrastructure en moins de deux mois et au moins à 2000€
+            </p>
+          </div>
         </motion.div>
 
         {/* Video Grid */}
@@ -85,16 +135,20 @@ const SocialProof: React.FC = () => {
         <div className="relative">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentPage}
+              key={currentIndex}
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              drag={isMobile ? "x" : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 cursor-grab active:cursor-grabbing"
             >
               {getCurrentPageReviews().map((review, idx) => (
                 <div
-                  key={`${currentPage}-${idx}`}
+                  key={`${currentIndex}-${idx}`}
                   className="p-8 rounded-2xl bg-surface/50 border border-slate-800 relative"
                 >
                   <Quote className="w-8 h-8 text-primary/20 mb-4" />
@@ -136,12 +190,12 @@ const SocialProof: React.FC = () => {
 
           {/* Dots Indicators */}
           <div className="flex justify-center gap-2 mt-8">
-            {Array.from({ length: totalPages }).map((_, idx) => (
+            {Array.from({ length: totalDots }).map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentPage(idx)}
+                onClick={() => setCurrentIndex(idx)}
                 className={`h-2 rounded-full transition-all ${
-                  idx === currentPage
+                  idx === currentIndex
                     ? 'w-8 bg-primary'
                     : 'w-2 bg-slate-700 hover:bg-slate-600'
                 }`}

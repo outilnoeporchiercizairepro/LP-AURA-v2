@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Server, Zap, Brain, Briefcase, Play } from 'lucide-react';
+import { BookOpen, CheckCircle, RefreshCw, Users, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
@@ -96,27 +96,27 @@ const Hero: React.FC = () => {
         </motion.div>
 
         {/* Bullet Points */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-12 flex flex-wrap justify-center gap-6 md:gap-10 text-sm font-medium text-gray-300"
         >
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-secondary/10 text-secondary"><Server className="w-4 h-4" /></div>
-            <span>Architecture & Infra</span>
+            <div className="p-1.5 rounded-lg bg-secondary/10 text-secondary"><BookOpen className="w-4 h-4" /></div>
+            <span>+50h de cours</span>
           </div>
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-primary/10 text-primary"><Zap className="w-4 h-4" /></div>
-            <span>Automatisation & Prod</span>
+            <div className="p-1.5 rounded-lg bg-primary/10 text-primary"><CheckCircle className="w-4 h-4" /></div>
+            <span>Validation de ton offre par nos experts</span>
           </div>
           <div className="flex items-center gap-2.5">
-             <div className="p-1.5 rounded-lg bg-secondary/10 text-secondary"><Brain className="w-4 h-4" /></div>
-            <span>Mindset & Productivité</span>
+             <div className="p-1.5 rounded-lg bg-secondary/10 text-secondary"><RefreshCw className="w-4 h-4" /></div>
+            <span>Mises à jour hebdomadaires</span>
           </div>
           <div className="flex items-center gap-2.5">
-             <div className="p-1.5 rounded-lg bg-primary/10 text-primary"><Briefcase className="w-4 h-4" /></div>
-            <span>Business & Réseau</span>
+             <div className="p-1.5 rounded-lg bg-primary/10 text-primary"><Users className="w-4 h-4" /></div>
+            <span>Coaching de groupe</span>
           </div>
         </motion.div>
 

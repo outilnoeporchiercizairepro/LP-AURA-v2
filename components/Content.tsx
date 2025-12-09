@@ -46,7 +46,7 @@ const Content: React.FC = () => {
       name: "Vibe Coding & IA",
       items: [
         { title: "Introduction", description: "Découvre ce qu'est le VibeCoding, cette approche révolutionnaire du développement assisté par IA. Comprends ce que tu peux construire et comment coder 10x plus vite avec cette méthodologie." },
-        { title: "Les Bases du Développement", description: "Maîtrise les fondamentaux essentiels : JSON pour structurer les données, les API pour faire communiquer tes outils, et les langages clés comme JavaScript et Python." },
+        { title: "Les Bases du Développement", description: "Maîtrise les fondamentaux essentiels : JSON pour structurer les données, les API pour faire communiquer tes outils, et les langages clés." },
         { title: "Le Prompting", description: "Apprends l'art du prompting pour communiquer efficacement avec l'IA. Construis des prompts puissants, comprends les différents modèles IA et optimise tes interactions avec les agents." },
         { title: "Cursor", description: "Maîtrise Cursor, l'éditeur de code révolutionnaire avec IA intégrée. Présentation complète de l'outil et réalisation d'un projet concret pour développer avec l'IA comme copilote." },
         { title: "Lovable / Bolt / Replit", description: "Découvre les plateformes no-code et low-code leaders : Lovable pour créer des sites web complets, Bolt pour des applications rapides et Replit pour le développement collaboratif en ligne." },

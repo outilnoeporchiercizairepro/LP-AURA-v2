@@ -9,7 +9,7 @@ const Pricing: React.FC = () => {
     "Channels Discord actifs et réactifs",
     "Calls de groupe réguliers avec la team",
     "Accès à vie aux replays et mises à jour",
-    "Templates Notion, n8n et code prêts à l'emploi"
+    "Ressources et code prêts à l'emploi"
   ];
 
   return (

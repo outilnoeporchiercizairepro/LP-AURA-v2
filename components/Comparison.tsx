@@ -22,7 +22,7 @@ const Comparison: React.FC = () => {
             <ul className="space-y-5 text-gray-400">
               <li className="flex gap-4 items-start">
                 <span className="text-primary font-bold mt-1">•</span>
-                <span>Tu cherches une solution magique "Get rich quick".</span>
+                <span>Tu cherches une solution magique pour gratter 500€.</span>
               </li>
               <li className="flex gap-4 items-start">
                 <span className="text-primary font-bold mt-1">•</span>

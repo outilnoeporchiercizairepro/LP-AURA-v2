@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 
 const Team: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
@@ -121,14 +122,16 @@ const Team: React.FC = () => {
                 }
             }
 
+            const isFlipped = flippedIndex === index;
+
             return (
               <motion.div
                 key={index}
                 animate={animateState}
-                transition={{ 
-                    type: "spring", 
-                    stiffness: 120, // Plus souple
-                    damping: 25,   // Moins de rebond
+                transition={{
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 25,
                     mass: 1
                 }}
                 onHoverStart={() => setHoveredIndex(index)}
@@ -137,47 +140,116 @@ const Team: React.FC = () => {
                   position: 'absolute',
                   width: '280px',
                   height: '420px',
-                  transformOrigin: 'center center', // Changement d'origine pour zoom plus naturel
-                  cursor: 'pointer'
+                  transformOrigin: 'center center',
+                  cursor: 'pointer',
+                  perspective: '1000px'
                 }}
-                className="rounded-3xl shadow-2xl overflow-hidden border border-slate-700/50 bg-slate-900 group"
               >
-                {/* Image */}
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-                />
-                
-                {/* Overlays */}
-                <div className={`absolute inset-0 bg-gradient-to-t ${member.color} via-transparent to-transparent opacity-40 mix-blend-overlay`} />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/0 to-[#020617] opacity-90" />
-                
-                {/* Contenu Texte */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-end transform transition-transform duration-300">
-                  <motion.div>
-                     <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-md">{member.name}</h3>
-                     <p className="text-primary font-bold tracking-wide text-sm mb-3 drop-shadow-md">{member.role}</p>
-                  </motion.div>
-
-                  {/* Description détaillée (Apparaît au survol) */}
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{
-                        opacity: isHovered ? 1 : 0,
-                        height: isHovered ? 'auto' : 0,
-                        marginTop: isHovered ? 8 : 0
+                <motion.div
+                  animate={{ rotateY: isFlipped ? 180 : 0 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative',
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  {/* Face Avant */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden'
                     }}
-                    className="overflow-hidden"
+                    className="rounded-3xl shadow-2xl overflow-hidden border border-slate-700/50 bg-slate-900"
                   >
-                     <p className="text-gray-200 text-sm leading-relaxed drop-shadow-md">{member.desc}</p>
-                  </motion.div>
-                </div>
-                
-                {/* Effet Shine au survol */}
-                <div className={`absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 opacity-0 transition-opacity duration-500 pointer-events-none ${isHovered ? 'opacity-100' : ''}`} />
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+
+                    <div className={`absolute inset-0 bg-gradient-to-t ${member.color} via-transparent to-transparent opacity-40 mix-blend-overlay`} />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617]/95" />
+
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                      <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{member.name}</h3>
+                      <p className="text-primary font-bold tracking-wide text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{member.role}</p>
+
+                      <motion.button
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{
+                          opacity: isHovered ? 1 : 0,
+                          y: isHovered ? 0 : 10
+                        }}
+                        transition={{ duration: 0.3 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFlippedIndex(index);
+                        }}
+                        className="mt-4 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                      >
+                        En savoir plus sur {member.name}
+                      </motion.button>
+                    </div>
+
+                    <div className={`absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 opacity-0 transition-opacity duration-500 pointer-events-none ${isHovered ? 'opacity-100' : ''}`} />
+                  </div>
+
+                  {/* Face Arrière */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)'
+                    }}
+                    className="rounded-3xl shadow-2xl overflow-hidden border border-slate-700/50 bg-gradient-to-br from-slate-800 to-slate-900"
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-20`} />
+
+                    <div className="relative h-full p-6 flex flex-col">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                          <p className="text-primary font-semibold text-xs">{member.role}</p>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFlippedIndex(null);
+                          }}
+                          className="text-gray-400 hover:text-white transition-colors"
+                        >
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <div className="flex-1 overflow-y-auto">
+                        <p className="text-gray-200 text-sm leading-relaxed">{member.desc}</p>
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFlippedIndex(null);
+                        }}
+                        className="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors"
+                      >
+                        Retour
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
               </motion.div>
             );
           })}
@@ -185,31 +257,108 @@ const Team: React.FC = () => {
 
         {/* --- MOBILE GRID (Responsive Fallback) --- */}
         <div className="grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-6">
-          {team.map((member, idx) => (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              key={idx} 
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-slate-800"
-            >
-              <img
-                src={member.image}
-                alt={member.name}
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
-              
-              <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
-                <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3">{member.role}</p>
-                <p className="text-gray-300 text-sm leading-relaxed">{member.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+          {team.map((member, idx) => {
+            const isMobileFlipped = flippedIndex === idx;
+
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                key={idx}
+                className="relative aspect-[4/5]"
+                style={{ perspective: '1000px' }}
+              >
+                <motion.div
+                  animate={{ rotateY: isMobileFlipped ? 180 : 0 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative',
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  {/* Face Avant Mobile */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden'
+                    }}
+                    className="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900"
+                  >
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
+
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                      <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{member.name}</h3>
+                      <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{member.role}</p>
+
+                      <button
+                        onClick={() => setFlippedIndex(idx)}
+                        className="mt-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg shadow-lg"
+                      >
+                        En savoir plus sur {member.name}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Face Arrière Mobile */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)'
+                    }}
+                    className="rounded-2xl overflow-hidden border border-slate-800 bg-gradient-to-br from-slate-800 to-slate-900"
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-20`} />
+
+                    <div className="relative h-full p-6 flex flex-col">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                          <p className="text-primary font-semibold text-xs">{member.role}</p>
+                        </div>
+                        <button
+                          onClick={() => setFlippedIndex(null)}
+                          className="text-gray-400 hover:text-white transition-colors"
+                        >
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <div className="flex-1 overflow-y-auto">
+                        <p className="text-gray-200 text-sm leading-relaxed">{member.desc}</p>
+                      </div>
+
+                      <button
+                        onClick={() => setFlippedIndex(null)}
+                        className="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors"
+                      >
+                        Retour
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>

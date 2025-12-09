@@ -131,13 +131,14 @@ const Hero: React.FC = () => {
             href="https://calendly.com/aura-academie/15min"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+            className="relative w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
           >
-            Réserver mon appel découverte
+            <span className="relative z-10">Commencer ma transformation</span>
+            <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
           </a>
           <a
             href="#team"
-            className="w-full sm:w-auto px-8 py-4 border border-slate-700 hover:border-secondary text-gray-300 hover:text-white rounded-full font-semibold text-lg transition-colors bg-white/5 backdrop-blur-sm"
+            className="w-full sm:w-auto px-8 py-4 border border-slate-700 hover:border-secondary text-gray-300 hover:text-white rounded-lg font-semibold text-lg transition-colors bg-white/5 backdrop-blur-sm"
           >
             Découvrir la team AURA
           </a>

@@ -225,6 +225,24 @@ const SocialProof: React.FC = () => {
           </div>
         </div>
 
+        {/* CTA Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <a
+            href="https://calendly.com/aura-academie/15min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
+          >
+            <span className="relative z-10">Rejoindre la communauté</span>
+            <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
+          </a>
+        </motion.div>
+
       </div>
     </section>
   );

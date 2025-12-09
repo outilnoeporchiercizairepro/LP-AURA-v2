@@ -61,8 +61,7 @@ const Content: React.FC = () => {
         { title: "Support & Accompagnement", description: "Bénéficie d'un accompagnement personnalisé sur tes projets, résous tes bugs en temps réel et obtiens de l'aide pour débloquer tes défis techniques." },
         { title: "Études de Cas Réels", description: "Analyse des cas réels d'implémentation IA et automatisation. Décortique des projets concrets pour comprendre les décisions techniques et business." },
         { title: "Communauté Discord VIP Gratuite", description: "Rejoins un Discord actif avec des channels thématiques (IA, n8n, dev, projets) et une communauté soudée pour s'entraider et progresser ensemble." },
-        { title: "Ressources Hebdo", description: "Reçois chaque semaine de nouvelles ressources, prompts optimisés, workflows n8n prêts à l'emploi et les dernières updates IA." },
-        { title: "Suivi de Progression", description: "Reste accountable grâce au suivi de progression, visualise ton avancement et fixe des objectifs hebdomadaires pour maintenir un rythme constant." }
+        { title: "Ressources Hebdo", description: "Reçois chaque semaine de nouvelles ressources, prompts optimisés, workflows n8n prêts à l'emploi et les dernières updates IA." }
       ]
     }
   ];

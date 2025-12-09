@@ -7,6 +7,8 @@ const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const currentMonth = new Date().toLocaleDateString('fr-FR', { month: 'long' });
+
   const handlePlayClick = () => {
     if (videoRef.current) {
       videoRef.current.play();
@@ -33,7 +35,7 @@ const Hero: React.FC = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          Cohorte limitée • 12 semaines
+          3 places restantes pour le mois de {currentMonth}
         </motion.div>
 
         {/* Headline */}

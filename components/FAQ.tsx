@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { HelpCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const FAQ: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -28,81 +28,101 @@ const FAQ: React.FC = () => {
     }
   ];
 
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <section id="faq" className="py-24 bg-[#020617]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2 
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl font-bold text-white text-center mb-12"
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-4"
         >
-          FAQ
+          Questions fréquentes
         </motion.h2>
-        
-        <div className="space-y-4">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-gray-400 text-center mb-16 text-lg"
+        >
+          Toutes les réponses à tes interrogations
+        </motion.p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {faqs.map((faq, idx) => (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              key={idx} 
-              className={`border rounded-2xl bg-surface overflow-hidden transition-all duration-300 ${openIndex === idx ? 'border-secondary/30 bg-surface/80' : 'border-slate-800'}`}
+              transition={{ delay: idx * 0.08 }}
+              key={idx}
+              onMouseEnter={() => setHoveredIndex(idx)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className={`group relative p-8 rounded-2xl bg-surface border transition-all duration-500 cursor-default ${
+                hoveredIndex === idx
+                  ? 'border-primary/40 shadow-lg shadow-primary/10 scale-[1.02]'
+                  : 'border-slate-800 hover:border-slate-700'
+              }`}
             >
-              <button
-                onClick={() => toggle(idx)}
-                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
-              >
-                <span className={`font-semibold text-lg transition-colors ${openIndex === idx ? 'text-secondary' : 'text-gray-200'}`}>
-                  {faq.q}
-                </span>
-                <ChevronDown 
-                  className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${openIndex === idx ? 'rotate-180 text-secondary' : ''}`} 
-                />
-              </button>
-              
-              <AnimatePresence>
-                {openIndex === idx && (
-                  <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-6 pt-0 text-gray-400 leading-relaxed border-t border-slate-800/50 mt-2">
-                      {faq.a}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl transition-opacity duration-500 ${
+                hoveredIndex === idx ? 'opacity-100' : 'opacity-0'
+              } ${idx % 2 === 0 ? 'bg-primary/10' : 'bg-secondary/10'}`} />
+
+              <div className="relative z-10">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${
+                    hoveredIndex === idx
+                      ? 'bg-gradient-to-br from-primary to-secondary'
+                      : 'bg-white/5'
+                  }`}>
+                    <HelpCircle className={`w-6 h-6 transition-colors duration-500 ${
+                      hoveredIndex === idx ? 'text-white' : 'text-gray-400'
+                    }`} />
+                  </div>
+                  <h3 className={`font-bold text-lg transition-colors duration-500 flex-1 ${
+                    hoveredIndex === idx ? 'text-white' : 'text-gray-200'
+                  }`}>
+                    {faq.q}
+                  </h3>
+                </div>
+
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: hoveredIndex === idx ? 1 : 0.7,
+                    y: hoveredIndex === idx ? 0 : 5
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className="text-gray-400 leading-relaxed pl-16">
+                    {faq.a}
+                  </p>
+                </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="text-center"
         >
-          <a
-            href="https://calendly.com/aura-academie/15min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
-          >
-            Réserver mon appel découverte
-          </a>
-          <p className="mt-4 text-sm text-gray-500">
-            Encore des questions ? Réserve un appel avec la team AURA.
-          </p>
+          <div className="inline-block p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20">
+            <p className="text-white font-semibold text-lg mb-4">
+              Encore des questions ?
+            </p>
+            <a
+              href="https://calendly.com/aura-academie/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(234,75,113,0.3)] hover:shadow-[0_0_30px_rgba(234,75,113,0.5)] transform hover:-translate-y-1"
+            >
+              Réserve un appel avec la team AURA
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

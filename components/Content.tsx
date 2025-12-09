@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface AccordionItem {
+interface TimelineItem {
   title: string;
   description: string;
 }
 
 interface TabContent {
   name: string;
-  items: AccordionItem[];
+  items: TimelineItem[];
 }
 
 const Content: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const tabs: TabContent[] = [
     {
@@ -84,13 +84,9 @@ const Content: React.FC = () => {
     }
   ];
 
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   const handleTabChange = (index: number) => {
     setActiveTab(index);
-    setOpenIndex(null);
+    setHoveredIndex(null);
   };
 
   return (
@@ -119,8 +115,7 @@ const Content: React.FC = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          {/* Tabs Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12 bg-surface/50 backdrop-blur-sm p-2 rounded-2xl border border-slate-800">
+          <div className="flex flex-wrap justify-center gap-2 mb-16 bg-surface/50 backdrop-blur-sm p-2 rounded-2xl border border-slate-800">
             {tabs.map((tab, idx) => (
               <button
                 key={idx}
@@ -143,7 +138,6 @@ const Content: React.FC = () => {
             ))}
           </div>
 
-          {/* Tab Content with Accordions */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -151,77 +145,91 @@ const Content: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="max-w-4xl mx-auto"
+              className="max-w-5xl mx-auto"
             >
-              <div className="space-y-3">
-                {tabs[activeTab].items.map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.03 }}
-                    className={`rounded-2xl bg-surface/80 backdrop-blur-sm border overflow-hidden transition-all duration-300 ${
-                      openIndex === idx
-                        ? 'border-primary/30 shadow-lg shadow-primary/5'
-                        : 'border-slate-800 hover:border-slate-700'
-                    }`}
-                  >
-                    <button
-                      onClick={() => toggle(idx)}
-                      className="w-full flex items-center justify-between p-5 md:p-6 text-left focus:outline-none group"
-                    >
-                      <div className="flex items-center gap-4 flex-1">
-                        <div
-                          className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
-                            openIndex === idx
-                              ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                              : 'bg-white/5 text-gray-400 group-hover:bg-white/10'
-                          }`}
-                        >
-                          {(idx + 1).toString().padStart(2, '0')}
-                        </div>
-                        <span
-                          className={`font-semibold text-base md:text-lg transition-colors ${
-                            openIndex === idx ? 'text-white' : 'text-gray-300 group-hover:text-white'
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                      </div>
-                      <ChevronDown
-                        className={`flex-shrink-0 w-5 h-5 transition-all duration-300 ${
-                          openIndex === idx ? 'rotate-180 text-primary' : 'text-gray-500 group-hover:text-gray-400'
-                        }`}
-                      />
-                    </button>
+              <div className="relative">
+                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary"></div>
 
-                    <AnimatePresence>
-                      {openIndex === idx && (
+                <div className="space-y-8 md:space-y-12">
+                  {tabs[activeTab].items.map((item, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05, duration: 0.5 }}
+                      className={`relative flex items-center ${
+                        idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                      } flex-row`}
+                      onMouseEnter={() => setHoveredIndex(idx)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                      <div className={`hidden md:block w-1/2 ${idx % 2 === 0 ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
+                        {idx % 2 === 0 && (
+                          <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 + 0.2 }}
+                          >
+                            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      <div className="absolute left-8 md:left-1/2 -ml-3 md:-ml-4 z-10">
                         <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
+                          className={`w-6 h-6 md:w-8 md:h-8 rounded-full border-4 border-background transition-all duration-300 ${
+                            hoveredIndex === idx
+                              ? 'bg-gradient-to-r from-primary to-secondary scale-125 shadow-lg shadow-primary/50'
+                              : 'bg-gradient-to-r from-primary/50 to-secondary/50'
+                          }`}
+                          whileHover={{ scale: 1.3 }}
                         >
-                          <div className="px-5 md:px-6 pb-5 md:pb-6 pl-16 md:pl-20">
-                            <div className="border-l-2 border-primary/20 pl-6">
-                              <p className="text-gray-400 leading-relaxed">{item.description}</p>
-                            </div>
-                          </div>
+                          {hoveredIndex === idx && (
+                            <motion.div
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              className="w-full h-full flex items-center justify-center"
+                            >
+                              <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                            </motion.div>
+                          )}
                         </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                ))}
+                      </div>
+
+                      <div className={`md:hidden w-full pl-20 pr-4`}>
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.05 + 0.2 }}
+                        >
+                          <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+                          <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
+                        </motion.div>
+                      </div>
+
+                      <div className={`hidden md:block w-1/2 ${idx % 2 === 1 ? 'pl-12 text-left' : 'pr-12 text-right'}`}>
+                        {idx % 2 === 1 && (
+                          <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 + 0.2 }}
+                          >
+                            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                            <p className="text-gray-400 leading-relaxed">{item.description}</p>
+                          </motion.div>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
-              {/* CTA Button at bottom of content */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="mt-12 text-center"
+                className="mt-16 text-center"
               >
                 <a
                   href="https://calendly.com/aura-academie/15min"

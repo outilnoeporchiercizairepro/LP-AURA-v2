@@ -43,7 +43,7 @@ const Content: React.FC = () => {
       ]
     },
     {
-      name: "Vibe Coding",
+      name: "Vibe Coding & IA",
       items: [
         { title: "Intro au Vibe Coding", description: "Découvre cette approche moderne du développement assisté par IA pour coder 10x plus vite et créer des applications complètes." },
         { title: "Dev Moderne & Outils IA", description: "Maîtrise les bases du développement web moderne et exploite Cursor et les assistants IA pour accélérer ton développement." },

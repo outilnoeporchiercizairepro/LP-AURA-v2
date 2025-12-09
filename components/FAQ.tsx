@@ -95,7 +95,7 @@ const FAQ: React.FC = () => {
                   }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="text-gray-400 leading-relaxed pl-16">
+                  <p className="text-gray-400 leading-relaxed pl-4 md:pl-16">
                     {faq.a}
                   </p>
                 </motion.div>

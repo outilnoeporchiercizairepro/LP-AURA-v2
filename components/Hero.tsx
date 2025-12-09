@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
             rel="noopener noreferrer"
             className="relative w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
           >
-            <span className="relative z-10">Commencer ma transformation</span>
+            <span className="relative z-10">Je réserve mon appel stratégique</span>
             <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
           </a>
           <a

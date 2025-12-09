@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { HelpCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FAQ: React.FC = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -23,6 +23,10 @@ const FAQ: React.FC = () => {
       a: "Le module Business (Pilier 3) est dédié à ça. On t'apprend à structurer ton offre, à pricer et à closer tes premiers clients corporate."
     }
   ];
+
+  const toggleFAQ = (idx: number) => {
+    setOpenIndex(openIndex === idx ? null : idx);
+  };
 
   return (
     <section id="faq" className="py-24 bg-[#020617]">
@@ -53,49 +57,57 @@ const FAQ: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
               key={idx}
-              onMouseEnter={() => setHoveredIndex(idx)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className={`group relative p-8 rounded-2xl bg-surface border transition-all duration-500 cursor-default ${
-                hoveredIndex === idx
-                  ? 'border-primary/40 shadow-lg shadow-primary/10 scale-[1.02]'
+              className={`group relative rounded-2xl bg-surface border transition-all duration-300 overflow-hidden ${
+                openIndex === idx
+                  ? 'border-primary/40 shadow-lg shadow-primary/10'
                   : 'border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl transition-opacity duration-500 ${
-                hoveredIndex === idx ? 'opacity-100' : 'opacity-0'
+                openIndex === idx ? 'opacity-100' : 'opacity-0'
               } ${idx % 2 === 0 ? 'bg-primary/10' : 'bg-secondary/10'}`} />
 
-              <div className="relative z-10">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${
-                    hoveredIndex === idx
+              <button
+                onClick={() => toggleFAQ(idx)}
+                className="relative z-10 w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
+              >
+                <h3 className={`font-bold text-lg transition-colors duration-300 flex-1 ${
+                  openIndex === idx ? 'text-white' : 'text-gray-200'
+                }`}>
+                  {faq.q}
+                </h3>
+                <motion.div
+                  animate={{ rotate: openIndex === idx ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300 ${
+                    openIndex === idx
                       ? 'bg-gradient-to-br from-primary to-secondary'
                       : 'bg-white/5'
-                  }`}>
-                    <HelpCircle className={`w-6 h-6 transition-colors duration-500 ${
-                      hoveredIndex === idx ? 'text-white' : 'text-gray-400'
-                    }`} />
-                  </div>
-                  <h3 className={`font-bold text-lg transition-colors duration-500 flex-1 ${
-                    hoveredIndex === idx ? 'text-white' : 'text-gray-200'
-                  }`}>
-                    {faq.q}
-                  </h3>
-                </div>
-
-                <motion.div
-                  initial={false}
-                  animate={{
-                    opacity: hoveredIndex === idx ? 1 : 0.7,
-                    y: hoveredIndex === idx ? 0 : 5
-                  }}
-                  transition={{ duration: 0.3 }}
+                  }`}
                 >
-                  <p className="text-gray-400 leading-relaxed pl-4 md:pl-16">
-                    {faq.a}
-                  </p>
+                  <ChevronDown className={`w-5 h-5 transition-colors duration-300 ${
+                    openIndex === idx ? 'text-white' : 'text-gray-400'
+                  }`} />
                 </motion.div>
-              </div>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {openIndex === idx && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-6">
+                      <p className="text-gray-400 leading-relaxed">
+                        {faq.a}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>

@@ -83,8 +83,8 @@ const Content: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Contenu de la formation <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 flex items-center justify-center gap-3 flex-wrap">
+            Contenu de la formation <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="inline h-10 md:h-14" />
           </h2>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
             Des modules structurés et complets pour maîtriser toutes les facettes du business qui nous génère 20k/mois

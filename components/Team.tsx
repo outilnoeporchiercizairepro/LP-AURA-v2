@@ -50,9 +50,7 @@ const Team: React.FC = () => {
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-3 flex-wrap">
             L'Équipe
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-extrabold">
-              AURA
-            </span>
+            <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="inline h-10 md:h-14" />
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             4 experts aux compétences complémentaires pour vous accompagner de A à Z.

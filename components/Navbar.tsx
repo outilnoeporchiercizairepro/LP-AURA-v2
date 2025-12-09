@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex-shrink-0 cursor-pointer">
             <a href="#" className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AURA</span>
+              <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-8" />
             </a>
           </div>
 

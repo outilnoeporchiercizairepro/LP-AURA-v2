@@ -51,7 +51,7 @@ const Content: React.FC = () => {
       ]
     },
     {
-      name: "Live Coaching de Groupe & Espace Communautaire",
+      name: "Suivi & Espace Communautaire",
       items: [
         { title: "Coaching Live Hebdo", description: "Participe à des sessions live et des appels de groupe avec la team AURA pour progresser rapidement, échanger et rester motivé." },
         { title: "Support & Accompagnement", description: "Bénéficie d'un accompagnement personnalisé sur tes projets, résous tes bugs en temps réel et obtiens de l'aide pour débloquer tes défis techniques." },

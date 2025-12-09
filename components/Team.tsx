@@ -10,7 +10,7 @@ const Team: React.FC = () => {
   const team = [
     {
       name: "Lionel",
-      role: "Mindset & Productivité",
+      role: "Coach Mindset & Productivité",
       desc: "Expert en développement personnel et optimisation cognitive. Il transforme ta manière de penser et de travailler pour atteindre des performances d'élite.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765225265429-2emt8w.png",
       color: "from-primary/20 to-primary/5"

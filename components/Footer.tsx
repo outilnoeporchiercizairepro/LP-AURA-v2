@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
         
         <div className="text-center md:text-left">
           <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-10 mx-auto md:mx-0 mb-2" />
-          <p className="text-gray-500 text-sm">Formation IA Avancée pour opérateurs d'élite.</p>
+          <p className="text-gray-500 text-sm">La seule formation IA créée par des experts.</p>
         </div>
 
               

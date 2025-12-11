@@ -92,7 +92,8 @@ const Analytics: React.FC = () => {
         const { data: clicks } = await supabase
           .from('click_events')
           .select('*')
-          .gte('created_at', startDate.toISOString());
+          .gte('created_at', startDate.toISOString())
+          .not('page_path', 'like', '/admin%');
 
         console.log('Fetched:', pageViews?.length, 'page views,', sessions?.length, 'sessions,', clicks?.length, 'clicks');
 

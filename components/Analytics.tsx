@@ -40,27 +40,6 @@ const Analytics: React.FC = () => {
   const [dateRange, setDateRange] = useState(7);
   const [utmMappings, setUtmMappings] = useState<Record<string, any>>({});
 
-  const loadUtmMappings = async () => {
-    try {
-      const { data: links } = await supabase.from('utm_links').select('*');
-      const mappings: Record<string, any> = {};
-
-      links?.forEach(link => {
-        mappings[link.short_code] = {
-          source: link.source_label,
-          medium: link.medium_label,
-          campaign: link.campaign_label,
-          term: link.term_label,
-          content: link.content_label,
-        };
-      });
-
-      setUtmMappings(mappings);
-    } catch (error) {
-      console.error('Error loading UTM mappings:', error);
-    }
-  };
-
   const decodeUtmValue = (code: string | null, type: 'source' | 'medium' | 'campaign' = 'source'): string => {
     if (!code) return '-';
 
@@ -73,99 +52,127 @@ const Analytics: React.FC = () => {
     return code;
   };
 
-  const fetchAnalytics = async () => {
-    setLoading(true);
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - dateRange);
+  useEffect(() => {
+    const loadUtmMappings = async () => {
+      try {
+        const { data: links } = await supabase.from('utm_links').select('*');
+        const mappings: Record<string, any> = {};
 
-    try {
-      const { data: pageViews } = await supabase
-        .from('page_views')
-        .select('*')
-        .gte('created_at', startDate.toISOString());
+        links?.forEach(link => {
+          mappings[link.short_code] = {
+            source: link.source_label,
+            medium: link.medium_label,
+            campaign: link.campaign_label,
+            term: link.term_label,
+            content: link.content_label,
+          };
+        });
 
-      const { data: sessions } = await supabase
-        .from('session_data')
-        .select('*')
-        .gte('created_at', startDate.toISOString())
-        .order('created_at', { ascending: false });
+        setUtmMappings(mappings);
+      } catch (error) {
+        console.error('Error loading UTM mappings:', error);
+      }
+    };
 
-      const { data: clicks } = await supabase
-        .from('click_events')
-        .select('*')
-        .gte('created_at', startDate.toISOString());
-
-      const totalViews = pageViews?.length || 0;
-      const totalSessions = sessions?.length || 0;
-      const totalClicks = clicks?.length || 0;
-
-      const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (totalSessions || 1);
-      const bounces = sessions?.filter(s => s.bounce).length || 0;
-      const bounceRate = totalSessions > 0 ? (bounces / totalSessions) * 100 : 0;
-
-      const pageCount: Record<string, number> = {};
-      pageViews?.forEach(pv => {
-        pageCount[pv.page_path] = (pageCount[pv.page_path] || 0) + 1;
-      });
-      const topPages = Object.entries(pageCount)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 5)
-        .map(([page, count]) => ({ page, count }));
-
-      const utmSourceCount: Record<string, number> = {};
-      pageViews?.forEach(pv => {
-        if (pv.utm_source) {
-          utmSourceCount[pv.utm_source] = (utmSourceCount[pv.utm_source] || 0) + 1;
-        }
-      });
-      const utmSources = Object.entries(utmSourceCount)
-        .sort(([, a], [, b]) => b - a)
-        .map(([source, count]) => ({ source, count }));
-
-      const utmCampaignCount: Record<string, number> = {};
-      pageViews?.forEach(pv => {
-        if (pv.utm_campaign) {
-          utmCampaignCount[pv.utm_campaign] = (utmCampaignCount[pv.utm_campaign] || 0) + 1;
-        }
-      });
-      const utmCampaigns = Object.entries(utmCampaignCount)
-        .sort(([, a], [, b]) => b - a)
-        .map(([campaign, count]) => ({ campaign, count }));
-
-      const clickCount: Record<string, { count: number; type: string }> = {};
-      clicks?.forEach(click => {
-        const key = click.element_text || 'Unknown';
-        if (!clickCount[key]) {
-          clickCount[key] = { count: 0, type: click.element_type };
-        }
-        clickCount[key].count += 1;
-      });
-      const topClicks = Object.entries(clickCount)
-        .sort(([, a], [, b]) => b.count - a.count)
-        .slice(0, 10)
-        .map(([text, { count, type }]) => ({ text, count, type }));
-
-      setData({
-        totalViews,
-        totalSessions,
-        totalClicks,
-        averageDuration: Math.round(avgDuration),
-        bounceRate: Math.round(bounceRate),
-        topPages,
-        utmSources,
-        utmCampaigns,
-        topClicks,
-        recentSessions: sessions?.slice(0, 10) || [],
-      });
-    } catch (error) {
-      console.error('Error fetching analytics:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    loadUtmMappings();
+  }, []);
 
   useEffect(() => {
-    loadUtmMappings();
+    const fetchAnalytics = async () => {
+      setLoading(true);
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - dateRange);
+
+      console.log('Fetching analytics for date range:', dateRange, 'days, starting from:', startDate.toISOString());
+
+      try {
+        const { data: pageViews } = await supabase
+          .from('page_views')
+          .select('*')
+          .gte('created_at', startDate.toISOString());
+
+        const { data: sessions } = await supabase
+          .from('session_data')
+          .select('*')
+          .gte('created_at', startDate.toISOString())
+          .order('created_at', { ascending: false });
+
+        const { data: clicks } = await supabase
+          .from('click_events')
+          .select('*')
+          .gte('created_at', startDate.toISOString());
+
+        console.log('Fetched:', pageViews?.length, 'page views,', sessions?.length, 'sessions,', clicks?.length, 'clicks');
+
+        const totalViews = pageViews?.length || 0;
+        const totalSessions = sessions?.length || 0;
+        const totalClicks = clicks?.length || 0;
+
+        const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (totalSessions || 1);
+        const bounces = sessions?.filter(s => s.bounce).length || 0;
+        const bounceRate = totalSessions > 0 ? (bounces / totalSessions) * 100 : 0;
+
+        const pageCount: Record<string, number> = {};
+        pageViews?.forEach(pv => {
+          pageCount[pv.page_path] = (pageCount[pv.page_path] || 0) + 1;
+        });
+        const topPages = Object.entries(pageCount)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 5)
+          .map(([page, count]) => ({ page, count }));
+
+        const utmSourceCount: Record<string, number> = {};
+        pageViews?.forEach(pv => {
+          if (pv.utm_source) {
+            utmSourceCount[pv.utm_source] = (utmSourceCount[pv.utm_source] || 0) + 1;
+          }
+        });
+        const utmSources = Object.entries(utmSourceCount)
+          .sort(([, a], [, b]) => b - a)
+          .map(([source, count]) => ({ source, count }));
+
+        const utmCampaignCount: Record<string, number> = {};
+        pageViews?.forEach(pv => {
+          if (pv.utm_campaign) {
+            utmCampaignCount[pv.utm_campaign] = (utmCampaignCount[pv.utm_campaign] || 0) + 1;
+          }
+        });
+        const utmCampaigns = Object.entries(utmCampaignCount)
+          .sort(([, a], [, b]) => b - a)
+          .map(([campaign, count]) => ({ campaign, count }));
+
+        const clickCount: Record<string, { count: number; type: string }> = {};
+        clicks?.forEach(click => {
+          const key = click.element_text || 'Unknown';
+          if (!clickCount[key]) {
+            clickCount[key] = { count: 0, type: click.element_type };
+          }
+          clickCount[key].count += 1;
+        });
+        const topClicks = Object.entries(clickCount)
+          .sort(([, a], [, b]) => b.count - a.count)
+          .slice(0, 10)
+          .map(([text, { count, type }]) => ({ text, count, type }));
+
+        setData({
+          totalViews,
+          totalSessions,
+          totalClicks,
+          averageDuration: Math.round(avgDuration),
+          bounceRate: Math.round(bounceRate),
+          topPages,
+          utmSources,
+          utmCampaigns,
+          topClicks,
+          recentSessions: sessions?.slice(0, 10) || [],
+        });
+      } catch (error) {
+        console.error('Error fetching analytics:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchAnalytics();
   }, [dateRange]);
 

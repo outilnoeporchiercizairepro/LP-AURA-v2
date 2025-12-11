@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { BarChart3, MousePointer, Users, TrendingUp, Clock, ExternalLink } from 'lucide-react';
+import UTMLinkGenerator from './UTMLinkGenerator';
 
 interface AnalyticsData {
   totalViews: number;
@@ -37,6 +38,40 @@ const Analytics: React.FC = () => {
   });
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState(7);
+  const [utmMappings, setUtmMappings] = useState<Record<string, any>>({});
+
+  const loadUtmMappings = async () => {
+    try {
+      const { data: links } = await supabase.from('utm_links').select('*');
+      const mappings: Record<string, any> = {};
+
+      links?.forEach(link => {
+        mappings[link.short_code] = {
+          source: link.source_label,
+          medium: link.medium_label,
+          campaign: link.campaign_label,
+          term: link.term_label,
+          content: link.content_label,
+        };
+      });
+
+      setUtmMappings(mappings);
+    } catch (error) {
+      console.error('Error loading UTM mappings:', error);
+    }
+  };
+
+  const decodeUtmValue = (code: string | null, type: 'source' | 'medium' | 'campaign' = 'source'): string => {
+    if (!code) return '-';
+
+    const baseCode = code.replace(/[mctx]$/, '');
+
+    if (utmMappings[baseCode]) {
+      return utmMappings[baseCode][type] || code;
+    }
+
+    return code;
+  };
 
   const fetchAnalytics = async () => {
     setLoading(true);
@@ -130,6 +165,7 @@ const Analytics: React.FC = () => {
   };
 
   useEffect(() => {
+    loadUtmMappings();
     fetchAnalytics();
   }, [dateRange]);
 
@@ -243,7 +279,7 @@ const Analytics: React.FC = () => {
                 <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
                   <div className="flex items-center gap-2">
                     <ExternalLink className="w-4 h-4 text-secondary" />
-                    <span className="text-gray-300 font-medium">{source.source}</span>
+                    <span className="text-gray-300 font-medium">{decodeUtmValue(source.source, 'source')}</span>
                   </div>
                   <span className="text-white font-bold">{source.count}</span>
                 </div>
@@ -259,7 +295,7 @@ const Analytics: React.FC = () => {
             <div className="space-y-3">
               {data.utmCampaigns.map((campaign, idx) => (
                 <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
-                  <span className="text-gray-300 font-medium">{campaign.campaign}</span>
+                  <span className="text-gray-300 font-medium">{decodeUtmValue(campaign.campaign, 'campaign')}</span>
                   <span className="text-white font-bold">{campaign.count}</span>
                 </div>
               ))}
@@ -331,8 +367,8 @@ const Analytics: React.FC = () => {
                       })}
                     </td>
                     <td className="py-3 px-4 text-gray-300 text-sm">{session.entry_page}</td>
-                    <td className="py-3 px-4 text-gray-300 text-sm">{session.utm_source || '-'}</td>
-                    <td className="py-3 px-4 text-gray-300 text-sm">{session.utm_campaign || '-'}</td>
+                    <td className="py-3 px-4 text-gray-300 text-sm">{decodeUtmValue(session.utm_source, 'source')}</td>
+                    <td className="py-3 px-4 text-gray-300 text-sm">{decodeUtmValue(session.utm_campaign, 'campaign')}</td>
                     <td className="py-3 px-4 text-right text-gray-300 text-sm">
                       {formatDuration(session.total_duration)}
                     </td>
@@ -361,38 +397,8 @@ const Analytics: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-8 bg-card border border-slate-800 rounded-xl p-6">
-          <h3 className="text-xl font-bold text-white mb-4">Comment utiliser les liens UTM</h3>
-          <div className="space-y-3 text-gray-300">
-            <p className="text-sm">
-              Pour tracker vos sources de trafic, ajoutez des paramètres UTM à vos liens. Exemple :
-            </p>
-            <div className="bg-surface p-4 rounded-lg font-mono text-sm overflow-x-auto">
-              <code className="text-secondary">
-                {window.location.origin}/?utm_source=facebook&utm_medium=social&utm_campaign=launch2024
-              </code>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <h4 className="font-semibold text-white mb-2">Paramètres disponibles :</h4>
-                <ul className="space-y-1 text-sm">
-                  <li><code className="text-primary">utm_source</code> : Source du trafic (ex: facebook, google)</li>
-                  <li><code className="text-primary">utm_medium</code> : Média (ex: social, email, cpc)</li>
-                  <li><code className="text-primary">utm_campaign</code> : Nom de la campagne</li>
-                  <li><code className="text-primary">utm_term</code> : Terme de recherche (optionnel)</li>
-                  <li><code className="text-primary">utm_content</code> : Contenu spécifique (optionnel)</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white mb-2">Exemples d'utilisation :</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>Facebook Ads : <code className="text-secondary text-xs">utm_source=facebook&utm_medium=cpc</code></li>
-                  <li>Newsletter : <code className="text-secondary text-xs">utm_source=newsletter&utm_medium=email</code></li>
-                  <li>Instagram Bio : <code className="text-secondary text-xs">utm_source=instagram&utm_medium=bio</code></li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div className="mt-8">
+          <UTMLinkGenerator />
         </div>
       </div>
     </div>

@@ -1,19 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { BookOpen, CheckCircle, RefreshCw, Users, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
-  const videoUrl = 'https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/videos/public/1765224757661-nj0g0t.mp4';
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const youtubeVideoId = 'ZS2fa-1I0uo';
   const [isPlaying, setIsPlaying] = useState(false);
 
   const currentMonth = new Date().toLocaleDateString('fr-FR', { month: 'long' });
 
   const handlePlayClick = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-      setIsPlaying(true);
-    }
+    setIsPlaying(true);
   };
 
   return (
@@ -70,27 +66,31 @@ const Hero: React.FC = () => {
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
           <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden">
-            <video
-              ref={videoRef}
-              src={videoUrl}
-              className="w-full h-full object-cover"
-              poster=""
-              playsInline
-              controls
-              preload="metadata"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-            />
-            {!isPlaying && (
-              <div
-                className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center cursor-pointer group-hover:bg-black/30 transition-colors"
-                onClick={handlePlayClick}
-              >
-                <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
-                  <Play className="w-10 h-10 text-white fill-white ml-1" />
+            {isPlaying ? (
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0`}
+                title="Vidéo de présentation AURA"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <>
+                <img
+                  src={`https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`}
+                  alt="Aperçu vidéo"
+                  className="w-full h-full object-cover"
+                />
+                <div
+                  className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center cursor-pointer group-hover:bg-black/30 transition-colors"
+                  onClick={handlePlayClick}
+                >
+                  <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
+                    <Play className="w-10 h-10 text-white fill-white ml-1" />
+                  </div>
+                  <p className="mt-4 text-sm font-medium text-white uppercase tracking-widest">Vidéo de présentation</p>
                 </div>
-                <p className="mt-4 text-sm font-medium text-white uppercase tracking-widest">Vidéo de présentation</p>
-              </div>
+              </>
             )}
           </div>
         </motion.div>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { MousePointer, Clock, ExternalLink } from 'lucide-react';
+import { MousePointer, Clock, ExternalLink, Users } from 'lucide-react';
 import UTMLinkGenerator from './UTMLinkGenerator';
 
 interface AnalyticsData {
   totalClicks: number;
+  totalSessions: number;
   averageDuration: number;
   utmSources: Array<{ source: string; count: number }>;
-  utmCampaigns: Array<{ campaign: string; count: number }>;
   topClicks: Array<{ text: string; count: number; type: string }>;
   recentSessions: Array<{
     entry_page: string;
@@ -22,9 +22,9 @@ interface AnalyticsData {
 const Analytics: React.FC = () => {
   const [data, setData] = useState<AnalyticsData>({
     totalClicks: 0,
+    totalSessions: 0,
     averageDuration: 0,
     utmSources: [],
-    utmCampaigns: [],
     topClicks: [],
     recentSessions: [],
   });
@@ -97,8 +97,9 @@ const Analytics: React.FC = () => {
         console.log('Fetched:', pageViews?.length, 'page views,', sessions?.length, 'sessions,', clicks?.length, 'clicks');
 
         const totalClicks = clicks?.length || 0;
+        const totalSessions = sessions?.length || 0;
 
-        const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (sessions?.length || 1);
+        const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (totalSessions || 1);
 
         const utmSourceCount: Record<string, number> = {};
         pageViews?.forEach(pv => {
@@ -109,16 +110,6 @@ const Analytics: React.FC = () => {
         const utmSources = Object.entries(utmSourceCount)
           .sort(([, a], [, b]) => b - a)
           .map(([source, count]) => ({ source, count }));
-
-        const utmCampaignCount: Record<string, number> = {};
-        pageViews?.forEach(pv => {
-          if (pv.utm_campaign) {
-            utmCampaignCount[pv.utm_campaign] = (utmCampaignCount[pv.utm_campaign] || 0) + 1;
-          }
-        });
-        const utmCampaigns = Object.entries(utmCampaignCount)
-          .sort(([, a], [, b]) => b - a)
-          .map(([campaign, count]) => ({ campaign, count }));
 
         const clickCount: Record<string, { count: number; type: string }> = {};
         clicks?.forEach(click => {
@@ -135,9 +126,9 @@ const Analytics: React.FC = () => {
 
         setData({
           totalClicks,
+          totalSessions,
           averageDuration: Math.round(avgDuration),
           utmSources,
-          utmCampaigns,
           topClicks,
           recentSessions: sessions?.slice(0, 10) || [],
         });
@@ -185,7 +176,7 @@ const Analytics: React.FC = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <div className="bg-card border border-slate-800 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-primary/10 rounded-lg">
@@ -199,7 +190,17 @@ const Analytics: React.FC = () => {
           <div className="bg-card border border-slate-800 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-secondary/10 rounded-lg">
-                <Clock className="w-6 h-6 text-secondary" />
+                <Users className="w-6 h-6 text-secondary" />
+              </div>
+            </div>
+            <h3 className="text-gray-400 text-sm font-medium mb-1">Nombre de sessions</h3>
+            <p className="text-3xl font-bold text-white">{data.totalSessions}</p>
+          </div>
+
+          <div className="bg-card border border-slate-800 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 bg-primary/10 rounded-lg">
+                <Clock className="w-6 h-6 text-primary" />
               </div>
             </div>
             <h3 className="text-gray-400 text-sm font-medium mb-1">Durée moyenne</h3>
@@ -207,38 +208,21 @@ const Analytics: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-card border border-slate-800 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Sources UTM</h3>
-            <div className="space-y-3">
-              {data.utmSources.map((source, idx) => (
-                <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <ExternalLink className="w-4 h-4 text-secondary" />
-                    <span className="text-gray-300 font-medium">{decodeUtmValue(source.source, 'source')}</span>
-                  </div>
-                  <span className="text-white font-bold">{source.count}</span>
+        <div className="bg-card border border-slate-800 rounded-xl p-6 mb-8">
+          <h3 className="text-xl font-bold text-white mb-4">Sources UTM</h3>
+          <div className="space-y-3">
+            {data.utmSources.map((source, idx) => (
+              <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
+                <div className="flex items-center gap-2">
+                  <ExternalLink className="w-4 h-4 text-secondary" />
+                  <span className="text-gray-300 font-medium">{decodeUtmValue(source.source, 'source')}</span>
                 </div>
-              ))}
-              {data.utmSources.length === 0 && (
-                <p className="text-gray-500 text-sm">Aucune source UTM détectée</p>
-              )}
-            </div>
-          </div>
-
-          <div className="bg-card border border-slate-800 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Campagnes UTM</h3>
-            <div className="space-y-3">
-              {data.utmCampaigns.map((campaign, idx) => (
-                <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
-                  <span className="text-gray-300 font-medium">{decodeUtmValue(campaign.campaign, 'campaign')}</span>
-                  <span className="text-white font-bold">{campaign.count}</span>
-                </div>
-              ))}
-              {data.utmCampaigns.length === 0 && (
-                <p className="text-gray-500 text-sm">Aucune campagne UTM détectée</p>
-              )}
-            </div>
+                <span className="text-white font-bold">{source.count}</span>
+              </div>
+            ))}
+            {data.utmSources.length === 0 && (
+              <p className="text-gray-500 text-sm">Aucune source UTM détectée</p>
+            )}
           </div>
         </div>
 

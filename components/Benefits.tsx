@@ -66,7 +66,7 @@ Des infrastructures IA personnalisées, scalables et rentables qui te rendent li
                 className="mt-8"
               >
                 <a
-                  href="https://calendly.com/aura-academie/15min"
+                  href="https://calendly.com/aura-academie/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative w-full inline-block text-center px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

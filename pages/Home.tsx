@@ -7,6 +7,7 @@ import Content from '../components/Content';
 import Comparison from '../components/Comparison';
 import Pricing from '../components/Pricing';
 import FAQ from '../components/FAQ';
+import ScrollToTop from '../components/ScrollToTop';
 
 const Home: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const Home: React.FC = () => {
       <Comparison />
       <Pricing />
       <FAQ />
+      <ScrollToTop />
     </>
   );
 };

@@ -10,7 +10,8 @@ const Footer: React.FC = () => {
           <p className="text-gray-500 text-sm">La seule formation IA créée par des experts.</p>
         </div>
 
-              
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 mt-8 pt-8 border-t border-slate-900/50 text-center">
         <p className="text-xs text-gray-600">
           &copy; {new Date().getFullYear()} AURA Formation. Tous droits réservés.

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { BarChart3, MousePointer, Users, TrendingUp, Clock, ExternalLink } from 'lucide-react';
+import { BarChart3, MousePointer, Users, Clock, ExternalLink } from 'lucide-react';
 import UTMLinkGenerator from './UTMLinkGenerator';
 
 interface AnalyticsData {
@@ -8,8 +8,6 @@ interface AnalyticsData {
   totalSessions: number;
   totalClicks: number;
   averageDuration: number;
-  bounceRate: number;
-  topPages: Array<{ page: string; count: number }>;
   utmSources: Array<{ source: string; count: number }>;
   utmCampaigns: Array<{ campaign: string; count: number }>;
   topClicks: Array<{ text: string; count: number; type: string }>;
@@ -29,8 +27,6 @@ const Analytics: React.FC = () => {
     totalSessions: 0,
     totalClicks: 0,
     averageDuration: 0,
-    bounceRate: 0,
-    topPages: [],
     utmSources: [],
     utmCampaigns: [],
     topClicks: [],
@@ -109,17 +105,6 @@ const Analytics: React.FC = () => {
         const totalClicks = clicks?.length || 0;
 
         const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (totalSessions || 1);
-        const bounces = sessions?.filter(s => s.bounce).length || 0;
-        const bounceRate = totalSessions > 0 ? (bounces / totalSessions) * 100 : 0;
-
-        const pageCount: Record<string, number> = {};
-        pageViews?.forEach(pv => {
-          pageCount[pv.page_path] = (pageCount[pv.page_path] || 0) + 1;
-        });
-        const topPages = Object.entries(pageCount)
-          .sort(([, a], [, b]) => b - a)
-          .slice(0, 5)
-          .map(([page, count]) => ({ page, count }));
 
         const utmSourceCount: Record<string, number> = {};
         pageViews?.forEach(pv => {
@@ -159,8 +144,6 @@ const Analytics: React.FC = () => {
           totalSessions,
           totalClicks,
           averageDuration: Math.round(avgDuration),
-          bounceRate: Math.round(bounceRate),
-          topPages,
           utmSources,
           utmCampaigns,
           topClicks,
@@ -249,32 +232,6 @@ const Analytics: React.FC = () => {
             </div>
             <h3 className="text-gray-400 text-sm font-medium mb-1">Durée moyenne</h3>
             <p className="text-3xl font-bold text-white">{formatDuration(data.averageDuration)}</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-card border border-slate-800 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
-              Taux de rebond
-            </h3>
-            <p className="text-4xl font-bold text-white mb-2">{data.bounceRate}%</p>
-            <p className="text-sm text-gray-400">Visiteurs qui quittent après une seule page</p>
-          </div>
-
-          <div className="bg-card border border-slate-800 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Pages populaires</h3>
-            <div className="space-y-3">
-              {data.topPages.map((page, idx) => (
-                <div key={idx} className="flex items-center justify-between">
-                  <span className="text-gray-300 text-sm truncate flex-1">{page.page}</span>
-                  <span className="text-white font-semibold ml-4">{page.count}</span>
-                </div>
-              ))}
-              {data.topPages.length === 0 && (
-                <p className="text-gray-500 text-sm">Aucune donnée disponible</p>
-              )}
-            </div>
           </div>
         </div>
 

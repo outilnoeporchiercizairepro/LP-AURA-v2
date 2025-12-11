@@ -58,7 +58,7 @@ const Comparison: React.FC = () => {
               </li>
               <li className="flex gap-4 items-start">
                 <span className="text-green-500 font-bold mt-1">•</span>
-                <span>Tu es prêt à passer à l'action et à implémenter chaque semaine.</span>
+                <span>Tu es prêt à passer à l'action et à être actif chaque semaine.</span>
               </li>
               <li className="flex gap-4 items-start">
                 <span className="text-green-500 font-bold mt-1">•</span>

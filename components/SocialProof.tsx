@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Play, Star, Quote } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
-  // Placeholders for video testimonials
-  const videoTestimonials = [1, 2, 3];
-
   // Placeholders for written reviews
   const writtenReviews = [
     { name: "Marc D.", role: "Étudiant en Droit", text: "J'ai vendu ma première infra à 3200€. Ça m'a largement remboursé le coût de la formation et j'ai pu commencer à scale mon activité." },
@@ -88,27 +85,6 @@ const SocialProof: React.FC = () => {
             </div>
           </div>
         </motion.div>
-
-        {/* Video Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-          {videoTestimonials.map((_, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="relative aspect-[9/16] md:aspect-[3/4] rounded-2xl bg-surface border border-slate-800 overflow-hidden group cursor-pointer hover:border-secondary/30 transition-all"
-            >
-              <div className="absolute inset-0 bg-slate-800/50 flex flex-col items-center justify-center">
-                 <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
-                    <Play className="w-6 h-6 text-white fill-white ml-1" />
-                 </div>
-                 <p className="mt-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Témoignage Vidéo</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
         {/* Written Reviews Infinite Carousel */}
         <div className="relative overflow-hidden -mx-4">

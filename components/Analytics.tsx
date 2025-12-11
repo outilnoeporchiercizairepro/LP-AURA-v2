@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { BarChart3, MousePointer, Users, Clock, ExternalLink } from 'lucide-react';
+import { MousePointer, Clock, ExternalLink } from 'lucide-react';
 import UTMLinkGenerator from './UTMLinkGenerator';
 
 interface AnalyticsData {
-  totalViews: number;
-  totalSessions: number;
   totalClicks: number;
   averageDuration: number;
   utmSources: Array<{ source: string; count: number }>;
@@ -23,8 +21,6 @@ interface AnalyticsData {
 
 const Analytics: React.FC = () => {
   const [data, setData] = useState<AnalyticsData>({
-    totalViews: 0,
-    totalSessions: 0,
     totalClicks: 0,
     averageDuration: 0,
     utmSources: [],
@@ -100,11 +96,9 @@ const Analytics: React.FC = () => {
 
         console.log('Fetched:', pageViews?.length, 'page views,', sessions?.length, 'sessions,', clicks?.length, 'clicks');
 
-        const totalViews = pageViews?.length || 0;
-        const totalSessions = sessions?.length || 0;
         const totalClicks = clicks?.length || 0;
 
-        const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (totalSessions || 1);
+        const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (sessions?.length || 1);
 
         const utmSourceCount: Record<string, number> = {};
         pageViews?.forEach(pv => {
@@ -140,8 +134,6 @@ const Analytics: React.FC = () => {
           .map(([text, { count, type }]) => ({ text, count, type }));
 
         setData({
-          totalViews,
-          totalSessions,
           totalClicks,
           averageDuration: Math.round(avgDuration),
           utmSources,
@@ -193,27 +185,7 @@ const Analytics: React.FC = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-card border border-slate-800 rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-primary/10 rounded-lg">
-                <BarChart3 className="w-6 h-6 text-primary" />
-              </div>
-            </div>
-            <h3 className="text-gray-400 text-sm font-medium mb-1">Total de vues</h3>
-            <p className="text-3xl font-bold text-white">{data.totalViews}</p>
-          </div>
-
-          <div className="bg-card border border-slate-800 rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-secondary/10 rounded-lg">
-                <Users className="w-6 h-6 text-secondary" />
-              </div>
-            </div>
-            <h3 className="text-gray-400 text-sm font-medium mb-1">Sessions</h3>
-            <p className="text-3xl font-bold text-white">{data.totalSessions}</p>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-card border border-slate-800 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-primary/10 rounded-lg">

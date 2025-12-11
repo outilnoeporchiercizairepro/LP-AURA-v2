@@ -1,9 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
+import { TrackingProvider, useTracking } from './contexts/TrackingContext';
+import { useTrackClicks } from './hooks/useTrackClicks';
 
 const Home = lazy(() => import('./pages/Home'));
 const Admin = lazy(() => import('./pages/Admin'));
@@ -18,10 +20,17 @@ const PageLoader = () => (
 
 const AppContent: React.FC = () => {
   const location = useLocation();
+  const { trackPageView } = useTracking();
   const isAdminPage = location.pathname === '/admin';
   const isLoginPage = location.pathname === '/login';
   const isSetupPage = location.pathname === '/setup';
   const hideNavFooter = isAdminPage || isLoginPage || isSetupPage;
+
+  useTrackClicks();
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname, trackPageView]);
 
   return (
     <div className="bg-[#020617] min-h-screen text-gray-200 font-sans selection:bg-primary/30 selection:text-white">
@@ -51,7 +60,9 @@ const App: React.FC = () => {
   return (
     <Router>
       <AuthProvider>
-        <AppContent />
+        <TrackingProvider>
+          <AppContent />
+        </TrackingProvider>
       </AuthProvider>
     </Router>
   );

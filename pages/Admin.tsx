@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, X, Image as ImageIcon, Video, Loader2, CheckCircle, AlertCircle, Home, LogOut } from 'lucide-react';
+import { Upload, X, Image as ImageIcon, Video, Loader2, CheckCircle, AlertCircle, Home, LogOut, BarChart3, FolderOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import Analytics from '../components/Analytics';
 
 interface UploadedFile {
   name: string;
@@ -16,6 +17,7 @@ interface UploadedFile {
 const Admin: React.FC = () => {
   const navigate = useNavigate();
   const { signOut } = useAuth();
+  const [activeTab, setActiveTab] = useState<'media' | 'analytics'>('media');
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState<string>('');
@@ -198,6 +200,47 @@ const Admin: React.FC = () => {
           </div>
         </div>
 
+        <div className="flex gap-4 mb-8 border-b border-slate-800">
+          <button
+            onClick={() => setActiveTab('media')}
+            className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors relative ${
+              activeTab === 'media'
+                ? 'text-primary'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <FolderOpen className="w-5 h-5" />
+            Médiathèque
+            {activeTab === 'media' && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+              />
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors relative ${
+              activeTab === 'analytics'
+                ? 'text-primary'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <BarChart3 className="w-5 h-5" />
+            Analytics
+            {activeTab === 'analytics' && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+              />
+            )}
+          </button>
+        </div>
+
+        {activeTab === 'analytics' ? (
+          <Analytics />
+        ) : (
+          <>
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <motion.div
             whileHover={{ scale: 1.02 }}
@@ -353,6 +396,8 @@ const Admin: React.FC = () => {
             </div>
           )}
         </div>
+          </>
+        )}
       </div>
     </div>
   );

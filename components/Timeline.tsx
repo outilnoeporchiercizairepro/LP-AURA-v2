@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Lightbulb, Code, Target, Handshake, ArrowRight, ChevronDown } from 'lucide-react';
+import { Lightbulb, Code, Target, Handshake } from 'lucide-react';
 
 interface TimelineStep {
   day: string;
@@ -58,48 +58,67 @@ const Timeline: React.FC = () => {
 
         {/* Desktop Timeline - Horizontal */}
         <div className="hidden lg:block">
-          <div className="relative">
-            <div className="flex items-center justify-between relative">
-              {steps.map((step, idx) => (
-                <React.Fragment key={idx}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.15 }}
-                    className="flex flex-col items-center flex-1"
-                  >
-                    {/* Circle with icon */}
-                    <div className="relative z-10 w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-white shadow-lg mb-6">
-                      {step.icon}
-                    </div>
+          <div className="relative max-w-6xl mx-auto">
+            {/* Main horizontal line */}
+            <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-800 -translate-y-1/2" />
 
-                    {/* Day badge */}
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-white font-bold text-sm mb-3">
+            {/* Animated progress line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-emerald-400 -translate-y-1/2 origin-left"
+            />
+
+            {/* Animated cursor */}
+            <motion.div
+              initial={{ x: 0 }}
+              whileInView={{ x: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute top-1/2 -translate-y-1/2 -translate-x-2 w-4 h-4"
+            >
+              <div className="w-4 h-4 bg-white rounded-full shadow-lg shadow-cyan-400/50 border-2 border-cyan-400" />
+              <div className="absolute inset-0 w-4 h-4 bg-cyan-400 rounded-full animate-ping opacity-75" />
+            </motion.div>
+
+            <div className="flex justify-between items-center relative pt-32 pb-24">
+              {steps.map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.2 }}
+                  className="flex flex-col items-center relative"
+                  style={{ width: `${100 / steps.length}%` }}
+                >
+                  {/* Day badge - Above timeline */}
+                  <div className="absolute -top-32 left-1/2 -translate-x-1/2">
+                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 border border-slate-700 text-white font-bold text-lg shadow-lg">
                       {step.day}
                     </div>
+                  </div>
 
-                    {/* Description */}
-                    <div className="text-center max-w-[200px]">
-                      <p className="text-gray-300 text-sm font-medium leading-relaxed">
-                        {step.title}
-                      </p>
-                    </div>
+                  {/* Circle with icon - On the line */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.2 + 0.3, type: "spring", stiffness: 200 }}
+                    className="absolute -top-12 left-1/2 -translate-x-1/2 z-10 w-24 h-24 rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border-4 border-slate-700 flex items-center justify-center text-white shadow-xl"
+                  >
+                    {step.icon}
                   </motion.div>
 
-                  {/* Arrow between steps */}
-                  {idx < steps.length - 1 && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.15 + 0.3 }}
-                      className="flex-shrink-0 mb-32"
-                    >
-                      <ArrowRight className="w-10 h-10 text-secondary" strokeWidth={3} />
-                    </motion.div>
-                  )}
-                </React.Fragment>
+                  {/* Description - Below timeline */}
+                  <div className="text-center max-w-[200px] mt-8">
+                    <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                      {step.title}
+                    </p>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -107,46 +126,62 @@ const Timeline: React.FC = () => {
 
         {/* Mobile Timeline - Vertical */}
         <div className="lg:hidden">
-          <div className="relative">
-            <div className="space-y-8">
-              {steps.map((step, idx) => (
-                <React.Fragment key={idx}>
-                  <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="flex items-start gap-6 relative"
-                  >
-                    {/* Circle with icon */}
-                    <div className="relative z-10 flex-shrink-0 w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-white shadow-lg">
-                      {step.icon}
-                    </div>
+          <div className="relative max-w-md mx-auto pl-16">
+            {/* Main vertical line */}
+            <div className="absolute left-12 top-0 bottom-0 w-1 bg-slate-800" />
 
-                    {/* Content */}
-                    <div className="flex-1 pt-2">
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-white font-bold text-xs mb-3">
-                        {step.day}
-                      </div>
-                      <p className="text-gray-300 text-sm font-medium leading-relaxed">
-                        {step.title}
-                      </p>
-                    </div>
+            {/* Animated progress line */}
+            <motion.div
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute left-12 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-cyan-400 to-emerald-400 origin-top"
+            />
+
+            {/* Animated cursor */}
+            <motion.div
+              initial={{ y: 0 }}
+              whileInView={{ y: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute left-12 top-0 -translate-x-1/2 -translate-y-2 w-4 h-4"
+            >
+              <div className="w-4 h-4 bg-white rounded-full shadow-lg shadow-cyan-400/50 border-2 border-cyan-400" />
+              <div className="absolute inset-0 w-4 h-4 bg-cyan-400 rounded-full animate-ping opacity-75" />
+            </motion.div>
+
+            <div className="space-y-16 py-8">
+              {steps.map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.2 }}
+                  className="relative flex items-center gap-6"
+                >
+                  {/* Circle with icon - On the line */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.2 + 0.3, type: "spring", stiffness: 200 }}
+                    className="absolute left-0 z-10 w-24 h-24 rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border-4 border-slate-700 flex items-center justify-center text-white shadow-xl"
+                  >
+                    {step.icon}
                   </motion.div>
 
-                  {/* Arrow between steps */}
-                  {idx < steps.length - 1 && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 + 0.2 }}
-                      className="flex justify-center ml-10"
-                    >
-                      <ChevronDown className="w-8 h-8 text-secondary" strokeWidth={3} />
-                    </motion.div>
-                  )}
-                </React.Fragment>
+                  {/* Content */}
+                  <div className="ml-32 flex-1">
+                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-900 border border-slate-700 text-white font-bold text-sm mb-3 shadow-lg">
+                      {step.day}
+                    </div>
+                    <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                      {step.title}
+                    </p>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>

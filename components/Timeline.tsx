@@ -61,31 +61,8 @@ const Timeline: React.FC = () => {
         {/* Desktop Timeline */}
         <div className="hidden lg:block">
           <div className="relative">
-            {/* Timeline track */}
-            <div className="absolute top-[60px] left-[10%] right-[10%] h-1 bg-slate-800/50 rounded-full" />
-
-            {/* Animated progress line */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 2.5, ease: "easeOut" }}
-              className="absolute top-[60px] left-[10%] right-[10%] h-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-full origin-left"
-            />
-
-            {/* Animated cursor */}
-            <motion.div
-              initial={{ left: "10%" }}
-              whileInView={{ left: "90%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 2.5, ease: "easeOut" }}
-              className="absolute top-[60px] -translate-y-1/2 z-20"
-            >
-              <div className="w-3 h-3 bg-white rounded-full shadow-[0_0_20px_rgba(234,75,113,0.8)]" />
-            </motion.div>
-
-            {/* Steps */}
-            <div className="flex justify-between px-[5%]">
+            {/* Steps container */}
+            <div className="flex justify-between items-start">
               {steps.map((step, idx) => (
                 <motion.div
                   key={idx}
@@ -93,8 +70,8 @@ const Timeline: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.15 + 0.3 }}
-                  className="flex flex-col items-center"
-                  style={{ width: '18%' }}
+                  className="flex flex-col items-center relative"
+                  style={{ width: '20%' }}
                 >
                   {/* Day badge */}
                   <motion.div
@@ -102,7 +79,7 @@ const Timeline: React.FC = () => {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.15 + 0.5, type: "spring", stiffness: 300 }}
-                    className={`mb-4 px-4 py-1.5 rounded-full font-bold text-sm border ${
+                    className={`mb-6 px-4 py-1.5 rounded-full font-bold text-sm border ${
                       step.isHighlight
                         ? 'bg-gradient-to-r from-primary to-secondary text-white border-transparent shadow-[0_0_30px_rgba(234,75,113,0.5)]'
                         : 'bg-card text-white border-slate-700'
@@ -111,23 +88,50 @@ const Timeline: React.FC = () => {
                     {step.day}
                   </motion.div>
 
-                  {/* Circle node */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.15 + 0.4, type: "spring", stiffness: 200 }}
-                    className={`relative z-10 flex items-center justify-center rounded-full border-4 ${
-                      step.isHighlight
-                        ? 'w-20 h-20 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_40px_rgba(234,75,113,0.6)]'
-                        : 'w-14 h-14 bg-card border-slate-700'
-                    }`}
-                  >
-                    {step.icon}
-                    {step.isHighlight && (
-                      <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                  {/* Circle node with line */}
+                  <div className="relative flex items-center justify-center w-full">
+                    {/* Line segment - left side */}
+                    {idx > 0 && (
+                      <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: idx * 0.15 + 0.2 }}
+                        className="absolute right-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-primary to-secondary origin-right"
+                        style={{ width: 'calc(50% + 50px)', marginRight: step.isHighlight ? '40px' : '28px' }}
+                      />
                     )}
-                  </motion.div>
+
+                    {/* Line segment - right side */}
+                    {idx < steps.length - 1 && (
+                      <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: idx * 0.15 + 0.4 }}
+                        className="absolute left-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-secondary to-primary origin-left"
+                        style={{ width: 'calc(50% + 50px)', marginLeft: step.isHighlight ? '40px' : '28px' }}
+                      />
+                    )}
+
+                    {/* Circle */}
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.15 + 0.4, type: "spring", stiffness: 200 }}
+                      className={`relative z-10 flex items-center justify-center rounded-full border-4 ${
+                        step.isHighlight
+                          ? 'w-20 h-20 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_40px_rgba(234,75,113,0.6)]'
+                          : 'w-14 h-14 bg-card border-slate-700'
+                      }`}
+                    >
+                      {step.icon}
+                      {step.isHighlight && (
+                        <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                      )}
+                    </motion.div>
+                  </div>
 
                   {/* Description */}
                   <p className={`mt-6 text-center text-sm leading-relaxed max-w-[160px] ${
@@ -143,20 +147,8 @@ const Timeline: React.FC = () => {
 
         {/* Mobile Timeline */}
         <div className="lg:hidden">
-          <div className="relative pl-8">
-            {/* Vertical line */}
-            <div className="absolute left-[23px] top-0 bottom-0 w-0.5 bg-slate-800/50" />
-
-            {/* Animated progress line */}
-            <motion.div
-              initial={{ scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 2, ease: "easeOut" }}
-              className="absolute left-[23px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary origin-top"
-            />
-
-            <div className="space-y-10">
+          <div className="relative">
+            <div className="space-y-8">
               {steps.map((step, idx) => (
                 <motion.div
                   key={idx}
@@ -164,28 +156,55 @@ const Timeline: React.FC = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="relative flex items-start gap-6"
+                  className="relative flex items-center gap-5"
                 >
-                  {/* Circle node */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 + 0.2, type: "spring", stiffness: 200 }}
-                    className={`relative z-10 flex-shrink-0 flex items-center justify-center rounded-full border-4 ${
-                      step.isHighlight
-                        ? 'w-14 h-14 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_30px_rgba(234,75,113,0.6)]'
-                        : 'w-12 h-12 bg-card border-slate-700'
-                    }`}
-                  >
-                    {step.icon}
-                    {step.isHighlight && (
-                      <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                  {/* Circle node with connecting line */}
+                  <div className="relative flex flex-col items-center">
+                    {/* Top line */}
+                    {idx > 0 && (
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: idx * 0.1 }}
+                        className="absolute bottom-1/2 w-0.5 h-8 bg-gradient-to-t from-primary to-secondary origin-bottom"
+                        style={{ marginBottom: step.isHighlight ? '28px' : '24px' }}
+                      />
                     )}
-                  </motion.div>
+
+                    {/* Bottom line */}
+                    {idx < steps.length - 1 && (
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: idx * 0.1 + 0.2 }}
+                        className="absolute top-1/2 w-0.5 h-8 bg-gradient-to-b from-secondary to-primary origin-top"
+                        style={{ marginTop: step.isHighlight ? '28px' : '24px' }}
+                      />
+                    )}
+
+                    {/* Circle */}
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 + 0.2, type: "spring", stiffness: 200 }}
+                      className={`relative z-10 flex-shrink-0 flex items-center justify-center rounded-full border-4 ${
+                        step.isHighlight
+                          ? 'w-14 h-14 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_30px_rgba(234,75,113,0.6)]'
+                          : 'w-12 h-12 bg-card border-slate-700'
+                      }`}
+                    >
+                      {step.icon}
+                      {step.isHighlight && (
+                        <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                      )}
+                    </motion.div>
+                  </div>
 
                   {/* Content */}
-                  <div className="flex-1 pt-1">
+                  <div className="flex-1">
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${
                       step.isHighlight
                         ? 'bg-gradient-to-r from-primary to-secondary text-white'

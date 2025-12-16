@@ -138,9 +138,9 @@ const Timeline: React.FC = () => {
 
         {/* Mobile Timeline */}
         <div className="lg:hidden">
-          <div className="relative pl-6">
-            {/* Continuous vertical line */}
-            <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary" style={{ transform: 'translateX(-50%)' }} />
+          <div className="relative">
+            {/* Continuous vertical line - centered on circles (w-12 = 48px, so center at 24px) */}
+            <div className="absolute top-6 bottom-6 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary" style={{ left: '24px' }} />
 
             <div className="space-y-6">
               {steps.map((step, idx) => (

@@ -138,8 +138,11 @@ const Timeline: React.FC = () => {
 
         {/* Mobile Timeline */}
         <div className="lg:hidden">
-          <div className="relative">
-            <div className="space-y-8">
+          <div className="relative pl-6">
+            {/* Continuous vertical line */}
+            <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary" style={{ transform: 'translateX(-50%)' }} />
+
+            <div className="space-y-6">
               {steps.map((step, idx) => (
                 <motion.div
                   key={idx}
@@ -147,55 +150,28 @@ const Timeline: React.FC = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="relative flex items-center gap-5"
+                  className="relative flex items-center gap-4"
                 >
-                  {/* Circle node with connecting line */}
-                  <div className="relative flex flex-col items-center">
-                    {/* Top line */}
-                    {idx > 0 && (
-                      <motion.div
-                        initial={{ scaleY: 0 }}
-                        whileInView={{ scaleY: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: idx * 0.1 }}
-                        className="absolute bottom-1/2 w-0.5 h-8 bg-gradient-to-t from-primary to-secondary origin-bottom"
-                        style={{ marginBottom: step.isHighlight ? '28px' : '24px' }}
-                      />
+                  {/* Circle */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 + 0.2, type: "spring", stiffness: 200 }}
+                    className={`relative z-10 flex-shrink-0 flex items-center justify-center rounded-full border-4 ${
+                      step.isHighlight
+                        ? 'w-12 h-12 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_30px_rgba(234,75,113,0.6)]'
+                        : 'w-12 h-12 bg-card border-slate-700'
+                    }`}
+                  >
+                    {step.icon}
+                    {step.isHighlight && (
+                      <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
                     )}
-
-                    {/* Bottom line */}
-                    {idx < steps.length - 1 && (
-                      <motion.div
-                        initial={{ scaleY: 0 }}
-                        whileInView={{ scaleY: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: idx * 0.1 + 0.2 }}
-                        className="absolute top-1/2 w-0.5 h-8 bg-gradient-to-b from-secondary to-primary origin-top"
-                        style={{ marginTop: step.isHighlight ? '28px' : '24px' }}
-                      />
-                    )}
-
-                    {/* Circle */}
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 + 0.2, type: "spring", stiffness: 200 }}
-                      className={`relative z-10 flex-shrink-0 flex items-center justify-center rounded-full border-4 ${
-                        step.isHighlight
-                          ? 'w-14 h-14 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_30px_rgba(234,75,113,0.6)]'
-                          : 'w-12 h-12 bg-card border-slate-700'
-                      }`}
-                    >
-                      {step.icon}
-                      {step.isHighlight && (
-                        <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
-                      )}
-                    </motion.div>
-                  </div>
+                  </motion.div>
 
                   {/* Content */}
-                  <div className="flex-1">
+                  <div className="flex-1 py-2">
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${
                       step.isHighlight
                         ? 'bg-gradient-to-r from-primary to-secondary text-white'

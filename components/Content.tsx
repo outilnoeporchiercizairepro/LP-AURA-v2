@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CountdownTimer from './CountdownTimer';
 
 interface TimelineItem {
   title: string;
@@ -136,6 +137,12 @@ const Content: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="max-w-5xl mx-auto"
             >
+              {tabs[activeTab].isBonus && (
+                <div className="mb-8">
+                  <CountdownTimer />
+                </div>
+              )}
+
               <div className="space-y-3">
                 {tabs[activeTab].items.map((item, idx) => (
                   <motion.div

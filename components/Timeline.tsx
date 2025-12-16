@@ -70,12 +70,12 @@ const Timeline: React.FC = () => {
                     className="flex flex-col items-center flex-1"
                   >
                     {/* Circle with icon */}
-                    <div className="relative z-10 w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white shadow-lg mb-6">
+                    <div className="relative z-10 w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-white shadow-lg mb-6">
                       {step.icon}
                     </div>
 
                     {/* Day badge */}
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-900 border border-primary/30 text-primary font-bold text-sm mb-3">
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-white font-bold text-sm mb-3">
                       {step.day}
                     </div>
 
@@ -119,13 +119,13 @@ const Timeline: React.FC = () => {
                     className="flex items-start gap-6 relative"
                   >
                     {/* Circle with icon */}
-                    <div className="relative z-10 flex-shrink-0 w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white shadow-lg">
+                    <div className="relative z-10 flex-shrink-0 w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-white shadow-lg">
                       {step.icon}
                     </div>
 
                     {/* Content */}
                     <div className="flex-1 pt-2">
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 border border-primary/30 text-primary font-bold text-xs mb-3">
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-white font-bold text-xs mb-3">
                         {step.day}
                       </div>
                       <p className="text-gray-300 text-sm font-medium leading-relaxed">

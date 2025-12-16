@@ -10,6 +10,7 @@ interface TimelineItem {
 interface TabContent {
   name: string;
   items: TimelineItem[];
+  isBonus?: boolean;
 }
 
 const Content: React.FC = () => {
@@ -43,7 +44,18 @@ const Content: React.FC = () => {
       ]
     },
     {
+      name: "Suivi & Espace Communautaire",
+      items: [
+        { title: "Coaching Live Hebdo", description: "Participe à des sessions live et des appels de groupe avec la team AURA pour progresser rapidement, échanger et rester motivé." },
+        { title: "Support & Accompagnement", description: "Bénéficie d'un accompagnement personnalisé sur tes projets, résous tes bugs en temps réel et obtiens de l'aide pour débloquer tes défis techniques." },
+        { title: "Études de Cas Réels", description: "Analyse des cas réels d'implémentation IA et automatisation. Décortique des projets concrets pour comprendre les décisions techniques et business." },
+        { title: "Communauté Discord VIP Gratuite", description: "Rejoins un Discord actif avec des channels thématiques (IA, n8n, dev, projets) et une communauté soudée pour s'entraider et progresser ensemble." },
+        { title: "Ressources Hebdo", description: "Reçois chaque semaine de nouvelles ressources, prompts optimisés, workflows n8n prêts à l'emploi et les dernières updates IA." }
+      ]
+    },
+    {
       name: "Vibe Coding & IA",
+      isBonus: true,
       items: [
         { title: "Introduction", description: "Découvre ce qu'est le VibeCoding, cette approche révolutionnaire du développement assisté par IA. Comprends ce que tu peux construire et comment coder 10x plus vite avec cette méthodologie." },
         { title: "Les Bases du Développement", description: "Maîtrise les fondamentaux essentiels : JSON pour structurer les données, les API pour faire communiquer tes outils, et les langages clés." },
@@ -52,16 +64,6 @@ const Content: React.FC = () => {
         { title: "Lovable / Bolt / Replit", description: "Découvre les plateformes no-code et low-code : Lovable pour créer des sites web complets, Bolt pour des applications complexes et Replit pour le développement collaboratif en ligne." },
         { title: "Coder avec les LLMs", description: "Exploite la puissance des grands modèles de langage : Claude pour la réflexion complexe, Codex pour la génération de code avancée et Copilot pour l'assistance en temps réel." },
         { title: "Déploiement et hébergement", description: "Apprends à mettre tes applications en production : hébergement depuis les plateformes de VibeCoding, déploiement à partir du code source et gestion de versions avec GitHub." }
-      ]
-    },
-    {
-      name: "Suivi & Espace Communautaire",
-      items: [
-        { title: "Coaching Live Hebdo", description: "Participe à des sessions live et des appels de groupe avec la team AURA pour progresser rapidement, échanger et rester motivé." },
-        { title: "Support & Accompagnement", description: "Bénéficie d'un accompagnement personnalisé sur tes projets, résous tes bugs en temps réel et obtiens de l'aide pour débloquer tes défis techniques." },
-        { title: "Études de Cas Réels", description: "Analyse des cas réels d'implémentation IA et automatisation. Décortique des projets concrets pour comprendre les décisions techniques et business." },
-        { title: "Communauté Discord VIP Gratuite", description: "Rejoins un Discord actif avec des channels thématiques (IA, n8n, dev, projets) et une communauté soudée pour s'entraider et progresser ensemble." },
-        { title: "Ressources Hebdo", description: "Reçois chaque semaine de nouvelles ressources, prompts optimisés, workflows n8n prêts à l'emploi et les dernières updates IA." }
       ]
     }
   ];
@@ -103,12 +105,24 @@ const Content: React.FC = () => {
                 key={idx}
                 onClick={() => handleTabChange(idx)}
                 className={`relative px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                  activeTab === idx
+                  tab.isBonus
+                    ? activeTab === idx
+                      ? 'text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 shadow-xl shadow-orange-500/40 scale-105'
+                      : 'text-white bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-red-500/90 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 border-2 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/40'
+                    : activeTab === idx
                     ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20'
                     : 'text-gray-400 hover:text-gray-300 bg-slate-900/40 hover:bg-slate-900/60 border border-slate-800/50'
                 }`}
               >
+                {tab.isBonus && (
+                  <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider animate-pulse shadow-lg shadow-red-500/50">
+                    Offert
+                  </span>
+                )}
                 <span className="relative z-10">{tab.name}</span>
+                {tab.isBonus && (
+                  <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 opacity-0 blur-lg animate-pulse"></span>
+                )}
               </button>
             ))}
           </div>

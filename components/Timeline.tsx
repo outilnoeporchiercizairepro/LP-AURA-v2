@@ -90,27 +90,18 @@ const Timeline: React.FC = () => {
 
                   {/* Circle node with line */}
                   <div className="relative flex items-center justify-center w-full">
-                    {/* Line segment - left side */}
-                    {idx > 0 && (
-                      <motion.div
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: idx * 0.15 + 0.2 }}
-                        className="absolute right-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-primary to-secondary origin-right"
-                        style={{ width: 'calc(50% + 50px)', marginRight: step.isHighlight ? '40px' : '28px' }}
-                      />
-                    )}
-
-                    {/* Line segment - right side */}
+                    {/* Line segment - only on the right side of each node (except last) */}
                     {idx < steps.length - 1 && (
                       <motion.div
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: idx * 0.15 + 0.4 }}
-                        className="absolute left-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-secondary to-primary origin-left"
-                        style={{ width: 'calc(50% + 50px)', marginLeft: step.isHighlight ? '40px' : '28px' }}
+                        transition={{ duration: 0.8, delay: idx * 0.15 + 0.3 }}
+                        className="absolute left-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-primary to-secondary origin-left"
+                        style={{
+                          width: 'calc(100% + 1px)',
+                          marginLeft: step.isHighlight ? '40px' : '28px'
+                        }}
                       />
                     )}
 

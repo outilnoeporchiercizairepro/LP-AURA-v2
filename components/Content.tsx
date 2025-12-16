@@ -116,7 +116,7 @@ const Content: React.FC = () => {
               >
                 {tab.isBonus && (
                   <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider animate-pulse shadow-lg shadow-red-500/50">
-                    Offert
+                    Offert pour 2025
                   </span>
                 )}
                 <span className="relative z-10">{tab.name}</span>

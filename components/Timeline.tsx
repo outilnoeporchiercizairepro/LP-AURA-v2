@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Lightbulb, Code, Target, Handshake } from 'lucide-react';
+import { Lightbulb, Code, Target, Handshake, ArrowRight, ChevronDown } from 'lucide-react';
 
 interface TimelineStep {
   day: string;
@@ -13,27 +13,27 @@ const Timeline: React.FC = () => {
     {
       day: 'J0',
       title: "J'intègre AURA",
-      icon: <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-6 w-auto" />
+      icon: <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-8 w-auto brightness-0 invert" />
     },
     {
       day: 'J7',
       title: "Je comprends les bases des systèmes IA et leurs cas d'usage concrets",
-      icon: <Lightbulb className="w-6 h-6" />
+      icon: <Lightbulb className="w-7 h-7 text-white" strokeWidth={2} />
     },
     {
       day: 'J14',
       title: "Je maîtrise n8n et les fondamentaux du vibe coding",
-      icon: <Code className="w-6 h-6" />
+      icon: <Code className="w-7 h-7 text-white" strokeWidth={2} />
     },
     {
       day: 'J21',
       title: "J'ai une offre structurée et une méthode claire pour prospecter",
-      icon: <Target className="w-6 h-6" />
+      icon: <Target className="w-7 h-7 text-white" strokeWidth={2} />
     },
     {
       day: 'J30',
       title: "Je signe mon premier client",
-      icon: <Handshake className="w-6 h-6" />
+      icon: <Handshake className="w-7 h-7 text-white" strokeWidth={2} />
     }
   ];
 
@@ -59,41 +59,47 @@ const Timeline: React.FC = () => {
         {/* Desktop Timeline - Horizontal */}
         <div className="hidden lg:block">
           <div className="relative">
-            {/* Horizontal Line */}
-            <div className="absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-primary/20 via-secondary to-primary/20" />
-
-            <div className="grid grid-cols-5 gap-4 relative">
+            <div className="flex items-center justify-between relative">
               {steps.map((step, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.15 }}
-                  className="flex flex-col items-center"
-                >
-                  {/* Circle with icon */}
-                  <div className="relative z-10 w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-lg shadow-primary/30 mb-6">
-                    {step.icon}
-                  </div>
+                <React.Fragment key={idx}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.15 }}
+                    className="flex flex-col items-center flex-1"
+                  >
+                    {/* Circle with icon */}
+                    <div className="relative z-10 w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white shadow-lg mb-6">
+                      {step.icon}
+                    </div>
 
-                  {/* Day badge */}
-                  <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-900 border border-primary/30 text-primary font-bold text-sm mb-3">
-                    {step.day}
-                  </div>
+                    {/* Day badge */}
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-900 border border-primary/30 text-primary font-bold text-sm mb-3">
+                      {step.day}
+                    </div>
 
-                  {/* Description */}
-                  <div className="text-center">
-                    <p className="text-gray-300 text-sm font-medium leading-relaxed">
-                      {step.title}
-                    </p>
-                  </div>
+                    {/* Description */}
+                    <div className="text-center max-w-[200px]">
+                      <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                        {step.title}
+                      </p>
+                    </div>
+                  </motion.div>
 
-                  {/* Connector dot */}
+                  {/* Arrow between steps */}
                   {idx < steps.length - 1 && (
-                    <div className="absolute top-24 right-0 w-2 h-2 rounded-full bg-secondary transform translate-x-1/2" />
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.15 + 0.3 }}
+                      className="flex-shrink-0 mb-32"
+                    >
+                      <ArrowRight className="w-10 h-10 text-secondary" strokeWidth={3} />
+                    </motion.div>
                   )}
-                </motion.div>
+                </React.Fragment>
               ))}
             </div>
           </div>
@@ -102,39 +108,45 @@ const Timeline: React.FC = () => {
         {/* Mobile Timeline - Vertical */}
         <div className="lg:hidden">
           <div className="relative">
-            {/* Vertical Line */}
-            <div className="absolute left-10 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/20 via-secondary to-primary/20" />
-
-            <div className="space-y-12">
+            <div className="space-y-8">
               {steps.map((step, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="flex items-start gap-6 relative"
-                >
-                  {/* Circle with icon */}
-                  <div className="relative z-10 flex-shrink-0 w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-lg shadow-primary/30">
-                    {step.icon}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 pt-2">
-                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 border border-primary/30 text-primary font-bold text-xs mb-3">
-                      {step.day}
+                <React.Fragment key={idx}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex items-start gap-6 relative"
+                  >
+                    {/* Circle with icon */}
+                    <div className="relative z-10 flex-shrink-0 w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white shadow-lg">
+                      {step.icon}
                     </div>
-                    <p className="text-gray-300 text-sm font-medium leading-relaxed">
-                      {step.title}
-                    </p>
-                  </div>
 
-                  {/* Connector dot on vertical line */}
+                    {/* Content */}
+                    <div className="flex-1 pt-2">
+                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 border border-primary/30 text-primary font-bold text-xs mb-3">
+                        {step.day}
+                      </div>
+                      <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                        {step.title}
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  {/* Arrow between steps */}
                   {idx < steps.length - 1 && (
-                    <div className="absolute left-10 bottom-0 w-2 h-2 rounded-full bg-secondary transform -translate-x-1/2 translate-y-6" />
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 + 0.2 }}
+                      className="flex justify-center ml-10"
+                    >
+                      <ChevronDown className="w-8 h-8 text-secondary" strokeWidth={3} />
+                    </motion.div>
                   )}
-                </motion.div>
+                </React.Fragment>
               ))}
             </div>
           </div>

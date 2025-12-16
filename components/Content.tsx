@@ -104,32 +104,24 @@ const Content: React.FC = () => {
               <button
                 key={idx}
                 onClick={() => handleTabChange(idx)}
-                className={`relative transition-all duration-300 ${
+                className={`relative px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                   tab.isBonus
                     ? activeTab === idx
-                      ? 'px-6 py-4 text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 shadow-[0_0_30px_rgba(249,115,22,0.6)] scale-110 rounded-xl font-bold text-base'
-                      : 'px-6 py-4 text-white bg-gradient-to-r from-amber-500/95 via-orange-500/95 to-red-500/95 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 border-2 border-orange-400/60 shadow-[0_0_25px_rgba(249,115,22,0.5)] hover:shadow-[0_0_35px_rgba(249,115,22,0.7)] hover:scale-110 rounded-xl font-bold text-base animate-pulse'
+                      ? 'text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 shadow-xl shadow-orange-500/40 scale-105'
+                      : 'text-white bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-red-500/90 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 border-2 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/40'
                     : activeTab === idx
-                    ? 'px-5 py-3 text-white bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20 rounded-xl font-semibold text-sm'
-                    : 'px-5 py-3 text-gray-400 hover:text-gray-300 bg-slate-900/40 hover:bg-slate-900/60 border border-slate-800/50 rounded-xl font-semibold text-sm'
+                    ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20'
+                    : 'text-gray-400 hover:text-gray-300 bg-slate-900/40 hover:bg-slate-900/60 border border-slate-800/50'
                 }`}
               >
                 {tab.isBonus && (
-                  <>
-                    <span className="absolute -top-3 -right-3 px-3 py-1 bg-gradient-to-r from-red-600 to-red-500 text-white text-xs font-extrabold rounded-full uppercase tracking-wider shadow-[0_0_20px_rgba(220,38,38,0.8)] z-20 border-2 border-white">
-                      <span className="animate-pulse">🎁 Offert</span>
-                    </span>
-                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 -translate-y-full px-2 py-0.5 bg-amber-400 text-slate-900 text-[9px] font-bold rounded uppercase whitespace-nowrap">
-                      Offre Lancement
-                    </span>
-                  </>
+                  <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider animate-pulse shadow-lg shadow-red-500/50">
+                    Offert
+                  </span>
                 )}
                 <span className="relative z-10">{tab.name}</span>
                 {tab.isBonus && (
-                  <>
-                    <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 opacity-20 blur-xl animate-pulse"></span>
-                    <span className="absolute -inset-1 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 opacity-30 blur-2xl"></span>
-                  </>
+                  <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 opacity-0 blur-lg animate-pulse"></span>
                 )}
               </button>
             ))}

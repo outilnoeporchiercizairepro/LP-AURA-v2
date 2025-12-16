@@ -88,8 +88,33 @@ const Timeline: React.FC = () => {
                     {step.day}
                   </motion.div>
 
-                  {/* Circle node */}
+                  {/* Circle node with line */}
                   <div className="relative flex items-center justify-center w-full">
+                    {/* Line segment - left side */}
+                    {idx > 0 && (
+                      <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: idx * 0.15 + 0.2 }}
+                        className="absolute right-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-primary to-secondary origin-right"
+                        style={{ width: 'calc(50% + 50px)', marginRight: step.isHighlight ? '40px' : '28px' }}
+                      />
+                    )}
+
+                    {/* Line segment - right side */}
+                    {idx < steps.length - 1 && (
+                      <motion.div
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: idx * 0.15 + 0.4 }}
+                        className="absolute left-1/2 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-secondary to-primary origin-left"
+                        style={{ width: 'calc(50% + 50px)', marginLeft: step.isHighlight ? '40px' : '28px' }}
+                      />
+                    )}
+
+                    {/* Circle */}
                     <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
@@ -133,8 +158,33 @@ const Timeline: React.FC = () => {
                   transition={{ delay: idx * 0.1 }}
                   className="relative flex items-center gap-5"
                 >
-                  {/* Circle node */}
+                  {/* Circle node with connecting line */}
                   <div className="relative flex flex-col items-center">
+                    {/* Top line */}
+                    {idx > 0 && (
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: idx * 0.1 }}
+                        className="absolute bottom-1/2 w-0.5 h-8 bg-gradient-to-t from-primary to-secondary origin-bottom"
+                        style={{ marginBottom: step.isHighlight ? '28px' : '24px' }}
+                      />
+                    )}
+
+                    {/* Bottom line */}
+                    {idx < steps.length - 1 && (
+                      <motion.div
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: idx * 0.1 + 0.2 }}
+                        className="absolute top-1/2 w-0.5 h-8 bg-gradient-to-b from-secondary to-primary origin-top"
+                        style={{ marginTop: step.isHighlight ? '28px' : '24px' }}
+                      />
+                    )}
+
+                    {/* Circle */}
                     <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}

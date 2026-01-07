@@ -18,11 +18,10 @@ const CountdownTimer: React.FC = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date('2026-01-01T00:00:00');
-
     const calculateTimeLeft = () => {
       const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+      const difference = endOfMonth.getTime() - now.getTime();
 
       if (difference > 0) {
         setTimeLeft({
@@ -100,7 +99,7 @@ const CountdownTimer: React.FC = () => {
         <div className="mt-4 flex items-center justify-center gap-2 text-orange-400 text-sm">
           <Clock className="w-4 h-4 animate-pulse" />
           <p className="font-semibold">
-            Jusqu'au 1er Janvier 2026
+            Jusqu'à la fin du mois de {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
           </p>
         </div>
       </div>

@@ -23,6 +23,7 @@ interface AnalyticsData {
     clicks: number;
     sessions: number;
     avgDuration: number;
+    displayLabel: string;
   }>;
 }
 
@@ -149,49 +150,97 @@ const Analytics: React.FC = () => {
           .map(([text, { count, type }]) => ({ text, count, type }));
 
         const timeSeriesMap: Record<string, { clicks: number; sessions: number; durations: number[] }> = {};
+        const isToday = dateRange === 1;
 
-        for (let i = 0; i < dateRange; i++) {
-          const date = new Date();
-          date.setDate(date.getDate() - i);
-          const dateKey = date.toISOString().split('T')[0];
-          timeSeriesMap[dateKey] = { clicks: 0, sessions: 0, durations: [] };
+        if (isToday) {
+          for (let i = 0; i < 24; i++) {
+            const hour = i.toString().padStart(2, '0');
+            timeSeriesMap[hour] = { clicks: 0, sessions: 0, durations: [] };
+          }
+
+          clicks?.forEach(click => {
+            const clickDate = new Date(click.created_at);
+            const hour = clickDate.getHours().toString().padStart(2, '0');
+            if (timeSeriesMap[hour]) {
+              timeSeriesMap[hour].clicks += 1;
+            }
+          });
+
+          sessions?.forEach(session => {
+            const sessionDate = new Date(session.created_at);
+            const hour = sessionDate.getHours().toString().padStart(2, '0');
+            if (timeSeriesMap[hour]) {
+              timeSeriesMap[hour].sessions += 1;
+              timeSeriesMap[hour].durations.push(session.total_duration || 0);
+            }
+          });
+
+          const timeSeriesData = Object.entries(timeSeriesMap)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([hour, data]) => ({
+              date: hour,
+              clicks: data.clicks,
+              sessions: data.sessions,
+              avgDuration: data.durations.length > 0
+                ? Math.round(data.durations.reduce((a, b) => a + b, 0) / data.durations.length)
+                : 0,
+              displayLabel: `${hour}h`,
+            }));
+
+          setData({
+            totalClicks,
+            totalSessions,
+            averageDuration: Math.round(avgDuration),
+            utmSources,
+            topClicks,
+            recentSessions: sessions?.slice(0, 10) || [],
+            timeSeriesData,
+          });
+        } else {
+          for (let i = 0; i < dateRange; i++) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            const dateKey = date.toISOString().split('T')[0];
+            timeSeriesMap[dateKey] = { clicks: 0, sessions: 0, durations: [] };
+          }
+
+          clicks?.forEach(click => {
+            const dateKey = new Date(click.created_at).toISOString().split('T')[0];
+            if (timeSeriesMap[dateKey]) {
+              timeSeriesMap[dateKey].clicks += 1;
+            }
+          });
+
+          sessions?.forEach(session => {
+            const dateKey = new Date(session.created_at).toISOString().split('T')[0];
+            if (timeSeriesMap[dateKey]) {
+              timeSeriesMap[dateKey].sessions += 1;
+              timeSeriesMap[dateKey].durations.push(session.total_duration || 0);
+            }
+          });
+
+          const timeSeriesData = Object.entries(timeSeriesMap)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([date, data]) => ({
+              date,
+              clicks: data.clicks,
+              sessions: data.sessions,
+              avgDuration: data.durations.length > 0
+                ? Math.round(data.durations.reduce((a, b) => a + b, 0) / data.durations.length)
+                : 0,
+              displayLabel: new Date(date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }),
+            }));
+
+          setData({
+            totalClicks,
+            totalSessions,
+            averageDuration: Math.round(avgDuration),
+            utmSources,
+            topClicks,
+            recentSessions: sessions?.slice(0, 10) || [],
+            timeSeriesData,
+          });
         }
-
-        clicks?.forEach(click => {
-          const dateKey = new Date(click.created_at).toISOString().split('T')[0];
-          if (timeSeriesMap[dateKey]) {
-            timeSeriesMap[dateKey].clicks += 1;
-          }
-        });
-
-        sessions?.forEach(session => {
-          const dateKey = new Date(session.created_at).toISOString().split('T')[0];
-          if (timeSeriesMap[dateKey]) {
-            timeSeriesMap[dateKey].sessions += 1;
-            timeSeriesMap[dateKey].durations.push(session.total_duration || 0);
-          }
-        });
-
-        const timeSeriesData = Object.entries(timeSeriesMap)
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([date, data]) => ({
-            date,
-            clicks: data.clicks,
-            sessions: data.sessions,
-            avgDuration: data.durations.length > 0
-              ? Math.round(data.durations.reduce((a, b) => a + b, 0) / data.durations.length)
-              : 0,
-          }));
-
-        setData({
-          totalClicks,
-          totalSessions,
-          averageDuration: Math.round(avgDuration),
-          utmSources,
-          topClicks,
-          recentSessions: sessions?.slice(0, 10) || [],
-          timeSeriesData,
-        });
       } catch (error) {
         console.error('Error fetching analytics:', error);
       } finally {
@@ -209,6 +258,8 @@ const Analytics: React.FC = () => {
   };
 
   const TimeSeriesChart: React.FC<{ data: AnalyticsData['timeSeriesData'] }> = ({ data }) => {
+    const [hoveredPoint, setHoveredPoint] = useState<{ index: number; x: number; y: number } | null>(null);
+
     if (data.length === 0) {
       return (
         <div className="text-center text-gray-500 py-8">
@@ -219,13 +270,16 @@ const Analytics: React.FC = () => {
 
     const width = 800;
     const height = 300;
-    const padding = { top: 20, right: 20, bottom: 40, left: 50 };
+    const padding = { top: 20, right: 20, bottom: 40, left: 60 };
     const chartWidth = width - padding.left - padding.right;
     const chartHeight = height - padding.top - padding.bottom;
 
     const maxClicks = Math.max(...data.map(d => d.clicks), 1);
     const maxSessions = Math.max(...data.map(d => d.sessions), 1);
     const maxDuration = Math.max(...data.map(d => d.avgDuration), 1);
+    const maxValue = Math.max(maxClicks, maxSessions);
+    const ySteps = 5;
+    const yStepValue = Math.ceil(maxValue / ySteps);
 
     const clicksPath = data
       .map((d, i) => {
@@ -244,7 +298,7 @@ const Analytics: React.FC = () => {
       .join(' ');
 
     return (
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto relative">
         <svg width={width} height={height} className="mx-auto">
           <defs>
             <linearGradient id="clicksGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -275,8 +329,37 @@ const Analytics: React.FC = () => {
             strokeWidth="2"
           />
 
+          {Array.from({ length: ySteps + 1 }).map((_, i) => {
+            const value = yStepValue * i;
+            const y = padding.top + chartHeight - (value / (yStepValue * ySteps)) * chartHeight;
+            return (
+              <g key={i}>
+                <line
+                  x1={padding.left - 5}
+                  y1={y}
+                  x2={padding.left + chartWidth}
+                  y2={y}
+                  stroke="rgb(71, 85, 105)"
+                  strokeWidth="1"
+                  strokeDasharray="2,2"
+                  opacity="0.3"
+                />
+                <text
+                  x={padding.left - 10}
+                  y={y + 4}
+                  textAnchor="end"
+                  fill="rgb(156, 163, 175)"
+                  fontSize="10"
+                >
+                  {value}
+                </text>
+              </g>
+            );
+          })}
+
           {data.map((d, i) => {
             const x = padding.left + (i / (data.length - 1)) * chartWidth;
+            const showLabel = data.length <= 24 ? i % 2 === 0 : i % Math.ceil(data.length / 7) === 0;
             return (
               <g key={i}>
                 <line
@@ -287,7 +370,7 @@ const Analytics: React.FC = () => {
                   stroke="rgb(71, 85, 105)"
                   strokeWidth="1"
                 />
-                {i % Math.ceil(data.length / 7) === 0 && (
+                {showLabel && (
                   <text
                     x={x}
                     y={padding.top + chartHeight + 20}
@@ -295,7 +378,7 @@ const Analytics: React.FC = () => {
                     fill="rgb(156, 163, 175)"
                     fontSize="10"
                   >
-                    {new Date(d.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+                    {d.displayLabel}
                   </text>
                 )}
               </g>
@@ -329,14 +412,52 @@ const Analytics: React.FC = () => {
             const x = padding.left + (i / (data.length - 1)) * chartWidth;
             const yClicks = padding.top + chartHeight - (d.clicks / maxClicks) * chartHeight;
             const ySessions = padding.top + chartHeight - (d.sessions / maxSessions) * chartHeight;
+            const isHovered = hoveredPoint?.index === i;
             return (
               <g key={i}>
-                <circle cx={x} cy={yClicks} r="4" fill="rgb(59, 130, 246)" />
-                <circle cx={x} cy={ySessions} r="4" fill="rgb(236, 72, 153)" />
+                <circle
+                  cx={x}
+                  cy={yClicks}
+                  r={isHovered ? 6 : 4}
+                  fill="rgb(59, 130, 246)"
+                  className="cursor-pointer transition-all"
+                  onMouseEnter={(e) => setHoveredPoint({ index: i, x: e.clientX, y: e.clientY })}
+                  onMouseLeave={() => setHoveredPoint(null)}
+                />
+                <circle
+                  cx={x}
+                  cy={ySessions}
+                  r={isHovered ? 6 : 4}
+                  fill="rgb(236, 72, 153)"
+                  className="cursor-pointer transition-all"
+                  onMouseEnter={(e) => setHoveredPoint({ index: i, x: e.clientX, y: e.clientY })}
+                  onMouseLeave={() => setHoveredPoint(null)}
+                />
               </g>
             );
           })}
         </svg>
+
+        {hoveredPoint !== null && (
+          <div
+            className="fixed z-50 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-xl"
+            style={{
+              left: `${hoveredPoint.x + 10}px`,
+              top: `${hoveredPoint.y - 60}px`,
+              pointerEvents: 'none',
+            }}
+          >
+            <div className="text-xs text-gray-400 mb-1">{data[hoveredPoint.index].displayLabel}</div>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-2 h-2 rounded-full bg-blue-500" />
+              <span className="text-sm text-white">Clics: {data[hoveredPoint.index].clicks}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-pink-500" />
+              <span className="text-sm text-white">Sessions: {data[hoveredPoint.index].sessions}</span>
+            </div>
+          </div>
+        )}
 
         <div className="flex items-center justify-center gap-6 mt-4">
           <div className="flex items-center gap-2">

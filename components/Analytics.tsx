@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { MousePointer, Clock, ExternalLink, Users } from 'lucide-react';
+import { MousePointer, Clock, ExternalLink, Users, ChevronDown, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import UTMLinkGenerator from './UTMLinkGenerator';
 
 interface AnalyticsData {
@@ -17,6 +18,12 @@ interface AnalyticsData {
     bounce: boolean;
     created_at: string;
   }>;
+  timeSeriesData: Array<{
+    date: string;
+    clicks: number;
+    sessions: number;
+    avgDuration: number;
+  }>;
 }
 
 const Analytics: React.FC = () => {
@@ -27,10 +34,26 @@ const Analytics: React.FC = () => {
     utmSources: [],
     topClicks: [],
     recentSessions: [],
+    timeSeriesData: [],
   });
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState(7);
   const [utmMappings, setUtmMappings] = useState<Record<string, any>>({});
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(['chart', 'utm', 'clicks', 'sessions'])
+  );
+
+  const toggleSection = (section: string) => {
+    setExpandedSections((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(section)) {
+        newSet.delete(section);
+      } else {
+        newSet.add(section);
+      }
+      return newSet;
+    });
+  };
 
   const decodeUtmValue = (code: string | null, type: 'source' | 'medium' | 'campaign' = 'source'): string => {
     if (!code) return '-';
@@ -125,6 +148,41 @@ const Analytics: React.FC = () => {
           .slice(0, 10)
           .map(([text, { count, type }]) => ({ text, count, type }));
 
+        const timeSeriesMap: Record<string, { clicks: number; sessions: number; durations: number[] }> = {};
+
+        for (let i = 0; i < dateRange; i++) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          const dateKey = date.toISOString().split('T')[0];
+          timeSeriesMap[dateKey] = { clicks: 0, sessions: 0, durations: [] };
+        }
+
+        clicks?.forEach(click => {
+          const dateKey = new Date(click.created_at).toISOString().split('T')[0];
+          if (timeSeriesMap[dateKey]) {
+            timeSeriesMap[dateKey].clicks += 1;
+          }
+        });
+
+        sessions?.forEach(session => {
+          const dateKey = new Date(session.created_at).toISOString().split('T')[0];
+          if (timeSeriesMap[dateKey]) {
+            timeSeriesMap[dateKey].sessions += 1;
+            timeSeriesMap[dateKey].durations.push(session.total_duration || 0);
+          }
+        });
+
+        const timeSeriesData = Object.entries(timeSeriesMap)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([date, data]) => ({
+            date,
+            clicks: data.clicks,
+            sessions: data.sessions,
+            avgDuration: data.durations.length > 0
+              ? Math.round(data.durations.reduce((a, b) => a + b, 0) / data.durations.length)
+              : 0,
+          }));
+
         setData({
           totalClicks,
           totalSessions,
@@ -132,6 +190,7 @@ const Analytics: React.FC = () => {
           utmSources,
           topClicks,
           recentSessions: sessions?.slice(0, 10) || [],
+          timeSeriesData,
         });
       } catch (error) {
         console.error('Error fetching analytics:', error);
@@ -147,6 +206,150 @@ const Analytics: React.FC = () => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${minutes}m ${secs}s`;
+  };
+
+  const TimeSeriesChart: React.FC<{ data: AnalyticsData['timeSeriesData'] }> = ({ data }) => {
+    if (data.length === 0) {
+      return (
+        <div className="text-center text-gray-500 py-8">
+          Aucune donnée disponible pour afficher le graphique
+        </div>
+      );
+    }
+
+    const width = 800;
+    const height = 300;
+    const padding = { top: 20, right: 20, bottom: 40, left: 50 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+
+    const maxClicks = Math.max(...data.map(d => d.clicks), 1);
+    const maxSessions = Math.max(...data.map(d => d.sessions), 1);
+    const maxDuration = Math.max(...data.map(d => d.avgDuration), 1);
+
+    const clicksPath = data
+      .map((d, i) => {
+        const x = padding.left + (i / (data.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - (d.clicks / maxClicks) * chartHeight;
+        return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+      })
+      .join(' ');
+
+    const sessionsPath = data
+      .map((d, i) => {
+        const x = padding.left + (i / (data.length - 1)) * chartWidth;
+        const y = padding.top + chartHeight - (d.sessions / maxSessions) * chartHeight;
+        return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+      })
+      .join(' ');
+
+    return (
+      <div className="overflow-x-auto">
+        <svg width={width} height={height} className="mx-auto">
+          <defs>
+            <linearGradient id="clicksGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgb(59, 130, 246)" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="rgb(59, 130, 246)" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="sessionsGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgb(236, 72, 153)" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="rgb(236, 72, 153)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+
+          <line
+            x1={padding.left}
+            y1={padding.top + chartHeight}
+            x2={padding.left + chartWidth}
+            y2={padding.top + chartHeight}
+            stroke="rgb(71, 85, 105)"
+            strokeWidth="2"
+          />
+
+          <line
+            x1={padding.left}
+            y1={padding.top}
+            x2={padding.left}
+            y2={padding.top + chartHeight}
+            stroke="rgb(71, 85, 105)"
+            strokeWidth="2"
+          />
+
+          {data.map((d, i) => {
+            const x = padding.left + (i / (data.length - 1)) * chartWidth;
+            return (
+              <g key={i}>
+                <line
+                  x1={x}
+                  y1={padding.top + chartHeight}
+                  x2={x}
+                  y2={padding.top + chartHeight + 5}
+                  stroke="rgb(71, 85, 105)"
+                  strokeWidth="1"
+                />
+                {i % Math.ceil(data.length / 7) === 0 && (
+                  <text
+                    x={x}
+                    y={padding.top + chartHeight + 20}
+                    textAnchor="middle"
+                    fill="rgb(156, 163, 175)"
+                    fontSize="10"
+                  >
+                    {new Date(d.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+
+          <path
+            d={`${clicksPath} L ${padding.left + chartWidth} ${padding.top + chartHeight} L ${padding.left} ${padding.top + chartHeight} Z`}
+            fill="url(#clicksGradient)"
+          />
+
+          <path
+            d={clicksPath}
+            fill="none"
+            stroke="rgb(59, 130, 246)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <path
+            d={sessionsPath}
+            fill="none"
+            stroke="rgb(236, 72, 153)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          {data.map((d, i) => {
+            const x = padding.left + (i / (data.length - 1)) * chartWidth;
+            const yClicks = padding.top + chartHeight - (d.clicks / maxClicks) * chartHeight;
+            const ySessions = padding.top + chartHeight - (d.sessions / maxSessions) * chartHeight;
+            return (
+              <g key={i}>
+                <circle cx={x} cy={yClicks} r="4" fill="rgb(59, 130, 246)" />
+                <circle cx={x} cy={ySessions} r="4" fill="rgb(236, 72, 153)" />
+              </g>
+            );
+          })}
+        </svg>
+
+        <div className="flex items-center justify-center gap-6 mt-4">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-blue-500" />
+            <span className="text-sm text-gray-300">Clics</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-pink-500" />
+            <span className="text-sm text-gray-300">Sessions</span>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   if (loading) {
@@ -209,113 +412,210 @@ const Analytics: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-card border border-slate-800 rounded-xl p-6 mb-8">
-          <h3 className="text-xl font-bold text-white mb-4">Sources UTM</h3>
-          <div className="space-y-3">
-            {data.utmSources.map((source, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
-                <div className="flex items-center gap-2">
-                  <ExternalLink className="w-4 h-4 text-secondary" />
-                  <span className="text-gray-300 font-medium">{decodeUtmValue(source.source, 'source')}</span>
-                </div>
-                <span className="text-white font-bold">{source.count}</span>
-              </div>
-            ))}
-            {data.utmSources.length === 0 && (
-              <p className="text-gray-500 text-sm">Aucune source UTM détectée</p>
+        <div className="bg-card border border-slate-800 rounded-xl overflow-hidden mb-8">
+          <button
+            onClick={() => toggleSection('chart')}
+            className="w-full flex items-center justify-between p-6 hover:bg-surface transition-colors"
+          >
+            <h3 className="text-xl font-bold text-white">Évolution temporelle</h3>
+            {expandedSections.has('chart') ? (
+              <ChevronDown className="w-5 h-5 text-gray-400" />
+            ) : (
+              <ChevronRight className="w-5 h-5 text-gray-400" />
             )}
-          </div>
+          </button>
+          <AnimatePresence>
+            {expandedSections.has('chart') && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-6 pt-0 border-t border-slate-800">
+                  <TimeSeriesChart data={data.timeSeriesData} />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        <div className="bg-card border border-slate-800 rounded-xl p-6 mb-8">
-          <h3 className="text-xl font-bold text-white mb-4">Éléments les plus cliqués</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-slate-700">
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Élément</th>
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Type</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium text-sm">Clics</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.topClicks.map((click, idx) => (
-                  <tr key={idx} className="border-b border-slate-800 hover:bg-surface transition-colors">
-                    <td className="py-3 px-4 text-gray-300">{click.text}</td>
-                    <td className="py-3 px-4">
-                      <span className="inline-block px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
-                        {click.type}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 text-right text-white font-semibold">{click.count}</td>
-                  </tr>
-                ))}
-                {data.topClicks.length === 0 && (
-                  <tr>
-                    <td colSpan={3} className="py-4 text-center text-gray-500 text-sm">
-                      Aucun clic enregistré
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+        <div className="bg-card border border-slate-800 rounded-xl overflow-hidden mb-8">
+          <button
+            onClick={() => toggleSection('utm')}
+            className="w-full flex items-center justify-between p-6 hover:bg-surface transition-colors"
+          >
+            <h3 className="text-xl font-bold text-white">Sources UTM</h3>
+            {expandedSections.has('utm') ? (
+              <ChevronDown className="w-5 h-5 text-gray-400" />
+            ) : (
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            )}
+          </button>
+          <AnimatePresence>
+            {expandedSections.has('utm') && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-6 pt-0 border-t border-slate-800">
+                  <div className="space-y-3">
+                    {data.utmSources.map((source, idx) => (
+                      <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <ExternalLink className="w-4 h-4 text-secondary" />
+                          <span className="text-gray-300 font-medium">{decodeUtmValue(source.source, 'source')}</span>
+                        </div>
+                        <span className="text-white font-bold">{source.count}</span>
+                      </div>
+                    ))}
+                    {data.utmSources.length === 0 && (
+                      <p className="text-gray-500 text-sm">Aucune source UTM détectée</p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        <div className="bg-card border border-slate-800 rounded-xl p-6">
-          <h3 className="text-xl font-bold text-white mb-4">Sessions récentes</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-slate-700">
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Date</th>
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Page d'entrée</th>
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Source</th>
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Campagne</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium text-sm">Durée</th>
-                  <th className="text-center py-3 px-4 text-gray-400 font-medium text-sm">Rebond</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.recentSessions.map((session, idx) => (
-                  <tr key={idx} className="border-b border-slate-800 hover:bg-surface transition-colors">
-                    <td className="py-3 px-4 text-gray-300 text-sm">
-                      {new Date(session.created_at).toLocaleDateString('fr-FR', {
-                        day: '2-digit',
-                        month: 'short',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </td>
-                    <td className="py-3 px-4 text-gray-300 text-sm">{session.entry_page}</td>
-                    <td className="py-3 px-4 text-gray-300 text-sm">{decodeUtmValue(session.utm_source, 'source')}</td>
-                    <td className="py-3 px-4 text-gray-300 text-sm">{decodeUtmValue(session.utm_campaign, 'campaign')}</td>
-                    <td className="py-3 px-4 text-right text-gray-300 text-sm">
-                      {formatDuration(session.total_duration)}
-                    </td>
-                    <td className="py-3 px-4 text-center">
-                      {session.bounce ? (
-                        <span className="inline-block px-2 py-1 bg-red-500/10 text-red-400 rounded text-xs font-medium">
-                          Oui
-                        </span>
-                      ) : (
-                        <span className="inline-block px-2 py-1 bg-green-500/10 text-green-400 rounded text-xs font-medium">
-                          Non
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-                {data.recentSessions.length === 0 && (
-                  <tr>
-                    <td colSpan={6} className="py-4 text-center text-gray-500 text-sm">
-                      Aucune session enregistrée
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+        <div className="bg-card border border-slate-800 rounded-xl overflow-hidden mb-8">
+          <button
+            onClick={() => toggleSection('clicks')}
+            className="w-full flex items-center justify-between p-6 hover:bg-surface transition-colors"
+          >
+            <h3 className="text-xl font-bold text-white">Éléments les plus cliqués</h3>
+            {expandedSections.has('clicks') ? (
+              <ChevronDown className="w-5 h-5 text-gray-400" />
+            ) : (
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            )}
+          </button>
+          <AnimatePresence>
+            {expandedSections.has('clicks') && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-6 pt-0 border-t border-slate-800">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-slate-700">
+                          <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Élément</th>
+                          <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Type</th>
+                          <th className="text-right py-3 px-4 text-gray-400 font-medium text-sm">Clics</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.topClicks.map((click, idx) => (
+                          <tr key={idx} className="border-b border-slate-800 hover:bg-surface transition-colors">
+                            <td className="py-3 px-4 text-gray-300">{click.text}</td>
+                            <td className="py-3 px-4">
+                              <span className="inline-block px-2 py-1 bg-primary/10 text-primary rounded text-xs font-medium">
+                                {click.type}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-right text-white font-semibold">{click.count}</td>
+                          </tr>
+                        ))}
+                        {data.topClicks.length === 0 && (
+                          <tr>
+                            <td colSpan={3} className="py-4 text-center text-gray-500 text-sm">
+                              Aucun clic enregistré
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <div className="bg-card border border-slate-800 rounded-xl overflow-hidden mb-8">
+          <button
+            onClick={() => toggleSection('sessions')}
+            className="w-full flex items-center justify-between p-6 hover:bg-surface transition-colors"
+          >
+            <h3 className="text-xl font-bold text-white">Sessions récentes</h3>
+            {expandedSections.has('sessions') ? (
+              <ChevronDown className="w-5 h-5 text-gray-400" />
+            ) : (
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            )}
+          </button>
+          <AnimatePresence>
+            {expandedSections.has('sessions') && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-6 pt-0 border-t border-slate-800">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-slate-700">
+                          <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Date</th>
+                          <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Page d'entrée</th>
+                          <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Source</th>
+                          <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">Campagne</th>
+                          <th className="text-right py-3 px-4 text-gray-400 font-medium text-sm">Durée</th>
+                          <th className="text-center py-3 px-4 text-gray-400 font-medium text-sm">Rebond</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.recentSessions.map((session, idx) => (
+                          <tr key={idx} className="border-b border-slate-800 hover:bg-surface transition-colors">
+                            <td className="py-3 px-4 text-gray-300 text-sm">
+                              {new Date(session.created_at).toLocaleDateString('fr-FR', {
+                                day: '2-digit',
+                                month: 'short',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </td>
+                            <td className="py-3 px-4 text-gray-300 text-sm">{session.entry_page}</td>
+                            <td className="py-3 px-4 text-gray-300 text-sm">{decodeUtmValue(session.utm_source, 'source')}</td>
+                            <td className="py-3 px-4 text-gray-300 text-sm">{decodeUtmValue(session.utm_campaign, 'campaign')}</td>
+                            <td className="py-3 px-4 text-right text-gray-300 text-sm">
+                              {formatDuration(session.total_duration)}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              {session.bounce ? (
+                                <span className="inline-block px-2 py-1 bg-red-500/10 text-red-400 rounded text-xs font-medium">
+                                  Oui
+                                </span>
+                              ) : (
+                                <span className="inline-block px-2 py-1 bg-green-500/10 text-green-400 rounded text-xs font-medium">
+                                  Non
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                        {data.recentSessions.length === 0 && (
+                          <tr>
+                            <td colSpan={6} className="py-4 text-center text-gray-500 text-sm">
+                              Aucune session enregistrée
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="mt-8">

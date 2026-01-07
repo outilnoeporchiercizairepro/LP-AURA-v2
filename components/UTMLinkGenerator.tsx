@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Copy, Plus, Trash2, ExternalLink, CheckCircle, ChevronDown, ChevronRight, Instagram, Linkedin, Youtube, Facebook, Twitter, Share2 } from 'lucide-react';
+import { Copy, Plus, Trash2, ExternalLink, CheckCircle, ChevronDown, ChevronRight, Youtube, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface UTMLink {
@@ -25,10 +25,6 @@ const UTMLinkGenerator: React.FC = () => {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['social', 'youtube']));
   const [formData, setFormData] = useState({
     source: '',
-    medium: '',
-    campaign: '',
-    term: '',
-    content: '',
     notes: '',
     category: 'social' as 'social' | 'youtube',
   });
@@ -80,20 +76,16 @@ const UTMLinkGenerator: React.FC = () => {
 
       const params = new URLSearchParams();
       params.append('utm_source', shortCode);
-      if (formData.medium) params.append('utm_medium', shortCode + 'm');
-      if (formData.campaign) params.append('utm_campaign', shortCode + 'c');
-      if (formData.term) params.append('utm_term', shortCode + 't');
-      if (formData.content) params.append('utm_content', shortCode + 'x');
 
       const fullUrl = `${baseUrl}/?${params.toString()}`;
 
       const { error } = await supabase.from('utm_links').insert({
         short_code: shortCode,
         source_label: formData.source,
-        medium_label: formData.medium || null,
-        campaign_label: formData.campaign || null,
-        term_label: formData.term || null,
-        content_label: formData.content || null,
+        medium_label: null,
+        campaign_label: null,
+        term_label: null,
+        content_label: null,
         full_url: fullUrl,
         notes: formData.notes || null,
         category: formData.category,
@@ -104,10 +96,6 @@ const UTMLinkGenerator: React.FC = () => {
 
       setFormData({
         source: '',
-        medium: '',
-        campaign: '',
-        term: '',
-        content: '',
         notes: '',
         category: 'social',
       });
@@ -194,8 +182,8 @@ const UTMLinkGenerator: React.FC = () => {
             onSubmit={generateLink}
             className="mb-6 p-4 bg-surface rounded-lg border border-slate-700"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="md:col-span-2">
+            <div className="space-y-4">
+              <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Catégorie *
                 </label>
@@ -238,58 +226,6 @@ const UTMLinkGenerator: React.FC = () => {
                   className="w-full px-4 py-2 bg-card border border-slate-700 rounded-lg text-white focus:outline-none focus:border-primary"
                   placeholder={formData.category === 'youtube' ? 'youtube-imrane' : 'instagram-baptiste'}
                   required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Medium <span className="text-xs text-gray-500">(ex: social, email, cpc)</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.medium}
-                  onChange={(e) => setFormData({ ...formData, medium: e.target.value })}
-                  className="w-full px-4 py-2 bg-card border border-slate-700 rounded-lg text-white focus:outline-none focus:border-primary"
-                  placeholder="post-organique"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Campagne <span className="text-xs text-gray-500">(ex: lancement-2024)</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.campaign}
-                  onChange={(e) => setFormData({ ...formData, campaign: e.target.value })}
-                  className="w-full px-4 py-2 bg-card border border-slate-700 rounded-lg text-white focus:outline-none focus:border-primary"
-                  placeholder="promo-noel"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Terme <span className="text-xs text-gray-500">(optionnel)</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.term}
-                  onChange={(e) => setFormData({ ...formData, term: e.target.value })}
-                  className="w-full px-4 py-2 bg-card border border-slate-700 rounded-lg text-white focus:outline-none focus:border-primary"
-                  placeholder="mot-clé"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Contenu <span className="text-xs text-gray-500">(optionnel)</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full px-4 py-2 bg-card border border-slate-700 rounded-lg text-white focus:outline-none focus:border-primary"
-                  placeholder="variante-a"
                 />
               </div>
 
@@ -393,23 +329,9 @@ const UTMLinkGenerator: React.FC = () => {
                                   </span>
                                 </div>
 
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-2">
-                                  <div>
-                                    <span className="text-xs text-gray-500">Source:</span>
-                                    <p className="text-sm text-white truncate">{link.source_label}</p>
-                                  </div>
-                                  {link.medium_label && (
-                                    <div>
-                                      <span className="text-xs text-gray-500">Medium:</span>
-                                      <p className="text-sm text-white truncate">{link.medium_label}</p>
-                                    </div>
-                                  )}
-                                  {link.campaign_label && (
-                                    <div>
-                                      <span className="text-xs text-gray-500">Campagne:</span>
-                                      <p className="text-sm text-white truncate">{link.campaign_label}</p>
-                                    </div>
-                                  )}
+                                <div className="mb-2">
+                                  <span className="text-xs text-gray-500">Source:</span>
+                                  <p className="text-sm text-white font-medium">{link.source_label}</p>
                                 </div>
 
                                 {link.notes && (
@@ -462,10 +384,10 @@ const UTMLinkGenerator: React.FC = () => {
       <div className="mt-6 p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg">
         <h4 className="text-sm font-semibold text-blue-400 mb-2">Comment ça marche ?</h4>
         <ul className="text-xs text-gray-300 space-y-1">
-          <li>• Les liens générés utilisent des codes courts anonymes (ex: a1b2c3)</li>
+          <li>• Les liens générés utilisent un code court anonyme dans utm_source (ex: a1b2c3d4)</li>
           <li>• Personne ne peut deviner la source réelle en regardant l'URL</li>
-          <li>• Dans le dashboard, vous verrez les vraies valeurs que vous avez définies</li>
-          <li>• Partagez ces liens sur vos réseaux sociaux, emails, etc.</li>
+          <li>• Dans le dashboard, vous verrez la vraie source que vous avez définie</li>
+          <li>• Partagez ces liens sur vos réseaux sociaux, vidéos YouTube, etc.</li>
         </ul>
       </div>
     </div>

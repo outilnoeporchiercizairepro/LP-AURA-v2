@@ -62,7 +62,7 @@ const SocialProof: React.FC = () => {
     <div className="flex-shrink-0 w-[90vw] md:w-[350px] px-3">
       <div
         onClick={() => setSelectedReview(review)}
-        className="p-5 rounded-xl bg-white border border-gray-200 relative shadow-sm hover:shadow-md transition-all cursor-pointer hover:border-primary/30"
+        className="h-[240px] p-5 rounded-xl bg-white border border-gray-200 relative shadow-sm hover:shadow-md transition-all cursor-pointer hover:border-primary/30 flex flex-col"
       >
         <div className="flex items-start justify-between mb-3">
           <svg className="trustpilot-stars-svg" height="18" width="90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 96">
@@ -78,9 +78,9 @@ const SocialProof: React.FC = () => {
         </div>
 
         <h4 className="text-gray-900 font-bold text-sm mb-2 line-clamp-2">{review.title}</h4>
-        <p className="text-gray-700 text-sm leading-relaxed mb-3 line-clamp-3">{review.text}</p>
+        <p className="text-gray-700 text-sm leading-relaxed flex-1 line-clamp-3">{review.text}</p>
 
-        <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+        <div className="flex items-center gap-2 pt-3 border-t border-gray-100 mt-auto">
           <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[10px] font-bold text-white">
             {getInitials(review.name)}
           </div>

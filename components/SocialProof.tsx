@@ -48,7 +48,7 @@ const SocialProof: React.FC = () => {
     }
   ];
 
-  const duplicatedReviews = [...writtenReviews, ...writtenReviews, ...writtenReviews, ...writtenReviews];
+  const duplicatedReviews = [...writtenReviews, ...writtenReviews];
 
   const getInitials = (name: string) => {
     const parts = name.split(' ');
@@ -144,7 +144,7 @@ const SocialProof: React.FC = () => {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 50,
+                duration: 30,
                 ease: "linear",
               },
             }}

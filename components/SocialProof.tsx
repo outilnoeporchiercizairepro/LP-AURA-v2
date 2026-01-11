@@ -1,7 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
+  const [selectedReview, setSelectedReview] = useState<typeof writtenReviews[0] | null>(null);
+
   const writtenReviews = [
     {
       name: "Caroline",
@@ -56,26 +59,29 @@ const SocialProof: React.FC = () => {
   };
 
   const ReviewCard = ({ review }: { review: typeof writtenReviews[0] }) => (
-    <div className="flex-shrink-0 w-[90vw] md:w-[400px] px-3">
-      <div className="p-6 rounded-xl bg-white border border-gray-200 relative h-full shadow-sm hover:shadow-md transition-shadow">
-        <div className="flex items-start justify-between mb-4">
-          <svg className="trustpilot-stars-svg" height="20" width="100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 96">
+    <div className="flex-shrink-0 w-[90vw] md:w-[350px] px-3">
+      <div
+        onClick={() => setSelectedReview(review)}
+        className="p-5 rounded-xl bg-white border border-gray-200 relative shadow-sm hover:shadow-md transition-all cursor-pointer hover:border-primary/30"
+      >
+        <div className="flex items-start justify-between mb-3">
+          <svg className="trustpilot-stars-svg" height="18" width="90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 96">
             <path fill="#00b67a" d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path>
             <path fill="#ffffff" d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z"></path>
           </svg>
-          <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded text-xs text-gray-600">
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-green-600">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 bg-gray-50 rounded text-xs text-gray-600">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-green-600">
               <path fillRule="evenodd" clipRule="evenodd" d="M7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14ZM6.09217 7.81401L9.20311 4.7031C9.44874 4.45757 9.84688 4.45757 10.0923 4.7031C10.338 4.94864 10.338 5.34673 10.0923 5.59226L6.62009 9.06448C6.59573 9.10283 6.56682 9.13912 6.53333 9.17256C6.28787 9.41821 5.88965 9.41821 5.64402 9.17256L3.7059 7.11031C3.46046 6.86464 3.46046 6.46669 3.7059 6.22102C3.95154 5.97548 4.34968 5.97548 4.59512 6.22102L6.09217 7.81401Z" fill="currentColor"></path>
             </svg>
             <span className="font-medium">Vérifié</span>
           </div>
         </div>
 
-        <h4 className="text-gray-900 font-bold text-sm mb-3">{review.title}</h4>
-        <p className="text-gray-700 text-sm leading-relaxed mb-4">{review.text}</p>
+        <h4 className="text-gray-900 font-bold text-sm mb-2 line-clamp-2">{review.title}</h4>
+        <p className="text-gray-700 text-sm leading-relaxed mb-3 line-clamp-3">{review.text}</p>
 
-        <div className="flex items-center gap-2 mt-auto pt-4 border-t border-gray-100">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[10px] font-bold text-white">
+        <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[10px] font-bold text-white">
             {getInitials(review.name)}
           </div>
           <span className="text-gray-900 font-semibold text-sm">{review.name}</span>
@@ -172,6 +178,70 @@ const SocialProof: React.FC = () => {
         </motion.div>
 
       </div>
+
+      <AnimatePresence>
+        {selectedReview && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedReview(null)}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              onClick={() => setSelectedReview(null)}
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              >
+                <div className="p-6 md:p-8">
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-4">
+                        <svg className="trustpilot-stars-svg" height="20" width="100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 96">
+                          <path fill="#00b67a" d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path>
+                          <path fill="#ffffff" d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z"></path>
+                        </svg>
+                        <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-50 rounded text-xs text-gray-600">
+                          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-green-600">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14ZM6.09217 7.81401L9.20311 4.7031C9.44874 4.45757 9.84688 4.45757 10.0923 4.7031C10.338 4.94864 10.338 5.34673 10.0923 5.59226L6.62009 9.06448C6.59573 9.10283 6.56682 9.13912 6.53333 9.17256C6.28787 9.41821 5.88965 9.41821 5.64402 9.17256L3.7059 7.11031C3.46046 6.86464 3.46046 6.46669 3.7059 6.22102C3.95154 5.97548 4.34968 5.97548 4.59512 6.22102L6.09217 7.81401Z" fill="currentColor"></path>
+                          </svg>
+                          <span className="font-medium">Vérifié</span>
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{selectedReview.title}</h3>
+                    </div>
+                    <button
+                      onClick={() => setSelectedReview(null)}
+                      className="ml-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    >
+                      <X className="w-5 h-5 text-gray-500" />
+                    </button>
+                  </div>
+
+                  <p className="text-gray-700 text-base leading-relaxed mb-6">{selectedReview.text}</p>
+
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-sm font-bold text-white">
+                      {getInitials(selectedReview.name)}
+                    </div>
+                    <div>
+                      <p className="text-gray-900 font-semibold">{selectedReview.name}</p>
+                      <p className="text-gray-500 text-sm">Membre Aura Academy</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

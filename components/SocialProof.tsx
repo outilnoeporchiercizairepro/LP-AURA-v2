@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
 const SocialProof: React.FC = () => {
   const [selectedReview, setSelectedReview] = useState<typeof writtenReviews[0] | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const constraintsRef = useRef<HTMLDivElement>(null);
 
   const writtenReviews = [
     {
@@ -61,7 +63,7 @@ const SocialProof: React.FC = () => {
   const ReviewCard = ({ review }: { review: typeof writtenReviews[0] }) => (
     <div className="flex-shrink-0 w-[90vw] md:w-[350px] px-3">
       <div
-        onClick={() => setSelectedReview(review)}
+        onClick={() => !isDragging && setSelectedReview(review)}
         className="h-[240px] p-5 rounded-xl bg-white border border-gray-200 relative shadow-sm hover:shadow-md transition-all cursor-pointer hover:border-primary/30 flex flex-col"
       >
         <div className="flex items-start justify-between mb-3">
@@ -133,21 +135,16 @@ const SocialProof: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Written Reviews Infinite Carousel */}
-        <div className="relative overflow-hidden -mx-4">
+        {/* Written Reviews Swipeable Carousel */}
+        <div ref={constraintsRef} className="relative overflow-hidden -mx-4 cursor-grab active:cursor-grabbing">
           <motion.div
             className="flex"
-            animate={{
-              x: ["0%", "-50%"],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 15,
-                ease: "linear",
-              },
-            }}
+            drag="x"
+            dragConstraints={constraintsRef}
+            dragElastic={0.1}
+            dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={() => setTimeout(() => setIsDragging(false), 100)}
           >
             {duplicatedReviews.map((review, idx) => (
               <ReviewCard key={idx} review={review} />

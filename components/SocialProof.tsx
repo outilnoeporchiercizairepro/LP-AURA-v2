@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+
+interface Review {
+  id?: string;
+  name: string;
+  title: string;
+  text: string;
+}
 
 const SocialProof: React.FC = () => {
-  const [selectedReview, setSelectedReview] = useState<typeof writtenReviews[0] | null>(null);
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const writtenReviews = [
+  const defaultReviews: Review[] = [
     {
       name: "Caroline",
       title: "Une excellente academy pour structurer et faire évoluer ses projets",
@@ -48,7 +58,34 @@ const SocialProof: React.FC = () => {
     }
   ];
 
-  const duplicatedReviews = [...writtenReviews, ...writtenReviews];
+  useEffect(() => {
+    loadTestimonials();
+  }, []);
+
+  const loadTestimonials = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('id, name, title, text')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        setReviews(data);
+      } else {
+        setReviews(defaultReviews);
+      }
+    } catch (err) {
+      console.error('Error loading testimonials:', err);
+      setReviews(defaultReviews);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const duplicatedReviews = [...reviews, ...reviews];
 
   const getInitials = (name: string) => {
     const parts = name.split(' ');
@@ -58,7 +95,7 @@ const SocialProof: React.FC = () => {
     return name.substring(0, 2).toUpperCase();
   };
 
-  const ReviewCard = ({ review }: { review: typeof writtenReviews[0] }) => (
+  const ReviewCard = ({ review }: { review: Review }) => (
     <div className="flex-shrink-0 w-[90vw] md:w-[350px] px-3">
       <div
         onClick={() => setSelectedReview(review)}
@@ -134,30 +171,40 @@ const SocialProof: React.FC = () => {
         </motion.div>
 
         {/* Written Reviews Infinite Carousel */}
-        <div className="relative overflow-hidden -mx-4">
-          <motion.div
-            className="flex"
-            animate={{
-              x: ["0%", "-50%"],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 15,
-                ease: "linear",
-              },
-            }}
-          >
-            {duplicatedReviews.map((review, idx) => (
-              <ReviewCard key={idx} review={review} />
-            ))}
-          </motion.div>
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : reviews.length === 0 ? (
+          <div className="text-center py-20 text-gray-400">
+            Aucun avis pour le moment
+          </div>
+        ) : (
+          <div className="relative overflow-hidden -mx-4">
+            <motion.div
+              className="flex"
+              animate={{
+                x: ["0%", "-50%"],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 15,
+                  ease: "linear",
+                },
+              }}
+            >
+              {duplicatedReviews.map((review, idx) => (
+                <ReviewCard key={idx} review={review} />
+              ))}
+            </motion.div>
 
-          {/* Gradient overlays for fade effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020617] to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none z-10" />
-        </div>
+            {/* Gradient overlays for fade effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020617] to-transparent pointer-events-none z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none z-10" />
+          </div>
+        )}
 
         {/* CTA Button */}
         <motion.div

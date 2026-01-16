@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, X, Image as ImageIcon, Video, Loader2, CheckCircle, AlertCircle, Home, LogOut, BarChart3, FolderOpen } from 'lucide-react';
+import { Upload, X, Image as ImageIcon, Video, Loader2, CheckCircle, AlertCircle, Home, LogOut, BarChart3, FolderOpen, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import Analytics from '../components/Analytics';
+import TestimonialsManager from '../components/TestimonialsManager';
 
 interface UploadedFile {
   name: string;
@@ -17,7 +18,7 @@ interface UploadedFile {
 const Admin: React.FC = () => {
   const navigate = useNavigate();
   const { signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<'media' | 'analytics'>('media');
+  const [activeTab, setActiveTab] = useState<'media' | 'analytics' | 'testimonials'>('media');
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState<string>('');
@@ -219,6 +220,23 @@ const Admin: React.FC = () => {
             )}
           </button>
           <button
+            onClick={() => setActiveTab('testimonials')}
+            className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors relative ${
+              activeTab === 'testimonials'
+                ? 'text-primary'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <MessageSquare className="w-5 h-5" />
+            Avis
+            {activeTab === 'testimonials' && (
+              <motion.div
+                layoutId="activeTab"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+              />
+            )}
+          </button>
+          <button
             onClick={() => setActiveTab('analytics')}
             className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors relative ${
               activeTab === 'analytics'
@@ -239,6 +257,8 @@ const Admin: React.FC = () => {
 
         {activeTab === 'analytics' ? (
           <Analytics />
+        ) : activeTab === 'testimonials' ? (
+          <TestimonialsManager />
         ) : (
           <>
         <div className="grid md:grid-cols-2 gap-6 mb-8">

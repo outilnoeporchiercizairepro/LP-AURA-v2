@@ -85,7 +85,7 @@ const SocialProof: React.FC = () => {
     }
   };
 
-  const duplicatedReviews = [...reviews, ...reviews];
+  const duplicatedReviews = [...reviews, ...reviews, ...reviews];
 
   const getInitials = (name: string) => {
     const parts = name.split(' ');
@@ -184,13 +184,13 @@ const SocialProof: React.FC = () => {
             <motion.div
               className="flex"
               animate={{
-                x: ["0%", "-50%"],
+                x: ["0%", "-66.66%"],
               }}
               transition={{
                 x: {
                   repeat: Infinity,
                   repeatType: "loop",
-                  duration: 15,
+                  duration: 20,
                   ease: "linear",
                 },
               }}

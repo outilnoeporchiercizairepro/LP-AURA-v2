@@ -105,7 +105,26 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">9. ABSENCE DE GARANTIE DE RÉSULTATS</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">9. GARANTIE COMMERCIALE "SATISFAIT OU REMBOURSÉ 7 JOURS"</h2>
+            <p className="mb-4">
+              Par dérogation aux dispositions relatives à l'absence de droit de rétractation, Aura Académie propose
+              une garantie commerciale "satisfait ou remboursé" d'une durée de sept (7) jours calendaires à compter
+              de la date d'accès à la plateforme.
+            </p>
+            <p className="mb-2">
+              Cette garantie permet au client de demander le remboursement intégral du montant payé, sans avoir à
+              justifier de motif, sous réserve du respect des conditions suivantes :
+            </p>
+            <ul className="list-disc list-inside ml-4 space-y-2">
+              <li>la demande doit être formulée par écrit (email) dans un délai de 7 jours calendaires après l'achat,</li>
+              <li>l'accès à la plateforme sera immédiatement désactivé,</li>
+              <li>cette garantie est limitée à une seule utilisation par client et par offre.</li>
+            </ul>
+            <p className="mt-4">Au-delà de ce délai, aucun remboursement ne pourra être exigé.</p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-white mb-4">10. ABSENCE DE GARANTIE DE RÉSULTATS</h2>
             <p className="mb-2">Aura Académie est tenue à une obligation de moyens, et non de résultats.</p>
             <p className="mb-2">Les formations fournissent :</p>
             <ul className="list-disc list-inside ml-4 space-y-1">
@@ -118,7 +137,7 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">10. RESPONSABILITÉ</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">11. RESPONSABILITÉ</h2>
             <p className="mb-2">Aura Académie ne saurait être tenue responsable :</p>
             <ul className="list-disc list-inside ml-4 space-y-1">
               <li>des décisions prises par le client</li>
@@ -129,7 +148,7 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">11. PROPRIÉTÉ INTELLECTUELLE</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">12. PROPRIÉTÉ INTELLECTUELLE</h2>
             <p className="mb-2">
               L'ensemble des contenus (vidéos, textes, supports, frameworks, méthodes) est protégé par le droit de
               la propriété intellectuelle.
@@ -138,7 +157,7 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">12. DONNÉES PERSONNELLES</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">13. DONNÉES PERSONNELLES</h2>
             <p className="mb-2">Les données collectées sont nécessaires à la gestion des commandes et des accès.</p>
             <p>
               Le client dispose d'un droit d'accès, de rectification et de suppression conformément au RGPD.
@@ -146,7 +165,7 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">13. RÉSILIATION</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">14. RÉSILIATION</h2>
             <p className="mb-2">
               Aura Académie se réserve le droit de résilier l'accès, sans remboursement, en cas de :
             </p>
@@ -159,7 +178,7 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">14. DROIT APPLICABLE – LITIGES</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">15. DROIT APPLICABLE – LITIGES</h2>
             <p className="mb-2">Les présentes CGV sont régies par le droit français.</p>
             <p className="mb-2">En cas de litige :</p>
             <ul className="list-disc list-inside ml-4 space-y-1">
@@ -169,7 +188,7 @@ const CGV: React.FC = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">15. ACCEPTATION</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">16. ACCEPTATION</h2>
             <p>
               Le client reconnaît avoir pris connaissance des CGV et les accepter sans réserve avant toute commande.
             </p>

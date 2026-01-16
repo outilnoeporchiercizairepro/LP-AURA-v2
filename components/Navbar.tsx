@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Programme', href: '#content' },
-    { name: 'Résultats', href: '#benefits' },
-    { name: 'Avis', href: '#reviews' }, // Updated link
-    { name: 'Équipe', href: '#team' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'Programme', href: '/#content' },
+    { name: 'Résultats', href: '/#benefits' },
+    { name: 'Avis', href: '/#reviews' },
+    { name: 'Équipe', href: '/#team' },
+    { name: 'FAQ', href: '/#faq' },
   ];
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -24,9 +25,9 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0 cursor-pointer">
-            <a href="#" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-8" />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Menu */}

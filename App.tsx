@@ -11,6 +11,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Admin = lazy(() => import('./pages/Admin'));
 const Login = lazy(() => import('./pages/Login'));
 const Setup = lazy(() => import('./pages/Setup'));
+const CGV = lazy(() => import('./pages/CGV'));
 
 const PageLoader = () => (
   <div className="min-h-screen bg-[#020617] flex items-center justify-center">
@@ -24,6 +25,7 @@ const AppContent: React.FC = () => {
   const isAdminPage = location.pathname === '/admin';
   const isLoginPage = location.pathname === '/login';
   const isSetupPage = location.pathname === '/setup';
+  const isCGVPage = location.pathname === '/cgv';
   const hideNavFooter = isAdminPage || isLoginPage || isSetupPage;
 
   useTrackClicks();
@@ -44,6 +46,7 @@ const AppContent: React.FC = () => {
           } />
           <Route path="/setup" element={<Setup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cgv" element={<CGV />} />
           <Route path="/admin" element={
             <ProtectedRoute>
               <Admin />

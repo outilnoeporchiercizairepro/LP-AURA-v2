@@ -1,8 +1,10 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTracking } from '../contexts/TrackingContext';
 
 const Team: React.FC = () => {
+  const { getCalendlyUrl } = useTracking();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
   const containerRef = useRef(null);
@@ -367,7 +369,7 @@ const Team: React.FC = () => {
           className="mt-16 text-center"
         >
           <a
-            href="https://calendly.com/aura-academie/30min"
+            href={getCalendlyUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

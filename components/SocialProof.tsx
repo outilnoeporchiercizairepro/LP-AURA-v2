@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTracking } from '../contexts/TrackingContext';
 
 interface Review {
   id?: string;
@@ -11,6 +12,7 @@ interface Review {
 }
 
 const SocialProof: React.FC = () => {
+  const { getCalendlyUrl } = useTracking();
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -214,7 +216,7 @@ const SocialProof: React.FC = () => {
           className="mt-12 text-center"
         >
           <a
-            href="https://calendly.com/aura-academie/30min"
+            href={getCalendlyUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

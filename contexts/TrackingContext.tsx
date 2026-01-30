@@ -5,6 +5,7 @@ interface TrackingContextType {
   trackPageView: (path: string) => void;
   trackClick: (elementId: string, elementText: string, elementType: string) => void;
   sessionId: string;
+  getCalendlyUrl: (baseUrl?: string) => string;
 }
 
 const TrackingContext = createContext<TrackingContextType | undefined>(undefined);
@@ -132,6 +133,18 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
+  const getCalendlyUrl = (baseUrl: string = 'https://calendly.com/aura-academie/30min') => {
+    const utmParams = getUTMParams();
+
+    if (utmParams.utm_source) {
+      const url = new URL(baseUrl);
+      url.searchParams.set('utm_source', utmParams.utm_source);
+      return url.toString();
+    }
+
+    return baseUrl;
+  };
+
   useEffect(() => {
     initSession();
 
@@ -155,7 +168,7 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [sessionId]);
 
   return (
-    <TrackingContext.Provider value={{ trackPageView, trackClick, sessionId }}>
+    <TrackingContext.Provider value={{ trackPageView, trackClick, sessionId, getCalendlyUrl }}>
       {children}
     </TrackingContext.Provider>
   );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CountdownTimer from './CountdownTimer';
+import { useTracking } from '../contexts/TrackingContext';
 
 interface TimelineItem {
   title: string;
@@ -15,6 +16,7 @@ interface TabContent {
 }
 
 const Content: React.FC = () => {
+  const { getCalendlyUrl } = useTracking();
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -207,7 +209,7 @@ const Content: React.FC = () => {
                 className="mt-12 text-center"
               >
                 <a
-                  href="https://calendly.com/aura-academie/30min"
+                  href={getCalendlyUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

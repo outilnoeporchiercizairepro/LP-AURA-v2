@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Lightbulb, Code, Target, Handshake } from 'lucide-react';
+import { useTracking } from '../contexts/TrackingContext';
 
 interface TimelineStep {
   day: string;
@@ -10,6 +11,7 @@ interface TimelineStep {
 }
 
 const Timeline: React.FC = () => {
+  const { getCalendlyUrl } = useTracking();
   const steps: TimelineStep[] = [
     {
       day: 'J0',
@@ -200,7 +202,7 @@ const Timeline: React.FC = () => {
           className="mt-16 text-center"
         >
           <a
-            href="https://calendly.com/aura-academie/30min"
+            href={getCalendlyUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

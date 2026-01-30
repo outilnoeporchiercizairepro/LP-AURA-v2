@@ -1,8 +1,10 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTracking } from '../contexts/TrackingContext';
 
 const Pricing: React.FC = () => {
+  const { getCalendlyUrl } = useTracking();
   const features = [
     "Plus de 50h de cours structurés",
     "Exercices pratiques et projets concrets",
@@ -92,7 +94,7 @@ const Pricing: React.FC = () => {
           </div>
 
           <a
-            href="https://calendly.com/aura-academie/30min"
+            href={getCalendlyUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block w-full md:w-auto px-12 py-5 bg-gradient-to-r from-primary to-primary-hover hover:to-primary text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_25px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_40px_rgba(234,75,113,0.6)]"

@@ -1,8 +1,10 @@
 import React from 'react';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTracking } from '../contexts/TrackingContext';
 
 const Benefits: React.FC = () => {
+  const { getCalendlyUrl } = useTracking();
   const skills = [
     "Concevoir une infrastructure IA (Interface, Base de Données, Automatisations)",
     "Déployer tes apps sur un serveur privé avec une base de données dédiée",
@@ -66,7 +68,7 @@ Des infrastructures IA personnalisées, scalables et rentables qui te rendent li
                 className="mt-8"
               >
                 <a
-                  href="https://calendly.com/aura-academie/30min"
+                  href={getCalendlyUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative w-full inline-block text-center px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

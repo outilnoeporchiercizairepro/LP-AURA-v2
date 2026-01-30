@@ -5,7 +5,7 @@ interface TrackingContextType {
   trackPageView: (path: string) => void;
   trackClick: (elementId: string, elementText: string, elementType: string) => void;
   sessionId: string;
-  getCalendlyUrl: (baseUrl?: string) => string;
+  utmSourceLabel: string | null;
 }
 
 const TrackingContext = createContext<TrackingContextType | undefined>(undefined);
@@ -26,6 +26,10 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const newSession = crypto.randomUUID();
     sessionStorage.setItem('tracking_session_id', newSession);
     return newSession;
+  });
+
+  const [utmSourceLabel, setUtmSourceLabel] = useState<string | null>(() => {
+    return sessionStorage.getItem('utm_source');
   });
 
   const sessionStartTime = useRef(Date.now());
@@ -56,14 +60,13 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           .eq('short_code', utmSource)
           .maybeSingle();
 
-        if (data && !error) {
-          sessionStorage.setItem('utm_source', data.source_label);
-        } else {
-          sessionStorage.setItem('utm_source', utmSource);
-        }
+        const label = (data && !error) ? data.source_label : utmSource;
+        sessionStorage.setItem('utm_source', label);
+        setUtmSourceLabel(label);
       } catch (error) {
         console.error('Error fetching UTM source label:', error);
         sessionStorage.setItem('utm_source', utmSource);
+        setUtmSourceLabel(utmSource);
       }
     }
 
@@ -154,18 +157,6 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
-  const getCalendlyUrl = (baseUrl: string = 'https://calendly.com/aura-academie/30min') => {
-    const utmParams = getUTMParams();
-
-    if (utmParams.utm_source) {
-      const url = new URL(baseUrl);
-      url.searchParams.set('utm_source', utmParams.utm_source);
-      return url.toString();
-    }
-
-    return baseUrl;
-  };
-
   useEffect(() => {
     initSession();
 
@@ -189,7 +180,7 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [sessionId]);
 
   return (
-    <TrackingContext.Provider value={{ trackPageView, trackClick, sessionId, getCalendlyUrl }}>
+    <TrackingContext.Provider value={{ trackPageView, trackClick, sessionId, utmSourceLabel }}>
       {children}
     </TrackingContext.Provider>
   );

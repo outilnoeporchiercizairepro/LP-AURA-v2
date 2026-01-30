@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTracking } from '../contexts/TrackingContext';
 
 const FAQ: React.FC = () => {
-  const { getCalendlyUrl } = useTracking();
+  const { utmSourceLabel } = useTracking();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const calendlyUrl = useMemo(() => {
+    const baseUrl = 'https://calendly.com/aura-academie/30min';
+    if (utmSourceLabel) {
+      const url = new URL(baseUrl);
+      url.searchParams.set('utm_source', utmSourceLabel);
+      return url.toString();
+    }
+    return baseUrl;
+  }, [utmSourceLabel]);
 
   const faqs = [
     {
@@ -125,7 +135,7 @@ const FAQ: React.FC = () => {
               Encore des questions ?
             </p>
             <a
-              href={getCalendlyUrl()}
+              href={calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

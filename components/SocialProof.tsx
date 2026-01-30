@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -12,8 +12,18 @@ interface Review {
 }
 
 const SocialProof: React.FC = () => {
-  const { getCalendlyUrl } = useTracking();
+  const { utmSourceLabel } = useTracking();
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+
+  const calendlyUrl = useMemo(() => {
+    const baseUrl = 'https://calendly.com/aura-academie/30min';
+    if (utmSourceLabel) {
+      const url = new URL(baseUrl);
+      url.searchParams.set('utm_source', utmSourceLabel);
+      return url.toString();
+    }
+    return baseUrl;
+  }, [utmSourceLabel]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -216,7 +226,7 @@ const SocialProof: React.FC = () => {
           className="mt-12 text-center"
         >
           <a
-            href={getCalendlyUrl()}
+            href={calendlyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

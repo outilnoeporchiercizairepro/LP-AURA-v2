@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { XCircle, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTracking } from '../contexts/TrackingContext';
 
 const Comparison: React.FC = () => {
-  const { getCalendlyUrl } = useTracking();
+  const { utmSourceLabel } = useTracking();
+
+  const calendlyUrl = useMemo(() => {
+    const baseUrl = 'https://calendly.com/aura-academie/30min';
+    if (utmSourceLabel) {
+      const url = new URL(baseUrl);
+      url.searchParams.set('utm_source', utmSourceLabel);
+      return url.toString();
+    }
+    return baseUrl;
+  }, [utmSourceLabel]);
+
   return (
     <section className="py-24 bg-[#020617]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +95,7 @@ const Comparison: React.FC = () => {
           className="mt-12 text-center"
         >
           <a
-            href={getCalendlyUrl()}
+            href={calendlyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

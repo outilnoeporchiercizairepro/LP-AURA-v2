@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { BookOpen, CheckCircle, RefreshCw, Users, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTracking } from '../contexts/TrackingContext';
 
 const Hero: React.FC = () => {
-  const { getCalendlyUrl } = useTracking();
+  const { utmSourceLabel } = useTracking();
   const youtubeVideoId = 'ZS2fa-1I0uo';
+
+  const calendlyUrl = useMemo(() => {
+    const baseUrl = 'https://calendly.com/aura-academie/30min';
+    if (utmSourceLabel) {
+      const url = new URL(baseUrl);
+      url.searchParams.set('utm_source', utmSourceLabel);
+      return url.toString();
+    }
+    return baseUrl;
+  }, [utmSourceLabel]);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const currentMonth = new Date().toLocaleDateString('fr-FR', { month: 'long' });
@@ -130,7 +140,7 @@ const Hero: React.FC = () => {
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
         >
           <a
-            href={getCalendlyUrl()}
+            href={calendlyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="relative w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"

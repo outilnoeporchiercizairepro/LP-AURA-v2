@@ -36,11 +36,11 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const getUTMParams = () => {
     const params = new URLSearchParams(window.location.search);
     return {
-      utm_source: params.get('utm_source') || sessionStorage.getItem('utm_source'),
-      utm_medium: params.get('utm_medium') || sessionStorage.getItem('utm_medium'),
-      utm_campaign: params.get('utm_campaign') || sessionStorage.getItem('utm_campaign'),
-      utm_term: params.get('utm_term') || sessionStorage.getItem('utm_term'),
-      utm_content: params.get('utm_content') || sessionStorage.getItem('utm_content'),
+      utm_source: sessionStorage.getItem('utm_source') || params.get('utm_source'),
+      utm_medium: sessionStorage.getItem('utm_medium') || params.get('utm_medium'),
+      utm_campaign: sessionStorage.getItem('utm_campaign') || params.get('utm_campaign'),
+      utm_term: sessionStorage.getItem('utm_term') || params.get('utm_term'),
+      utm_content: sessionStorage.getItem('utm_content') || params.get('utm_content'),
     };
   };
 

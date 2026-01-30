@@ -44,9 +44,30 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     };
   };
 
-  const saveUTMParams = () => {
+  const saveUTMParams = async () => {
     const params = new URLSearchParams(window.location.search);
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+    const utmSource = params.get('utm_source');
+
+    if (utmSource) {
+      try {
+        const { data, error } = await supabase
+          .from('utm_links')
+          .select('source_label')
+          .eq('short_code', utmSource)
+          .maybeSingle();
+
+        if (data && !error) {
+          sessionStorage.setItem('utm_source', data.source_label);
+        } else {
+          sessionStorage.setItem('utm_source', utmSource);
+        }
+      } catch (error) {
+        console.error('Error fetching UTM source label:', error);
+        sessionStorage.setItem('utm_source', utmSource);
+      }
+    }
+
+    ['utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
       const value = params.get(param);
       if (value) {
         sessionStorage.setItem(param, value);
@@ -58,7 +79,7 @@ export const TrackingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (hasInitialized.current) return;
     hasInitialized.current = true;
 
-    saveUTMParams();
+    await saveUTMParams();
     const utmParams = getUTMParams();
     const entryPage = window.location.pathname;
 

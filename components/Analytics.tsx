@@ -265,127 +265,6 @@ const Analytics: React.FC = () => {
     return `${minutes}m ${secs}s`;
   };
 
-  const PIE_COLORS = [
-    '#3b82f6', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6',
-    '#06b6d4', '#ef4444', '#84cc16', '#f97316', '#6366f1',
-    '#14b8a6', '#eab308', '#a855f7', '#22c55e', '#0ea5e9',
-  ];
-
-  const PieChart: React.FC<{ data: Array<{ source: string; count: number }>; totalSessions: number }> = ({ data, totalSessions }) => {
-    const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
-
-    if (data.length === 0 || totalSessions === 0) {
-      return (
-        <div className="flex items-center justify-center h-64 text-gray-500">
-          Aucune donnee disponible
-        </div>
-      );
-    }
-
-    const size = 280;
-    const center = size / 2;
-    const radius = 100;
-    const innerRadius = 60;
-
-    let currentAngle = -Math.PI / 2;
-    const slices = data.map((item, idx) => {
-      const percentage = item.count / totalSessions;
-      const angle = percentage * Math.PI * 2;
-      const startAngle = currentAngle;
-      const endAngle = currentAngle + angle;
-      currentAngle = endAngle;
-
-      const midAngle = (startAngle + endAngle) / 2;
-      const labelRadius = radius + 20;
-      const labelX = center + Math.cos(midAngle) * labelRadius;
-      const labelY = center + Math.sin(midAngle) * labelRadius;
-
-      const x1 = center + Math.cos(startAngle) * innerRadius;
-      const y1 = center + Math.sin(startAngle) * innerRadius;
-      const x2 = center + Math.cos(startAngle) * radius;
-      const y2 = center + Math.sin(startAngle) * radius;
-      const x3 = center + Math.cos(endAngle) * radius;
-      const y3 = center + Math.sin(endAngle) * radius;
-      const x4 = center + Math.cos(endAngle) * innerRadius;
-      const y4 = center + Math.sin(endAngle) * innerRadius;
-
-      const largeArc = angle > Math.PI ? 1 : 0;
-
-      const pathData = [
-        `M ${x1} ${y1}`,
-        `L ${x2} ${y2}`,
-        `A ${radius} ${radius} 0 ${largeArc} 1 ${x3} ${y3}`,
-        `L ${x4} ${y4}`,
-        `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1} ${y1}`,
-        'Z',
-      ].join(' ');
-
-      return {
-        pathData,
-        color: PIE_COLORS[idx % PIE_COLORS.length],
-        percentage: (percentage * 100).toFixed(1),
-        label: item.source,
-        count: item.count,
-        labelX,
-        labelY,
-        midAngle,
-      };
-    });
-
-    return (
-      <div className="flex flex-col items-center">
-        <svg width={size} height={size} className="overflow-visible">
-          {slices.map((slice, idx) => (
-            <g key={idx}>
-              <path
-                d={slice.pathData}
-                fill={slice.color}
-                stroke="#0f172a"
-                strokeWidth="2"
-                className="transition-all duration-200 cursor-pointer"
-                style={{
-                  transform: hoveredSlice === idx ? `scale(1.05)` : 'scale(1)',
-                  transformOrigin: `${center}px ${center}px`,
-                  opacity: hoveredSlice !== null && hoveredSlice !== idx ? 0.5 : 1,
-                }}
-                onMouseEnter={() => setHoveredSlice(idx)}
-                onMouseLeave={() => setHoveredSlice(null)}
-              />
-            </g>
-          ))}
-          <circle cx={center} cy={center} r={innerRadius - 5} fill="#0f172a" />
-          <text
-            x={center}
-            y={center - 8}
-            textAnchor="middle"
-            fill="white"
-            fontSize="24"
-            fontWeight="bold"
-          >
-            {totalSessions}
-          </text>
-          <text
-            x={center}
-            y={center + 12}
-            textAnchor="middle"
-            fill="rgb(156, 163, 175)"
-            fontSize="12"
-          >
-            sessions
-          </text>
-        </svg>
-        {hoveredSlice !== null && (
-          <div className="mt-4 text-center bg-surface px-4 py-2 rounded-lg">
-            <div className="text-white font-medium">{slices[hoveredSlice].label}</div>
-            <div className="text-gray-400 text-sm">
-              {slices[hoveredSlice].count} sessions ({slices[hoveredSlice].percentage}%)
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
   const TimeSeriesChart: React.FC<{ data: AnalyticsData['timeSeriesData'] }> = ({ data }) => {
     const [hoveredPoint, setHoveredPoint] = useState<{ index: number; x: number; y: number } | null>(null);
 
@@ -711,33 +590,27 @@ const Analytics: React.FC = () => {
                 className="overflow-hidden"
               >
                 <div className="p-6 pt-0 border-t border-slate-800">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <PieChart data={data.utmSources} totalSessions={data.totalSessions} />
-                    <div className="space-y-3 max-h-96 overflow-y-auto">
-                      {data.utmSources.map((source, idx) => {
-                        const percentage = data.totalSessions > 0
-                          ? ((source.count / data.totalSessions) * 100).toFixed(1)
-                          : '0';
-                        return (
-                          <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
-                            <div className="flex items-center gap-2">
-                              <div
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: PIE_COLORS[idx % PIE_COLORS.length] }}
-                              />
-                              <span className="text-gray-300 font-medium">{source.source}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-gray-400 text-sm">{percentage}%</span>
-                              <span className="text-white font-bold">{source.count}</span>
-                            </div>
+                  <div className="space-y-3">
+                    {data.utmSources.map((source, idx) => {
+                      const percentage = data.totalSessions > 0
+                        ? ((source.count / data.totalSessions) * 100).toFixed(1)
+                        : '0';
+                      return (
+                        <div key={idx} className="flex items-center justify-between p-3 bg-surface rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <ExternalLink className="w-4 h-4 text-secondary" />
+                            <span className="text-gray-300 font-medium">{source.source}</span>
                           </div>
-                        );
-                      })}
-                      {data.utmSources.length === 0 && (
-                        <p className="text-gray-500 text-sm">Aucune source UTM detectee</p>
-                      )}
-                    </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-gray-400 text-sm">{percentage}%</span>
+                            <span className="text-white font-bold">{source.count}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {data.utmSources.length === 0 && (
+                      <p className="text-gray-500 text-sm">Aucune source UTM detectee</p>
+                    )}
                   </div>
                 </div>
               </motion.div>

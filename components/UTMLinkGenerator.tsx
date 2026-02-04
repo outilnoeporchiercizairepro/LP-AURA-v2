@@ -13,7 +13,7 @@ interface UTMLink {
   content_label: string | null;
   full_url: string;
   notes: string | null;
-  category: 'social' | 'youtube-baptiste' | 'youtube-imrane' | null;
+  category: 'social' | 'youtube-baptiste' | 'youtube-imrane' | 'youtube-noe' | null;
   created_at: string;
 }
 
@@ -22,11 +22,11 @@ const UTMLinkGenerator: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['social', 'youtube-baptiste', 'youtube-imrane']));
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['social', 'youtube-baptiste', 'youtube-imrane', 'youtube-noe']));
   const [formData, setFormData] = useState({
     source: '',
     notes: '',
-    category: 'social' as 'social' | 'youtube-baptiste' | 'youtube-imrane',
+    category: 'social' as 'social' | 'youtube-baptiste' | 'youtube-imrane' | 'youtube-noe',
   });
 
   useEffect(() => {
@@ -137,8 +137,8 @@ const UTMLinkGenerator: React.FC = () => {
     });
   };
 
-  const getCategoryIcon = (category: 'social' | 'youtube-baptiste' | 'youtube-imrane') => {
-    if (category === 'youtube-baptiste' || category === 'youtube-imrane') {
+  const getCategoryIcon = (category: 'social' | 'youtube-baptiste' | 'youtube-imrane' | 'youtube-noe') => {
+    if (category === 'youtube-baptiste' || category === 'youtube-imrane' || category === 'youtube-noe') {
       return <Youtube className="w-5 h-5 text-red-500" />;
     }
     return <Share2 className="w-5 h-5 text-blue-400" />;
@@ -148,6 +148,7 @@ const UTMLinkGenerator: React.FC = () => {
     social: links.filter(link => link.category === 'social' || !link.category),
     'youtube-baptiste': links.filter(link => link.category === 'youtube-baptiste'),
     'youtube-imrane': links.filter(link => link.category === 'youtube-imrane'),
+    'youtube-noe': links.filter(link => link.category === 'youtube-noe'),
   };
 
   if (loading) {
@@ -190,7 +191,7 @@ const UTMLinkGenerator: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   Catégorie *
                 </label>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, category: 'social' })}
@@ -227,6 +228,18 @@ const UTMLinkGenerator: React.FC = () => {
                     <Youtube className="w-5 h-5" />
                     <span className="font-medium">YouTube Imrane</span>
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, category: 'youtube-noe' })}
+                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all ${
+                      formData.category === 'youtube-noe'
+                        ? 'bg-red-500/20 border-2 border-red-500 text-red-400'
+                        : 'bg-slate-800 border-2 border-slate-700 text-gray-400 hover:border-slate-600'
+                    }`}
+                  >
+                    <Youtube className="w-5 h-5" />
+                    <span className="font-medium">YouTube Noé</span>
+                  </button>
                 </div>
               </div>
 
@@ -242,6 +255,7 @@ const UTMLinkGenerator: React.FC = () => {
                   placeholder={
                     formData.category === 'youtube-baptiste' ? 'video-titre-baptiste' :
                     formData.category === 'youtube-imrane' ? 'video-titre-imrane' :
+                    formData.category === 'youtube-noe' ? 'video-titre-noe' :
                     'instagram-baptiste'
                   }
                   required
@@ -289,13 +303,14 @@ const UTMLinkGenerator: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-4">
-          {(['social', 'youtube-baptiste', 'youtube-imrane'] as const).map((category) => {
+          {(['social', 'youtube-baptiste', 'youtube-imrane', 'youtube-noe'] as const).map((category) => {
             const categoryLinks = groupedLinks[category];
             const isExpanded = expandedCategories.has(category);
             const categoryLabel =
               category === 'social' ? 'Réseaux Sociaux' :
               category === 'youtube-baptiste' ? 'YouTube Baptiste' :
-              'YouTube Imrane';
+              category === 'youtube-imrane' ? 'YouTube Imrane' :
+              'YouTube Noé';
 
             if (categoryLinks.length === 0) return null;
 
@@ -409,7 +424,7 @@ const UTMLinkGenerator: React.FC = () => {
           <li>• Les liens générés utilisent un code court anonyme dans utm_source (ex: a1b2c3d4)</li>
           <li>• Personne ne peut deviner la source réelle en regardant l'URL</li>
           <li>• Dans le dashboard, vous verrez la vraie source que vous avez définie</li>
-          <li>• Les vidéos YouTube sont organisées par créateur (Baptiste ou Imrane)</li>
+          <li>• Les vidéos YouTube sont organisées par créateur (Baptiste, Imrane ou Noé)</li>
           <li>• Partagez ces liens sur vos réseaux sociaux, descriptions YouTube, etc.</li>
         </ul>
       </div>

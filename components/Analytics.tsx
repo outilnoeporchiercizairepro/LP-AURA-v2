@@ -127,9 +127,9 @@ const Analytics: React.FC = () => {
         const avgDuration = sessions?.reduce((acc, s) => acc + (s.total_duration || 0), 0) / (totalSessions || 1);
 
         const utmSourceCount: Record<string, number> = {};
-        pageViews?.forEach(pv => {
-          if (pv.utm_source) {
-            utmSourceCount[pv.utm_source] = (utmSourceCount[pv.utm_source] || 0) + 1;
+        sessions?.forEach(session => {
+          if (session.utm_source) {
+            utmSourceCount[session.utm_source] = (utmSourceCount[session.utm_source] || 0) + 1;
           }
         });
         const utmSources = Object.entries(utmSourceCount)

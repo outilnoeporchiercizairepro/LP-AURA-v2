@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTracking } from '../contexts/TrackingContext';
+import { ShinyButton } from './ui/ShinyButton';
 
 const FAQ: React.FC = () => {
   const { utmSourceLabel } = useTracking();
@@ -41,7 +42,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 bg-[#020617]">
+    <section id="faq" className="py-24 bg-transparent">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -69,37 +70,32 @@ const FAQ: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
               key={idx}
-              className={`group relative rounded-2xl bg-surface border transition-all duration-300 overflow-hidden ${
-                openIndex === idx
-                  ? 'border-primary/40 shadow-lg shadow-primary/10'
-                  : 'border-slate-800 hover:border-slate-700'
-              }`}
+              className={`group relative rounded-2xl bg-surface border transition-all duration-300 overflow-hidden ${openIndex === idx
+                ? 'border-primary/40 shadow-lg shadow-primary/10'
+                : 'border-slate-800 hover:border-slate-700'
+                }`}
             >
-              <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl transition-opacity duration-500 ${
-                openIndex === idx ? 'opacity-100' : 'opacity-0'
-              } ${idx % 2 === 0 ? 'bg-primary/10' : 'bg-secondary/10'}`} />
+              <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl transition-opacity duration-500 ${openIndex === idx ? 'opacity-100' : 'opacity-0'
+                } ${idx % 2 === 0 ? 'bg-primary/10' : 'bg-secondary/10'}`} />
 
               <button
                 onClick={() => toggleFAQ(idx)}
                 className="relative z-10 w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
               >
-                <h3 className={`font-bold text-lg transition-colors duration-300 flex-1 ${
-                  openIndex === idx ? 'text-white' : 'text-gray-200'
-                }`}>
+                <h3 className={`font-bold text-lg transition-colors duration-300 flex-1 ${openIndex === idx ? 'text-white' : 'text-gray-200'
+                  }`}>
                   {faq.q}
                 </h3>
                 <motion.div
                   animate={{ rotate: openIndex === idx ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
-                  className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300 ${
-                    openIndex === idx
-                      ? 'bg-gradient-to-br from-primary to-secondary'
-                      : 'bg-white/5'
-                  }`}
+                  className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300 ${openIndex === idx
+                    ? 'bg-gradient-to-br from-primary to-secondary'
+                    : 'bg-white/5'
+                    }`}
                 >
-                  <ChevronDown className={`w-5 h-5 transition-colors duration-300 ${
-                    openIndex === idx ? 'text-white' : 'text-gray-400'
-                  }`} />
+                  <ChevronDown className={`w-5 h-5 transition-colors duration-300 ${openIndex === idx ? 'text-white' : 'text-gray-400'
+                    }`} />
                 </motion.div>
               </button>
 
@@ -134,15 +130,13 @@ const FAQ: React.FC = () => {
             <p className="text-white font-semibold text-lg mb-4">
               Encore des questions ?
             </p>
-            <a
+            <ShinyButton
               href={calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
             >
-              <span className="relative z-10">Poser mes questions</span>
-              <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
-            </a>
+              Poser mes questions
+            </ShinyButton>
           </div>
         </motion.div>
       </div>

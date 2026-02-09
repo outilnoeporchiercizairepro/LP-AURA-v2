@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Lightbulb, Code, Target, Handshake } from 'lucide-react';
 import { useTracking } from '../contexts/TrackingContext';
+import { ShinyButton } from './ui/ShinyButton';
 
 interface TimelineStep {
   day: string;
@@ -27,7 +28,7 @@ const Timeline: React.FC = () => {
     {
       day: 'J0',
       title: "J'intègre AURA",
-      icon: <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-6 w-auto brightness-0 invert" />
+      icon: <img src="/aura.png" alt="AURA" className="h-6 w-auto brightness-0 invert" />
     },
     {
       day: 'J7',
@@ -53,10 +54,9 @@ const Timeline: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-surface/30 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[600px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
-
+    <section className="py-24 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -92,11 +92,10 @@ const Timeline: React.FC = () => {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.15 + 0.5, type: "spring", stiffness: 300 }}
-                    className={`mb-6 px-4 py-1.5 rounded-full font-bold text-sm border ${
-                      step.isHighlight
-                        ? 'bg-gradient-to-r from-primary to-secondary text-white border-transparent shadow-[0_0_30px_rgba(234,75,113,0.5)]'
-                        : 'bg-card text-white border-slate-700'
-                    }`}
+                    className={`mb-6 px-4 py-1.5 rounded-full font-bold text-sm border ${step.isHighlight
+                      ? 'bg-gradient-to-r from-primary to-secondary text-white border-transparent shadow-[0_0_30px_rgba(250,12,249,0.5)]'
+                      : 'bg-card text-white border-slate-700'
+                      }`}
                   >
                     {step.day}
                   </motion.div>
@@ -124,11 +123,10 @@ const Timeline: React.FC = () => {
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.15 + 0.4, type: "spring", stiffness: 200 }}
-                      className={`relative z-10 flex items-center justify-center rounded-full border-4 ${
-                        step.isHighlight
-                          ? 'w-20 h-20 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_40px_rgba(234,75,113,0.6)]'
-                          : 'w-14 h-14 bg-card border-slate-700'
-                      }`}
+                      className={`relative z-10 flex items-center justify-center rounded-full border-4 ${step.isHighlight
+                        ? 'w-20 h-20 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_40px_rgba(250,12,249,0.6)]'
+                        : 'w-14 h-14 bg-card border-slate-700'
+                        }`}
                     >
                       {step.icon}
                       {step.isHighlight && (
@@ -138,9 +136,8 @@ const Timeline: React.FC = () => {
                   </div>
 
                   {/* Description */}
-                  <p className={`mt-6 text-center text-sm leading-relaxed max-w-[160px] ${
-                    step.isHighlight ? 'text-white font-semibold' : 'text-gray-400'
-                  }`}>
+                  <p className={`mt-6 text-center text-sm leading-relaxed max-w-[160px] ${step.isHighlight ? 'text-white font-semibold' : 'text-gray-400'
+                    }`}>
                     {step.title}
                   </p>
                 </motion.div>
@@ -171,11 +168,10 @@ const Timeline: React.FC = () => {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 + 0.2, type: "spring", stiffness: 200 }}
-                    className={`relative z-10 flex-shrink-0 flex items-center justify-center rounded-full border-4 ${
-                      step.isHighlight
-                        ? 'w-12 h-12 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_30px_rgba(234,75,113,0.6)]'
-                        : 'w-12 h-12 bg-card border-slate-700'
-                    }`}
+                    className={`relative z-10 flex-shrink-0 flex items-center justify-center rounded-full border-4 ${step.isHighlight
+                      ? 'w-12 h-12 bg-gradient-to-br from-primary to-secondary border-primary/50 shadow-[0_0_30px_rgba(250,12,249,0.6)]'
+                      : 'w-12 h-12 bg-card border-slate-700'
+                      }`}
                   >
                     {step.icon}
                     {step.isHighlight && (
@@ -185,16 +181,14 @@ const Timeline: React.FC = () => {
 
                   {/* Content */}
                   <div className="flex-1 py-2">
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${
-                      step.isHighlight
-                        ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                        : 'bg-card text-gray-300 border border-slate-700'
-                    }`}>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${step.isHighlight
+                      ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                      : 'bg-card text-gray-300 border border-slate-700'
+                      }`}>
                       {step.day}
                     </span>
-                    <p className={`text-sm leading-relaxed ${
-                      step.isHighlight ? 'text-white font-semibold' : 'text-gray-400'
-                    }`}>
+                    <p className={`text-sm leading-relaxed ${step.isHighlight ? 'text-white font-semibold' : 'text-gray-400'
+                      }`}>
                       {step.title}
                     </p>
                   </div>
@@ -212,15 +206,13 @@ const Timeline: React.FC = () => {
           transition={{ delay: 0.6 }}
           className="mt-16 text-center"
         >
-          <a
+          <ShinyButton
             href={calendlyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
           >
-            <span className="relative z-10">Démarrer mon parcours</span>
-            <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
-          </a>
+            Démarrer mon parcours
+          </ShinyButton>
         </motion.div>
       </div>
     </section>

@@ -22,7 +22,7 @@ const WhatIsAISystem: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-[#020617] relative overflow-hidden">
+    <section className="py-20 bg-transparent relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-surface/20 to-transparent pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

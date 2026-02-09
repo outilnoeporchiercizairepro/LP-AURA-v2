@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTracking } from '../contexts/TrackingContext';
+import { ShinyButton } from './ui/ShinyButton';
 
 const Navbar: React.FC = () => {
   const { utmSourceLabel } = useTracking();
@@ -31,14 +32,14 @@ const Navbar: React.FC = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5"
+      className="fixed top-0 left-0 right-0 z-50 bg-[#000000]/80 backdrop-blur-xl border-b border-white/5"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0 cursor-pointer">
             <Link to="/" className="flex items-center gap-2">
-              <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-8" />
+              <img src="/aura.png" alt="AURA" className="h-8" />
             </Link>
           </div>
 
@@ -54,14 +55,14 @@ const Navbar: React.FC = () => {
                   {link.name}
                 </a>
               ))}
-              <a
+              <ShinyButton
                 href={calendlyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-[0_0_15px_rgba(234,75,113,0.3)] hover:shadow-[0_0_25px_rgba(234,75,113,0.5)]"
+                className="!py-2.5 !px-6 !text-sm"
               >
                 Rejoindre AURA
-              </a>
+              </ShinyButton>
             </div>
           </div>
 
@@ -80,11 +81,11 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#020617] border-b border-white/5 overflow-hidden"
+            className="md:hidden bg-[#000000] border-b border-white/5 overflow-hidden"
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navLinks.map((link) => (

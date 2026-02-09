@@ -177,7 +177,7 @@ const Admin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] py-8">
+    <div className="min-h-screen bg-[#000000] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white">

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTracking } from '../contexts/TrackingContext';
+import { ShinyButton } from './ui/ShinyButton';
 
 const Team: React.FC = () => {
   const { utmSourceLabel } = useTracking();
@@ -20,13 +21,6 @@ const Team: React.FC = () => {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   const team = [
-    {
-      name: "Lionel",
-      role: "Coach Mindset & Productivité",
-      desc: "Expert en développement personnel et optimisation cognitive. Il transforme ta manière de penser et de travailler pour atteindre des performances d'élite.",
-      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765225265429-2emt8w.png",
-      color: "from-primary/20 to-primary/5"
-    },
     {
       name: "Baptiste",
       role: "Expert IA & Automatisation",
@@ -50,8 +44,10 @@ const Team: React.FC = () => {
     }
   ];
 
+  const offsetBase = (team.length - 1) / 2;
+
   return (
-    <section id="team" className="py-24 bg-[#020617] relative overflow-hidden">
+    <section id="team" className="py-24 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -61,74 +57,65 @@ const Team: React.FC = () => {
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-3 flex-wrap">
             L'Équipe
-            <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="inline h-10 md:h-14" />
+            <img src="/aura.png" alt="AURA" className="inline h-10 md:h-14" />
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            4 experts aux compétences complémentaires pour vous accompagner de A à Z.
+            3 experts aux compétences complémentaires pour vous accompagner de A à Z.
           </p>
         </motion.div>
 
         {/* --- DESKTOP FAN DECK (ANIMATION AVANCÉE) --- */}
         <div ref={containerRef} className="hidden lg:flex justify-center items-center h-[500px] w-full relative -mt-10 perspective-[1000px]">
           {team.map((member, index) => {
-            const offset = index - 1.5; // Centers around 1.5
+            const offset = index - offsetBase;
             const isHovered = hoveredIndex === index;
             const isAnyHovered = hoveredIndex !== null;
 
-            // --- CALCUL DE L'ÉTAT D'ANIMATION ---
-            
-            // 1. État initial (Hors champ)
             let animateState = {
-                x: 0,
-                y: 100,
-                rotate: 0,
-                scale: 0.9,
-                zIndex: index,
-                opacity: 0,
-                filter: 'brightness(1)',
+              x: 0,
+              y: 100,
+              rotate: 0,
+              scale: 0.9,
+              zIndex: index,
+              opacity: 0,
+              filter: 'brightness(1)',
             };
 
-            // 2. Si visible
             if (isInView) {
-                // État de base (Repos) - Éventail TRÈS large pour lisibilité immédiate
-                animateState = {
-                    x: offset * 190, // Écartement large (visages bien visibles)
-                    y: 0, // Pas d'arc vertical inutile au repos
-                    rotate: offset * 2, // Rotation très subtile
-                    scale: 1,
-                    zIndex: index,
-                    opacity: 1,
-                    filter: 'brightness(1) blur(0px)',
-                };
+              animateState = {
+                x: offset * 240,
+                y: 0,
+                rotate: offset * 2,
+                scale: 1,
+                zIndex: index,
+                opacity: 1,
+                filter: 'brightness(1) blur(0px)',
+              };
 
-                // État interactif (Survol)
-                if (isAnyHovered) {
-                    if (isHovered) {
-                        // LA CARTE SÉLECTIONNÉE (FOCUS DOUX)
-                        animateState = {
-                            x: offset * 190, // Reste à sa place horizontale
-                            y: -40, // Remonte légèrement
-                            rotate: 0, // Se redresse
-                            scale: 1.15, // Zoom modéré (Premium, pas cartoon)
-                            zIndex: 50,
-                            opacity: 1,
-                            filter: 'brightness(1.1) drop-shadow(0 25px 50px rgba(0,0,0,0.5))',
-                        };
-                    } else {
-                        // LES AUTRES CARTES (DIMMED LÉGER)
-                        // On écarte à peine
-                        const pushAside = index < hoveredIndex ? -20 : 20; 
-                        animateState = {
-                            x: (offset * 190) + pushAside, 
-                            y: 10, 
-                            rotate: offset * 2,
-                            scale: 0.98, // Rétrécissement quasi imperceptible
-                            zIndex: index,
-                            opacity: 0.8, // Garde de la visibilité
-                            filter: 'brightness(0.7) blur(1px)', // Flou très léger pour garder le contexte
-                        };
-                    }
+              if (isAnyHovered) {
+                if (isHovered) {
+                  animateState = {
+                    x: offset * 240,
+                    y: -40,
+                    rotate: 0,
+                    scale: 1.15,
+                    zIndex: 50,
+                    opacity: 1,
+                    filter: 'brightness(1.1) drop-shadow(0 25px 50px rgba(0,0,0,0.5))',
+                  };
+                } else {
+                  const pushAside = index < hoveredIndex ? -30 : 30;
+                  animateState = {
+                    x: (offset * 240) + pushAside,
+                    y: 10,
+                    rotate: offset * 2,
+                    scale: 0.98,
+                    zIndex: index,
+                    opacity: 0.8,
+                    filter: 'brightness(0.7) blur(1px)',
+                  };
                 }
+              }
             }
 
             const isFlipped = flippedIndex === index;
@@ -138,10 +125,10 @@ const Team: React.FC = () => {
                 key={index}
                 animate={animateState}
                 transition={{
-                    type: "spring",
-                    stiffness: 120,
-                    damping: 25,
-                    mass: 1
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 25,
+                  mass: 1
                 }}
                 onHoverStart={() => setHoveredIndex(index)}
                 onHoverEnd={() => setHoveredIndex(null)}
@@ -184,7 +171,7 @@ const Team: React.FC = () => {
                     />
 
                     <div className={`absolute inset-0 bg-gradient-to-t ${member.color} via-transparent to-transparent opacity-40 mix-blend-overlay`} />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617]/95" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#000000]/95" />
 
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
                       <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{member.name}</h3>
@@ -307,7 +294,7 @@ const Team: React.FC = () => {
                       decoding="async"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/50 to-transparent" />
 
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
                       <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{member.name}</h3>
@@ -377,15 +364,13 @@ const Team: React.FC = () => {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <a
+          <ShinyButton
             href={calendlyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
           >
-            <span className="relative z-10">Discuter avec la team</span>
-            <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
-          </a>
+            Discuter avec la team
+          </ShinyButton>
         </motion.div>
 
       </div>

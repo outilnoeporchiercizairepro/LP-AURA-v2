@@ -3,6 +3,7 @@ import { CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CountdownTimer from './CountdownTimer';
 import { useTracking } from '../contexts/TrackingContext';
+import { ShinyButton } from './ui/ShinyButton';
 
 interface TimelineItem {
   title: string;
@@ -87,7 +88,7 @@ const Content: React.FC = () => {
   };
 
   return (
-    <section id="content" className="py-24 bg-[#020617] relative overflow-hidden">
+    <section id="content" className="py-24 bg-transparent relative overflow-hidden">
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -99,7 +100,7 @@ const Content: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 flex items-center justify-center gap-3 flex-wrap">
-            Contenu de la formation <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="inline h-10 md:h-14" />
+            Contenu de la formation <img src="/aura.png" alt="AURA" className="inline h-10 md:h-14" />
           </h2>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
             Des modules structurés et complets pour maîtriser toutes les facettes du business qui nous génère 20k/mois
@@ -117,15 +118,14 @@ const Content: React.FC = () => {
               <button
                 key={idx}
                 onClick={() => handleTabChange(idx)}
-                className={`relative px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                  tab.isBonus
-                    ? activeTab === idx
-                      ? 'text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 shadow-xl shadow-orange-500/40 scale-105'
-                      : 'text-white bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-red-500/90 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 border-2 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/40'
-                    : activeTab === idx
+                className={`relative px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${tab.isBonus
+                  ? activeTab === idx
+                    ? 'text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 shadow-xl shadow-orange-500/40 scale-105'
+                    : 'text-white bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-red-500/90 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 border-2 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/40'
+                  : activeTab === idx
                     ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20'
                     : 'text-gray-400 hover:text-gray-300 bg-slate-900/40 hover:bg-slate-900/60 border border-slate-800/50'
-                }`}
+                  }`}
               >
                 {tab.isBonus && (
                   <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider animate-pulse shadow-lg shadow-red-500/50">
@@ -164,25 +164,22 @@ const Content: React.FC = () => {
                     transition={{ delay: idx * 0.05, duration: 0.4 }}
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`group relative p-5 rounded-xl border transition-all duration-300 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 ${
-                      hoveredIndex === idx
-                        ? 'border-primary/40 shadow-lg shadow-primary/10 translate-x-2'
-                        : 'border-slate-800/50'
-                    }`}
+                    className={`group relative p-5 rounded-xl border transition-all duration-300 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 ${hoveredIndex === idx
+                      ? 'border-primary/40 shadow-lg shadow-primary/10 translate-x-2'
+                      : 'border-slate-800/50'
+                      }`}
                   >
                     <div className="flex items-start gap-4">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm transition-all duration-300 ${
-                        hoveredIndex === idx
-                          ? 'bg-gradient-to-br from-primary to-secondary text-white'
-                          : 'bg-slate-800/50 text-gray-400'
-                      }`}>
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm transition-all duration-300 ${hoveredIndex === idx
+                        ? 'bg-gradient-to-br from-primary to-secondary text-white'
+                        : 'bg-slate-800/50 text-gray-400'
+                        }`}>
                         {idx + 1}
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h3 className={`font-bold text-lg mb-1.5 transition-colors ${
-                          hoveredIndex === idx ? 'text-white' : 'text-gray-200'
-                        }`}>
+                        <h3 className={`font-bold text-lg mb-1.5 transition-colors ${hoveredIndex === idx ? 'text-white' : 'text-gray-200'
+                          }`}>
                           {item.title}
                         </h3>
                         <p className="text-gray-400 text-sm leading-relaxed">
@@ -190,12 +187,10 @@ const Content: React.FC = () => {
                         </p>
                       </div>
 
-                      <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
-                        hoveredIndex === idx ? 'bg-primary/20' : 'bg-transparent'
-                      }`}>
-                        <CheckCircle2 className={`w-4 h-4 transition-all duration-300 ${
-                          hoveredIndex === idx ? 'text-primary opacity-100' : 'text-gray-600 opacity-50'
-                        }`} />
+                      <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${hoveredIndex === idx ? 'bg-primary/20' : 'bg-transparent'
+                        }`}>
+                        <CheckCircle2 className={`w-4 h-4 transition-all duration-300 ${hoveredIndex === idx ? 'text-primary opacity-100' : 'text-gray-600 opacity-50'
+                          }`} />
                       </div>
                     </div>
 
@@ -218,15 +213,14 @@ const Content: React.FC = () => {
                 transition={{ delay: 0.4 }}
                 className="mt-12 text-center"
               >
-                <a
+                <ShinyButton
                   href={calendlyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative inline-block px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
+                  className="w-full sm:w-auto"
                 >
-                  <span className="relative z-10">Accéder au programme complet</span>
-                  <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
-                </a>
+                  Accéder au programme complet
+                </ShinyButton>
               </motion.div>
             </motion.div>
           </AnimatePresence>

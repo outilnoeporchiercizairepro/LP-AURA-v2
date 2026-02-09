@@ -1,63 +1,100 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AURA | La seule académie IA créée par des experts </title>
-    <script src="https://t.contentsquare.net/uxa/4543d5a61fd13.js"></script>
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765279371675-lfmry.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765279371675-lfmry.png" />
-    <link rel="apple-touch-icon" href="https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765279371675-lfmry.png" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURA | La seule académie IA créée par des experts </title>
+  <script src="https://t.contentsquare.net/uxa/4543d5a61fd13.js"></script>
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32"
+    href="https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765279371675-lfmry.png" />
+  <link rel="icon" type="image/png" sizes="16x16"
+    href="https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765279371675-lfmry.png" />
+  <link rel="apple-touch-icon"
+    href="https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765279371675-lfmry.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            background: '#000000', // Pure Black
+            surface: '#050505',
+            card: '#080808',
+            primary: {
+              DEFAULT: '#FA0CF9', // New Pink/Magenta
+              hover: '#d10bc1',
             },
-            colors: {
-              background: '#020617', // Slate 950/Black blend
-              surface: '#0b1120',
-              card: '#0F172A',
-              primary: {
-                DEFAULT: '#ea4b71', // Pink/Magenta
-                hover: '#be185d',
-              },
-              secondary: {
-                DEFAULT: '#00bcfa', // Cyan/Light Blue
-                hover: '#0ea5e9',
-              },
-              border: '#1e293b', // Slate 800
+            secondary: {
+              DEFAULT: '#0C94F7', // New Cyan/Light Blue
+              hover: '#0a7dcf',
             },
-            backgroundImage: {
-              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-              'aura-gradient': 'linear-gradient(to right, #ea4b71, #00bcfa)',
-            }
+            border: '#111111',
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            'aura-gradient': 'linear-gradient(to right, #FA0CF9, #0C94F7)',
           }
         }
       }
-    </script>
-    <style>
-      body {
-        background-color: #020617;
-        color: #e5e7eb;
-        overflow-x: hidden;
+    }
+  </script>
+  <style>
+    body {
+      background-color: #000000;
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    ::selection {
+      background: #FA0CF9;
+      color: white;
+    }
+
+    @keyframes aurora {
+      0% {
+        background-position: 0% 50%;
+        transform: rotate(-2deg) scale(0.95);
       }
-      /* Smooth scrolling */
-      html {
-        scroll-behavior: smooth;
+
+      25% {
+        background-position: 50% 100%;
+        transform: rotate(2deg) scale(1.05);
       }
-      ::selection {
-        background: #ea4b71;
-        color: white;
+
+      50% {
+        background-position: 100% 50%;
+        transform: rotate(-1deg) scale(0.98);
       }
-    </style>
+
+      75% {
+        background-position: 50% 0%;
+        transform: rotate(1deg) scale(1.02);
+      }
+
+      100% {
+        background-position: 0% 50%;
+        transform: rotate(-2deg) scale(0.95);
+      }
+    }
+
+    .animate-aurora {
+      animation: aurora 8s ease-in-out infinite alternate;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -70,8 +107,10 @@
 }
 </script>
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

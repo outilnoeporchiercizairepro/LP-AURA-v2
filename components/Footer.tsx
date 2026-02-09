@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#01040f] border-t border-slate-900 py-12">
+    <footer className="bg-[#000000] border-t border-slate-900 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
 
         <div className="text-center md:text-left">
-          <img src="/design_sans_titre_-_2025-12-09t224556.947.png" alt="AURA" className="h-10 mx-auto md:mx-0 mb-2" />
+          <img src="/aura.png" alt="AURA" className="h-10 mx-auto md:mx-0 mb-2" />
           <p className="text-gray-500 text-sm">La seule formation IA créée par des experts.</p>
         </div>
 

@@ -1,11 +1,32 @@
-import React, { useState, useMemo } from 'react';
-import { BookOpen, CheckCircle, RefreshCw, Users, Play } from 'lucide-react';
-import { motion } from 'framer-motion';
+'use client';
+
+import React, { useRef, useMemo, useState } from 'react';
+import { Play, BookOpen, CheckCircle, RefreshCw, Users } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import { useTracking } from '../contexts/TrackingContext';
+import { ShinyButton } from './ui/ShinyButton';
+
+// GSAP SplitText is a premium plugin. Fallback provided.
+// @ts-ignore
+import { SplitText } from 'gsap/SplitText';
+
+gsap.registerPlugin(SplitText, useGSAP);
 
 const Hero: React.FC = () => {
   const { utmSourceLabel } = useTracking();
   const youtubeVideoId = 'ZS2fa-1I0uo';
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const headerRef = useRef<HTMLHeadingElement | null>(null);
+  const paraRef = useRef<HTMLParagraphElement | null>(null);
+  const ctaRef = useRef<HTMLDivElement | null>(null);
+  const badgeRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLDivElement | null>(null);
+  const microRefs = useRef<(HTMLLIElement | null)[]>([]);
+
+  const currentMonth = new Date().toLocaleDateString('fr-FR', { month: 'long' });
 
   const calendlyUrl = useMemo(() => {
     const baseUrl = 'https://calendly.com/aura-academie/30min';
@@ -16,68 +37,97 @@ const Hero: React.FC = () => {
     }
     return baseUrl;
   }, [utmSourceLabel]);
-  const [isPlaying, setIsPlaying] = useState(false);
 
-  const currentMonth = new Date().toLocaleDateString('fr-FR', { month: 'long' });
+  useGSAP(
+    () => {
+      if (!headerRef.current) return;
 
-  const handlePlayClick = () => {
-    setIsPlaying(true);
-  };
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // Badge Animation
+        if (badgeRef.current) {
+          gsap.set(badgeRef.current, { autoAlpha: 0, y: -20 });
+          tl.to(badgeRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, 0);
+        }
+
+        // Title Animation (SplitText or Fallback)
+        if (typeof SplitText !== 'undefined') {
+          const split = new SplitText(headerRef.current!, { type: 'lines' });
+          gsap.set(split.lines, { filter: 'blur(10px)', y: 40, autoAlpha: 0 });
+          tl.to(split.lines, { filter: 'blur(0px)', y: 0, autoAlpha: 1, duration: 1, stagger: 0.15 }, 0.2);
+        } else {
+          gsap.set(headerRef.current, { autoAlpha: 0, y: 30 });
+          tl.to(headerRef.current, { autoAlpha: 1, y: 0, duration: 1 }, 0.2);
+        }
+
+        // Paragraph & CTA & Video
+        if (paraRef.current) {
+          gsap.set(paraRef.current, { autoAlpha: 0, y: 20 });
+          tl.to(paraRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.4);
+        }
+        if (ctaRef.current) {
+          gsap.set(ctaRef.current, { autoAlpha: 0, y: 20 });
+          tl.to(ctaRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.5);
+        }
+        if (videoRef.current) {
+          gsap.set(videoRef.current, { autoAlpha: 0, scale: 0.95 });
+          tl.to(videoRef.current, { autoAlpha: 1, scale: 1, duration: 1 }, 0.6);
+        }
+
+        // Micro Details
+        const activeMicros = microRefs.current.filter(Boolean);
+        if (activeMicros.length > 0) {
+          gsap.set(activeMicros, { autoAlpha: 0, x: -10 });
+          tl.to(activeMicros, { autoAlpha: 1, x: 0, duration: 0.6, stagger: 0.1 }, 0.8);
+        }
+      });
+    },
+    { scope: sectionRef }
+  );
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden">
-      {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10 opacity-60" />
-      <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-secondary/10 blur-[100px] rounded-full pointer-events-none -z-10 opacity-40" />
+    <section ref={sectionRef} className="relative min-h-screen pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden bg-transparent">
+      {/* Background Glows shifted to very subtle */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/2 blur-[120px] rounded-full pointer-events-none -z-10 opacity-20" />
+      <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-secondary/2 blur-[100px] rounded-full pointer-events-none -z-10 opacity-15" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
-        
+
         {/* Badge */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase mb-8 backdrop-blur-sm"
-        >
+        <div ref={badgeRef} className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase mb-8 backdrop-blur-sm">
           <span className="relative flex h-2 w-2 mr-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
           </span>
-          3 places restantes pour le mois de {currentMonth}
-        </motion.div>
+          3 places restantes pour {currentMonth}
+        </div>
 
         {/* Headline */}
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 leading-tight"
-        >
+        <h1 ref={headerRef} className="text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight mb-8 leading-[1.1]">
           Maîtrise les systèmes IA, <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary">
-             indispensables pour 2026.
-          </span>
-        </motion.h1>
+          <span className="text-primary italic font-serif">indispensables</span> pour 2026.
+        </h1>
 
         {/* Subhead */}
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-2 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed"
-        >
-          Apprends à créer, déployer et vendre tes solutions IA grâce à une roadmap claire guidée par 4 experts.
-        </motion.p>
+        <p ref={paraRef} className="max-w-2xl mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-12">
+          Apprends à créer, déployer et vendre tes solutions IA grâce à une roadmap claire guidée par 3 experts.
+        </p>
+
+        {/* CTA Buttons */}
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 w-full sm:w-auto">
+          <ShinyButton href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto text-lg">
+            Réserver mon appel stratégique
+          </ShinyButton>
+          <a href="#team" className="w-full sm:w-auto px-8 py-4 border border-white/10 hover:border-secondary/50 text-white/70 hover:text-white rounded-xl font-light text-lg transition-all bg-white/5 backdrop-blur-md">
+            Découvrir la team
+          </a>
+        </div>
 
         {/* Video Preview */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-12 w-full max-w-4xl relative group"
-        >
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden">
+        <div ref={videoRef} className="w-full max-w-4xl relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-1000"></div>
+          <div className="relative aspect-video rounded-2xl bg-slate-900 border border-white/5 overflow-hidden shadow-2xl">
             {isPlaying ? (
               <iframe
                 className="w-full h-full"
@@ -87,74 +137,41 @@ const Hero: React.FC = () => {
                 allowFullScreen
               />
             ) : (
-              <>
+              <div className="relative h-full w-full cursor-pointer group" onClick={() => setIsPlaying(true)}>
                 <img
                   src={`https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`}
                   alt="Aperçu vidéo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div
-                  className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center cursor-pointer group-hover:bg-black/30 transition-colors"
-                  onClick={handlePlayClick}
-                >
-                  <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-300">
-                    <Play className="w-10 h-10 text-white fill-white ml-1" />
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition-colors">
+                  <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-500">
+                    <Play className="w-8 h-8 text-white fill-white ml-1" />
                   </div>
-                  <p className="mt-4 text-sm font-medium text-white uppercase tracking-widest">Vidéo de présentation</p>
+                  <p className="mt-6 text-xs font-light text-white uppercase tracking-[0.2em]">Play Presentation</p>
                 </div>
-              </>
+              </div>
             )}
           </div>
-        </motion.div>
+        </div>
 
         {/* Bullet Points */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 flex flex-wrap justify-center gap-6 md:gap-10 text-sm font-medium text-gray-300"
-        >
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-secondary/10 text-secondary"><BookOpen className="w-4 h-4" /></div>
-            <span>+50h de cours</span>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-primary/10 text-primary"><CheckCircle className="w-4 h-4" /></div>
-            <span>Validation de ton offre par nos experts</span>
-          </div>
-          <div className="flex items-center gap-2.5">
-             <div className="p-1.5 rounded-lg bg-secondary/10 text-secondary"><RefreshCw className="w-4 h-4" /></div>
-            <span>Mises à jour hebdomadaires</span>
-          </div>
-          <div className="flex items-center gap-2.5">
-             <div className="p-1.5 rounded-lg bg-primary/10 text-primary"><Users className="w-4 h-4" /></div>
-            <span>Coaching de groupe</span>
-          </div>
-        </motion.div>
-
-        {/* CTA Buttons */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
-        >
-          <a
-            href={calendlyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-[0_4px_20px_rgba(234,75,113,0.4)] hover:shadow-[0_6px_30px_rgba(234,75,113,0.6)]"
-          >
-            <span className="relative z-10">Je réserve mon appel stratégique</span>
-            <div className="absolute inset-0 -z-10 bg-primary/30 blur-xl rounded-lg"></div>
-          </a>
-          <a
-            href="#team"
-            className="w-full sm:w-auto px-8 py-4 border border-slate-700 hover:border-secondary text-gray-300 hover:text-white rounded-lg font-semibold text-lg transition-colors bg-white/5 backdrop-blur-sm"
-          >
-            Découvrir la team AURA
-          </a>
-        </motion.div>
+        <ul className="mt-20 flex flex-wrap justify-center gap-8 md:gap-12 text-sm font-light text-gray-400">
+          {[
+            { icon: <BookOpen className="w-4 h-4" />, text: "+50h de cours" },
+            { icon: <CheckCircle className="w-4 h-4" />, text: "Validation expert" },
+            { icon: <RefreshCw className="w-4 h-4" />, text: "Updates hebdomadaires" },
+            { icon: <Users className="w-4 h-4" />, text: "Coaching de groupe" }
+          ].map((item, idx) => (
+            <li
+              key={idx}
+              ref={(el) => { microRefs.current[idx] = el; }}
+              className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-lg border border-white/5 hover:border-primary/20 transition-colors"
+            >
+              <span className="text-primary/70">{item.icon}</span>
+              <span>{item.text}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

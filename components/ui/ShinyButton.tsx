@@ -10,6 +10,7 @@ interface ShinyButtonProps {
   rel?: string
   type?: "button" | "submit"
   className?: string
+  variant?: "default" | "primary"
 }
 
 export function ShinyButton({
@@ -19,8 +20,10 @@ export function ShinyButton({
   target,
   rel,
   type = "button",
-  className = ""
+  className = "",
+  variant = "default"
 }: ShinyButtonProps) {
+  const isPrimary = variant === "primary";
   const buttonStyles = `
     @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
 
@@ -49,11 +52,11 @@ export function ShinyButton({
     }
 
     .shiny-cta {
-      --shiny-cta-bg: #000000;
-      --shiny-cta-bg-subtle: #111111;
+      --shiny-cta-bg: ${isPrimary ? "linear-gradient(to right, #FA0CF9, #0C94F7)" : "#000000"};
+      --shiny-cta-bg-subtle: ${isPrimary ? "#FA0CF9" : "#111111"};
       --shiny-cta-fg: #ffffff;
-      --shiny-cta-highlight: #FA0CF9; /* Pink */
-      --shiny-cta-highlight-subtle: #0C94F7; /* Blue */
+      --shiny-cta-highlight: ${isPrimary ? "#ffffff" : "#FA0CF9"}; /* White highlight if primary */
+      --shiny-cta-highlight-subtle: ${isPrimary ? "#FA0CF9" : "#0C94F7"};
       --animation: gradient-angle linear infinite;
       --duration: 3s;
       --shadow-size: 2px;
@@ -166,25 +169,21 @@ export function ShinyButton({
     .shiny-cta::before,
     .shiny-cta::after {
       animation: var(--animation) var(--duration),
-        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+        var(--animation) calc(var(--duration) / 0.4) reverse;
       animation-composition: add;
     }
 
-    .shiny-cta:is(:hover, :focus-visible) {
-      --gradient-percent: 20%;
-      --gradient-angle-offset: 95deg;
-      --gradient-shine: var(--shiny-cta-highlight-subtle);
-    }
-
-    .shiny-cta:is(:hover, :focus-visible),
+    /* Animation runs by default now */
+    /* .shiny-cta:is(:hover, :focus-visible),
     .shiny-cta:is(:hover, :focus-visible)::before,
     .shiny-cta:is(:hover, :focus-visible)::after {
       animation-play-state: running;
-    }
+    } */
 
-    .shiny-cta:is(:hover, :focus-visible) span::before {
+    /* No hover effect on span::before */
+    /* .shiny-cta:is(:hover, :focus-visible) span::before {
       opacity: 1;
-    }
+    } */
 
     @keyframes gradient-angle {
       to {

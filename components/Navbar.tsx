@@ -55,14 +55,14 @@ const Navbar: React.FC = () => {
                   {link.name}
                 </a>
               ))}
-              <ShinyButton
+              <a
                 href={calendlyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="!py-2.5 !px-6 !text-sm"
+                className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary/20"
               >
                 Rejoindre AURA
-              </ShinyButton>
+              </a>
             </div>
           </div>
 
@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-center block mt-4 bg-primary hover:bg-primary-hover text-white px-5 py-3 rounded-lg text-base font-semibold shadow-lg shadow-primary/20"
+                className="w-full text-center block mt-4 bg-aura-gradient hover:opacity-90 text-white px-5 py-3 rounded-xl text-base font-semibold shadow-lg shadow-primary/20 transition-all"
               >
                 Rejoindre AURA
               </a>

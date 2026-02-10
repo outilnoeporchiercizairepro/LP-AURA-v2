@@ -66,20 +66,21 @@ const Hero: React.FC = () => {
           gsap.set(paraRef.current, { autoAlpha: 0, y: 20 });
           tl.to(paraRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.4);
         }
-        if (ctaRef.current) {
-          gsap.set(ctaRef.current, { autoAlpha: 0, y: 20 });
-          tl.to(ctaRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.5);
-        }
         if (videoRef.current) {
           gsap.set(videoRef.current, { autoAlpha: 0, scale: 0.95 });
-          tl.to(videoRef.current, { autoAlpha: 1, scale: 1, duration: 1 }, 0.6);
+          tl.to(videoRef.current, { autoAlpha: 1, scale: 1, duration: 1 }, 0.5);
         }
 
-        // Micro Details
+        // Micro Details (Bullet Points)
         const activeMicros = microRefs.current.filter(Boolean);
         if (activeMicros.length > 0) {
           gsap.set(activeMicros, { autoAlpha: 0, x: -10 });
-          tl.to(activeMicros, { autoAlpha: 1, x: 0, duration: 0.6, stagger: 0.1 }, 0.8);
+          tl.to(activeMicros, { autoAlpha: 1, x: 0, duration: 0.6, stagger: 0.1 }, 0.7);
+        }
+
+        if (ctaRef.current) {
+          gsap.set(ctaRef.current, { autoAlpha: 0, y: 20 });
+          tl.to(ctaRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.9);
         }
       });
     },
@@ -104,28 +105,18 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Headline */}
-        <h1 ref={headerRef} className="text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight mb-8 leading-[1.1]">
-          Maîtrise les systèmes IA, <br className="hidden md:block" />
-          <span className="text-primary italic font-serif">indispensables</span> pour 2026.
+        <h1 ref={headerRef} className="text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight mb-8 leading-[1.1]" style={{ fontFamily: "'Helvetica', 'Arial', sans-serif" }}>
+          Vas-tu laisser passer la plus grosse <br className="hidden md:block" />
+          <span className="bg-aura-gradient bg-clip-text text-transparent font-bold animate-aurora bg-[length:200%_200%]">opportunité IA</span> de 2026 ?
         </h1>
 
         {/* Subhead */}
-        <p ref={paraRef} className="max-w-2xl mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-12">
-          Apprends à créer, déployer et vendre tes solutions IA grâce à une roadmap claire guidée par 3 experts.
+        <p ref={paraRef} className="max-w-3xl mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-10">
+          Apprenez à construire des systèmes IA que les entreprises s'arrachent et générez entre <span className="text-white font-medium">2 000€</span> et <span className="text-white font-medium">10 000€</span> par mois.
         </p>
 
-        {/* CTA Buttons */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 w-full sm:w-auto">
-          <ShinyButton href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto text-lg">
-            Réserver mon appel stratégique
-          </ShinyButton>
-          <a href="#team" className="w-full sm:w-auto px-8 py-4 border border-white/10 hover:border-secondary/50 text-white/70 hover:text-white rounded-xl font-light text-lg transition-all bg-white/5 backdrop-blur-md">
-            Découvrir la team
-          </a>
-        </div>
-
         {/* Video Preview */}
-        <div ref={videoRef} className="w-full max-w-4xl relative group">
+        <div ref={videoRef} className="w-full max-w-4xl relative group mb-8">
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-1000"></div>
           <div className="relative aspect-video rounded-2xl bg-slate-900 border border-white/5 overflow-hidden shadow-2xl">
             {isPlaying ? (
@@ -155,7 +146,7 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Bullet Points */}
-        <ul className="mt-20 flex flex-wrap justify-center gap-8 md:gap-12 text-sm font-light text-gray-400">
+        <ul className="mb-8 flex flex-wrap justify-center gap-8 md:gap-12 text-sm font-light text-gray-400">
           {[
             { icon: <BookOpen className="w-4 h-4" />, text: "+50h de cours" },
             { icon: <CheckCircle className="w-4 h-4" />, text: "Validation expert" },
@@ -172,6 +163,13 @@ const Hero: React.FC = () => {
             </li>
           ))}
         </ul>
+
+        {/* CTA Buttons */}
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center mb-10 w-full sm:w-auto text-center">
+          <ShinyButton href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto text-lg">
+            Réserver mon appel stratégique
+          </ShinyButton>
+        </div>
       </div>
     </section>
   );

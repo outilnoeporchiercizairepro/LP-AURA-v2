@@ -88,7 +88,7 @@ const Hero: React.FC = () => {
   );
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden bg-transparent">
+    <section ref={sectionRef} className="relative min-h-screen pt-32 pb-10 lg:pt-44 lg:pb-16 overflow-hidden bg-transparent">
       {/* Background Glows shifted to very subtle */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/2 blur-[120px] rounded-full pointer-events-none -z-10 opacity-20" />
       <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-secondary/2 blur-[100px] rounded-full pointer-events-none -z-10 opacity-15" />
@@ -112,7 +112,7 @@ const Hero: React.FC = () => {
 
         {/* Subhead */}
         <p ref={paraRef} className="max-w-3xl mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-10">
-          Apprenez à construire des systèmes IA que les entreprises s'arrachent et générez entre <span className="text-white font-medium">2 000€</span> et <span className="text-white font-medium">10 000€</span> par mois.
+          Apprenez à construire des systèmes IA que les entreprises s'arrachent et générez vos premiers <span className="text-white font-medium">10 000 euros</span> par mois.
         </p>
 
         {/* Video Preview */}
@@ -149,9 +149,8 @@ const Hero: React.FC = () => {
         <ul className="mb-8 flex flex-wrap justify-center gap-8 md:gap-12 text-sm font-light text-gray-400">
           {[
             { icon: <BookOpen className="w-4 h-4" />, text: "+50h de cours" },
-            { icon: <CheckCircle className="w-4 h-4" />, text: "Validation expert" },
-            { icon: <RefreshCw className="w-4 h-4" />, text: "Updates hebdomadaires" },
-            { icon: <Users className="w-4 h-4" />, text: "Coaching de groupe" }
+            { icon: <RefreshCw className="w-4 h-4" />, text: "Mises à jour continuelles" },
+            { icon: <Users className="w-4 h-4" />, text: "Accompagnement" }
           ].map((item, idx) => (
             <li
               key={idx}

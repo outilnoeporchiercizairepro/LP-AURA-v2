@@ -22,18 +22,18 @@ const Team: React.FC = () => {
 
   const team = [
     {
-      name: "Baptiste",
-      role: "Expert IA & Automatisation",
-      desc: "Architecte des infrastructures IA. Co-Fondateur de VeliosAI, il vous apprend à créer des systèmes IA scalables et duplicables de A à Z.",
-      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224896655-ru45nc.jpeg",
-      color: "from-secondary/20 to-secondary/5"
-    },
-    {
       name: "Noé",
       role: "Spécialiste en Déploiement & Vente",
       desc: "Expert du closing et de la stratégie commerciale. Il t'apprend à vendre tes solutions IA et à développer ton activité rapidement qu'elle soit en ligne ou en physique.",
       image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765226175618-b7yhs6.png",
       color: "from-primary/20 to-primary/5"
+    },
+    {
+      name: "Baptiste",
+      role: "Expert IA & Automatisation",
+      desc: "Architecte des infrastructures IA. Co-Fondateur de VeliosAI, il vous apprend à créer des systèmes IA scalables et duplicables de A à Z.",
+      image: "https://qixufxuiscypehxupiqh.supabase.co/storage/v1/object/public/images/public/1765224896655-ru45nc.jpeg",
+      color: "from-secondary/20 to-secondary/5"
     },
     {
       name: "Imrane",
@@ -55,6 +55,11 @@ const Team: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase backdrop-blur-sm">
+              Team
+            </div>
+          </div>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-3 flex-wrap">
             L'Équipe
             <img src="/aura.png" alt="AURA" className="inline h-10 md:h-14" />

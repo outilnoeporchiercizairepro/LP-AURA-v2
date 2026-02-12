@@ -63,6 +63,11 @@ const Timeline: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase backdrop-blur-sm">
+              Roadmap
+            </div>
+          </div>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
             Je vends ma première infrastructure à 3k minimum
           </h2>

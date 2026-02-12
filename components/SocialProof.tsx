@@ -136,7 +136,7 @@ const SocialProof: React.FC = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tighter">
             Ils sont passés à l'action
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">Rejoins une communauté de bâtisseurs d'élite qui transforment l'IA en profit.</p>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">Rejoins une communauté de bâtisseurs d'élite qui transforment l'IA et l'Automatisation en profit.</p>
         </motion.div>
 
         {/* Stats Banner */}

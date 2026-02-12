@@ -76,7 +76,7 @@ const Comparison: React.FC = () => {
               </li>
               <li className="flex gap-4 items-start">
                 <span className="text-green-500 font-bold mt-1">•</span>
-                <span>Tu comprends que l'IA est la révolution industrielle de notre siècle.</span>
+                <span>Tu comprends que l'IA est la révolution de notre siècle.</span>
               </li>
               <li className="flex gap-4 items-start">
                 <span className="text-green-500 font-bold mt-1">•</span>

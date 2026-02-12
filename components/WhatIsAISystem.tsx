@@ -1,28 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Workflow, Layout, Database } from 'lucide-react';
+import { Layout, Database, Bot } from 'lucide-react';
 
 const WhatIsAISystem: React.FC = () => {
   const components = [
     {
-      icon: <Workflow className="w-8 h-8" />,
-      title: 'n8n',
-      description: 'Le moteur d\'automatisation'
+      icon: <Bot className="w-8 h-8 text-white" />,
+      title: 'Agents et Automatisations IA',
+      description: ''
     },
     {
-      icon: <Layout className="w-8 h-8" />,
+      icon: <Layout className="w-8 h-8 text-white" />,
       title: 'Interface graphique',
-      description: 'Plus de valeur pour le client'
+      description: ''
     },
     {
-      icon: <Database className="w-8 h-8" />,
-      title: 'Base de données',
-      description: 'Une infra complète et dédiée'
+      icon: <Database className="w-8 h-8 text-white" />,
+      title: 'Bases de données',
+      description: ''
     }
   ];
 
   return (
-    <section className="py-20 bg-transparent relative overflow-hidden">
+    <section className="pt-10 pb-20 bg-transparent relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-surface/20 to-transparent pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -46,7 +46,7 @@ const WhatIsAISystem: React.FC = () => {
                 transition={{ delay: idx * 0.1 }}
                 className="p-6 rounded-xl bg-surface/50 border border-slate-800"
               >
-                <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                   {item.icon}
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
@@ -72,11 +72,9 @@ const WhatIsAISystem: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed"
+            className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto"
           >
-            <span className="text-primary font-semibold">n8n</span> + une{' '}
-            <span className="text-secondary font-semibold">interface graphique</span> par dessus qui ajoute plus de valeur au client + une{' '}
-            <span className="text-primary font-semibold">base de données</span> dédiée pour avoir une infra complète
+            Un <span className="text-white font-medium">système complet</span> qui ne se contente pas d’automatiser : il <span className="text-primary font-medium">structure les données</span>, centralise les opérations et offre une <span className="text-secondary font-medium">interface claire</span> pour piloter l’activité. Résultat : <span className="text-white font-medium">moins de tâches manuelles</span>, plus de contrôle, une exécution plus rapide et une <span className="bg-aura-gradient bg-clip-text text-transparent font-bold">valeur perçue</span> qui augmente fortement côté client.
           </motion.p>
         </motion.div>
       </div>

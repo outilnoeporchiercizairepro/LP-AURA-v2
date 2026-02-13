@@ -17,12 +17,12 @@ const Pricing: React.FC = () => {
     return baseUrl;
   }, [utmSourceLabel]);
   const features = [
-    "Plus de 50h de cours structurés",
-    "Exercices pratiques et projets concrets",
-    "Channels Discord actifs et réactifs",
-    "Calls de groupe réguliers avec la team",
-    "Accès à vie aux replays et mises à jour",
-    "Templates et ressources prêts à l'emploi"
+    "50+ heures de cours structurés, concrets et directement applicables",
+    "Exercices pratiques et projets réels pour construire des systèmes opérationnels",
+    "Coachings de groupe plusieurs fois par semaine",
+    "Réponses rapides aux questions + accompagnement personnalisé",
+    "Communauté active et réactive sur WhatsApp et Skool",
+    "Accès à vie aux replays, mises à jour, templates et ressources prêts à l'emploi"
   ];
 
   return (

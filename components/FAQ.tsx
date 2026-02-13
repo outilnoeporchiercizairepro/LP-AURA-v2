@@ -21,7 +21,7 @@ const FAQ: React.FC = () => {
   const faqs = [
     {
       q: "Quel niveau technique est nécessaire ?",
-      a: "Un intérêt fort pour la tech est requis. Si tu sais utiliser un ordinateur et que tu es curieux, on t'apprendra le reste. Avoir des bases en code (HTML/JS/Python) est un plus, mais pas obligatoire."
+      a: "Un intérêt fort pour la tech est requis. Si tu sais utiliser un ordinateur et que tu es curieux, on t'apprendra le reste. Avoir des bases en code est un plus mais pas besoin (la preuve nous en avons pas nous meme)"
     },
     {
       q: "Puis-je suivre AURA en parallèle d'un job ?",

@@ -1,24 +1,209 @@
 import React, { useState, useMemo } from 'react';
-import { CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CountdownTimer from './CountdownTimer';
+import { ChevronDown, Users, Brain, Zap, Code2, Database, Cpu, Rocket, Shield, TrendingUp, Wrench, BookOpen, Network, Star } from 'lucide-react';
 import { useTracking } from '../contexts/TrackingContext';
 import { ShinyButton } from './ui/ShinyButton';
 
-interface TimelineItem {
+interface Module {
+  number: string;
   title: string;
-  description: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  items: string[];
+  objective: string;
+  isBonus?: boolean;
+  isCommunity?: boolean;
 }
 
-interface TabContent {
-  name: string;
-  items: TimelineItem[];
-  isBonus?: boolean;
-}
+const modules: Module[] = [
+  {
+    number: '00',
+    title: 'Écosystème Aura',
+    subtitle: 'Communauté & accompagnement',
+    icon: <Users className="w-5 h-5" />,
+    isCommunity: true,
+    items: [
+      'Coachings de groupe hebdomadaires',
+      'Communauté WhatsApp active',
+      'Communauté Skool structurée',
+      'Accompagnement stratégique continu',
+    ],
+    objective: 'Évoluer dans un environnement encadré et orienté résultats.',
+  },
+  {
+    number: '01',
+    title: 'Onboarding & Méthodologie',
+    subtitle: 'Démarrer efficacement',
+    icon: <BookOpen className="w-5 h-5" />,
+    items: [
+      'Comprendre la structure de la formation',
+      'Adopter une méthode claire',
+      'Organiser son apprentissage',
+      'Suivre sa progression',
+    ],
+    objective: 'Démarrer efficacement dès le premier jour.',
+  },
+  {
+    number: '02',
+    title: 'Mindset & Performance',
+    subtitle: 'Fondations mentales',
+    icon: <Brain className="w-5 h-5" />,
+    items: [
+      'Discipline et productivité',
+      'Gestion de l\'énergie',
+      'Résilience face aux obstacles',
+      'Du consommateur au créateur',
+    ],
+    objective: 'Installer une posture d\'exécution durable.',
+  },
+  {
+    number: '03',
+    title: 'Fondamentaux de l\'IA',
+    subtitle: 'Compréhension stratégique',
+    icon: <Cpu className="w-5 h-5" />,
+    items: [
+      'Fonctionnement de l\'IA',
+      'Large Language Models (LLMs)',
+      'Données et structuration (JSON)',
+      'APIs, Fine-tuning, RAG, MCPs',
+    ],
+    objective: 'Maîtriser les briques conceptuelles avant la pratique.',
+  },
+  {
+    number: '04',
+    title: 'Automatisation avec N8N',
+    subtitle: 'Workflows & agents IA',
+    icon: <Zap className="w-5 h-5" />,
+    items: [
+      'Workflows automatisés complets',
+      'Intégrations IA avancées',
+      'Agents IA autonomes',
+      'Projet complet d\'Agent IA',
+    ],
+    objective: 'Construire des systèmes automatisés exploitables en production.',
+  },
+  {
+    number: '05',
+    title: 'Vibecoding & Développement',
+    subtitle: 'Interfaces & applications',
+    icon: <Code2 className="w-5 h-5" />,
+    items: [
+      'Logique vibecoding',
+      'Création d\'interfaces modernes',
+      'Outils spécialisés (Cursor, Bolt…)',
+      'Structuration d\'applications',
+    ],
+    objective: 'Relier IA, automatisation et front-end.',
+  },
+  {
+    number: '06',
+    title: 'Base de données – Supabase',
+    subtitle: 'Couche data d\'un système IA',
+    icon: <Database className="w-5 h-5" />,
+    items: [
+      'Création et gestion de données',
+      'Connexion à N8N',
+      'Connexion aux interfaces',
+      'Stockage et extensions',
+    ],
+    objective: 'Structurer la couche data d\'un système complet.',
+  },
+  {
+    number: '07',
+    title: 'Infrastructures IA',
+    subtitle: 'Assemblage des briques',
+    icon: <Network className="w-5 h-5" />,
+    items: [
+      'IA + Automatisation + BDD + Interface',
+      'Cas concrets orientés métiers',
+      'Architecture système complète',
+      'Patterns d\'intégration avancés',
+    ],
+    objective: 'Construire un système IA complet de A à Z.',
+  },
+  {
+    number: '08',
+    title: 'Déploiement en production',
+    subtitle: 'Du prototype au réel',
+    icon: <Rocket className="w-5 h-5" />,
+    items: [
+      'Architecture cible',
+      'Sécurité et bonnes pratiques',
+      'Scalabilité',
+      'Mise en ligne via solution dédiée',
+    ],
+    objective: 'Rendre un système exploitable dans le monde réel.',
+  },
+  {
+    number: '09',
+    title: 'RGPD & Sécurité',
+    subtitle: 'Conformité et protection',
+    icon: <Shield className="w-5 h-5" />,
+    items: [
+      'Principes du RGPD',
+      'Sécurisation des bases de données',
+      'Protection des infrastructures',
+      'Conformité réglementaire',
+    ],
+    objective: 'Construire des systèmes conformes et sécurisés.',
+  },
+  {
+    number: '10',
+    title: 'Monétisation',
+    subtitle: 'Vendre des systèmes IA',
+    icon: <TrendingUp className="w-5 h-5" />,
+    items: [
+      'Niche, offre et pricing',
+      'Acquisition clients (Inbound / Outbound)',
+      'Positionnement & image de marque',
+      'Closing, onboarding, bases fiscales',
+    ],
+    objective: 'Vendre des systèmes IA de manière structurée et récurrente.',
+  },
+  {
+    number: '11',
+    title: 'Boîte à outils IA',
+    subtitle: 'Outils complémentaires',
+    icon: <Wrench className="w-5 h-5" />,
+    items: [
+      'Outils de création',
+      'Outils de recherche',
+      'Outils de développement',
+      'Opportunités de monétisation',
+    ],
+    objective: 'Élargir les possibilités et rester à la pointe.',
+  },
+  {
+    number: '12',
+    title: 'Ressources & Contenus',
+    subtitle: 'Supports complémentaires',
+    icon: <Star className="w-5 h-5" />,
+    items: [
+      'Replays des sessions live',
+      'Ressources téléchargeables',
+      'Contenus additionnels',
+      'Mises à jour continuelles',
+    ],
+    objective: 'Accéder à tous les supports pour aller plus loin.',
+  },
+  {
+    number: '13',
+    title: 'Audit & Networking',
+    subtitle: 'En évolution continue',
+    icon: <Network className="w-5 h-5" />,
+    isBonus: true,
+    items: [
+      'Analyser les besoins d\'une entreprise',
+      'Identifier des opportunités',
+      'Développer son réseau stratégique',
+      'Approche consultant senior',
+    ],
+    objective: 'Devenir un interlocuteur de référence pour les entreprises.',
+  },
+];
 
 const Content: React.FC = () => {
   const { utmSourceLabel } = useTracking();
-  const [activeTab, setActiveTab] = useState(0);
 
   const calendlyUrl = useMemo(() => {
     const baseUrl = 'https://calendly.com/aura-academie/30min';
@@ -29,204 +214,191 @@ const Content: React.FC = () => {
     }
     return baseUrl;
   }, [utmSourceLabel]);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const tabs: TabContent[] = [
-    {
-      name: "Roadmap Aura",
-      items: [
-        { title: "Introduction - Apprentissage d'une compétence IA", description: "Découvre les fondamentaux de l'IA et comment choisir la compétence IA qui te correspond. Développe la mentalité des pionniers qui réussissent avec l'IA avant tout le monde." },
-        { title: "Avant de savoir vendre", description: "Comprends les prérequis essentiels avant de te lancer : mindset entrepreneurial, bases techniques et compréhension du marché de l'IA. Pose des fondations solides pour réussir." },
-        { title: "Choisir une niche", description: "Identifie ta niche IA idéale et définis ton positionnement unique sur le marché. Analyse la demande, la concurrence et trouve ton angle différenciant pour te démarquer." },
-        { title: "Obtenir des clients", description: "Maîtrise les stratégies d'acquisition client efficaces : prospection LinkedIn, networking, cold email et création de contenu. Génère un flux constant d'opportunités qualifiées." },
-        { title: "Image de marque", description: "Construis ton identité professionnelle et ta présence en ligne. Crée un personal branding impactant qui attire naturellement tes clients idéaux et te positionne en expert." },
-        { title: "Offres et prix", description: "Structure des offres IA irrésistibles et définis une tarification premium adaptée à la valeur que tu apportes. Apprends à packager tes compétences pour maximiser tes revenus." },
-        { title: "Closing", description: "Convertis tes prospects en clients payants avec des techniques de closing éthiques et efficaces. Gère les objections et conclus des ventes à forte valeur ajoutée." },
-        { title: "Onboarding / Déploiement", description: "Embarque tes clients de manière professionnelle et déploie tes solutions IA en production. Assure une mise en place réussie qui génère des résultats mesurables rapidement." },
-        { title: "Fiscalité et juridique", description: "Comprends les aspects légaux et fiscaux pour sécuriser ton activité d'opérateur IA. Structure ton business de manière optimale et développe sereinement en toute légalité." }
-      ]
-    },
-    {
-      name: "Infrastructure IA & Automatisation",
-      items: [
-        { title: "Maîtrise de n8n", description: "Maîtrise n8n de zéro jusqu'aux workflows les plus complexes avec des cas d'usage réels et pratiques." },
-        { title: "Automatisations Avancées", description: "Crée des automatisations intelligentes qui combinent plusieurs IA et outils pour maximiser l'impact de tes solutions." },
-        { title: "Interfaces personnalisées", description: "Développe des interfaces sur-mesure pour rendre tes solutions IA accessibles, intuitives et professionnelles." },
-        { title: "Bases de Données", description: "Connecte tes systèmes IA à des bases de données performantes pour gérer l'information à grande échelle." },
-        { title: "Mise en Production", description: "Déploie tes solutions chez un client en production avec les bonnes pratiques de sécurité et de maintenance professionnelle." },
-        { title: "Projet Complet A-Z", description: "Réalise un projet complet de bout en bout : de la conception au déploiement d'un système IA professionnel fonctionnel." }
-      ]
-    },
-    {
-      name: "Suivi & Espace Communautaire",
-      items: [
-        { title: "Coaching Live Hebdo", description: "Participe à des sessions live et des appels de groupe avec la team AURA pour progresser rapidement, échanger et rester motivé." },
-        { title: "Support & Accompagnement", description: "Bénéficie d'un accompagnement personnalisé sur tes projets, résous tes bugs en temps réel et obtiens de l'aide pour débloquer tes défis techniques." },
-        { title: "Études de Cas Réels", description: "Analyse des cas réels d'implémentation IA et automatisation. Décortique des projets concrets pour comprendre les décisions techniques et business." },
-        { title: "Communauté Discord VIP Gratuite", description: "Rejoins un Discord actif avec des channels thématiques (IA, n8n, dev, projets) et une communauté soudée pour s'entraider et progresser ensemble." },
-        { title: "Ressources Hebdo", description: "Reçois chaque semaine de nouvelles ressources, prompts optimisés, workflows n8n prêts à l'emploi et les dernières updates IA." }
-      ]
-    },
-    {
-      name: "Vibe Coding & IA",
-      isBonus: true,
-      items: [
-        { title: "Introduction", description: "Découvre ce qu'est le VibeCoding, cette approche révolutionnaire du développement assisté par IA. Comprends ce que tu peux construire et comment coder 10x plus vite avec cette méthodologie." },
-        { title: "Les Bases du Développement", description: "Maîtrise les fondamentaux essentiels : JSON pour structurer les données, les API pour faire communiquer tes outils, et les langages clés." },
-        { title: "Le Prompting", description: "Apprends l'art du prompting pour communiquer efficacement avec l'IA. Construis des prompts puissants, comprends les différents modèles IA et optimise tes interactions avec les agents." },
-        { title: "Cursor", description: "Maîtrise Cursor, l'éditeur de code révolutionnaire avec IA intégrée. Présentation complète de l'outil et réalisation d'un projet concret pour développer avec l'IA comme copilote." },
-        { title: "Lovable / Bolt / Replit", description: "Découvre les plateformes no-code et low-code : Lovable pour créer des sites web complets, Bolt pour des applications complexes et Replit pour le développement collaboratif en ligne." },
-        { title: "Coder avec les LLMs", description: "Exploite la puissance des grands modèles de langage : Claude pour la réflexion complexe, Codex pour la génération de code avancée et Copilot pour l'assistance en temps réel." },
-        { title: "Déploiement et hébergement", description: "Apprends à mettre tes applications en production : hébergement depuis les plateformes de VibeCoding, déploiement à partir du code source et gestion de versions avec GitHub." }
-      ]
-    }
-  ];
-
-  const handleTabChange = (index: number) => {
-    setActiveTab(index);
-    setHoveredIndex(null);
-  };
+  const [expandAll, setExpandAll] = useState(false);
 
   return (
     <section id="content" className="py-24 bg-transparent relative overflow-hidden">
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-6"
         >
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide uppercase backdrop-blur-sm">
+              Programme 2026
+            </div>
+          </div>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 flex items-center justify-center gap-3 flex-wrap">
             Contenu de la formation <img src="/aura.png" alt="AURA" className="inline h-10 md:h-14" />
           </h2>
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-            Des modules structurés et complets pour maîtriser toutes les facettes du business qui nous génère 20k/mois
+          <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8">
+            14 modules complets pour concevoir, déployer et vendre des systèmes IA en production
           </p>
+
+          <div className="flex items-center justify-center gap-6 mb-10">
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <div className="w-3 h-3 rounded-full bg-primary/60 border border-primary/30" />
+              Modules techniques
+            </div>
+            <div className="flex items-center gap-2 text-sm text-blue-400">
+              <div className="w-3 h-3 rounded-full bg-blue-500/60 border border-blue-500/30" />
+              Communauté incluse
+            </div>
+            <div className="flex items-center gap-2 text-sm text-amber-400">
+              <div className="w-3 h-3 rounded-full bg-amber-500/60 border border-amber-500/30" />
+              Bonus
+            </div>
+          </div>
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex justify-end mb-4"
+        >
+          <button
+            onClick={() => setExpandAll(!expandAll)}
+            className="text-xs text-gray-500 hover:text-gray-300 transition-colors underline underline-offset-4"
+          >
+            {expandAll ? 'Tout réduire' : 'Tout développer'}
+          </button>
+        </motion.div>
+
+        <div className="space-y-3">
+          {modules.map((module, idx) => (
+            <ExpandableModule key={module.number} module={module} index={idx} forceOpen={expandAll} />
+          ))}
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.4 }}
+          className="mt-14 text-center"
         >
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
-            {tabs.map((tab, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleTabChange(idx)}
-                className={`relative px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${tab.isBonus
-                  ? activeTab === idx
-                    ? 'text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 shadow-xl shadow-orange-500/40 scale-105'
-                    : 'text-white bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-red-500/90 hover:from-amber-500 hover:via-orange-500 hover:to-red-500 border-2 border-orange-400/50 shadow-lg shadow-orange-500/30 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/40'
-                  : activeTab === idx
-                    ? 'text-white bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20'
-                    : 'text-gray-400 hover:text-gray-300 bg-slate-900/40 hover:bg-slate-900/60 border border-slate-800/50'
-                  }`}
-              >
-                {tab.isBonus && (
-                  <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider animate-pulse shadow-lg shadow-red-500/50">
-                    Offert
-                  </span>
-                )}
-                <span className="relative z-10">{tab.name}</span>
-                {tab.isBonus && (
-                  <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 opacity-0 blur-lg animate-pulse"></span>
-                )}
-              </button>
-            ))}
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="max-w-5xl mx-auto"
-            >
-              {tabs[activeTab].isBonus && (
-                <div className="mb-8">
-                  <CountdownTimer />
-                </div>
-              )}
-
-              <div className="space-y-3">
-                {tabs[activeTab].items.map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05, duration: 0.4 }}
-                    onMouseEnter={() => setHoveredIndex(idx)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    className={`group relative p-5 rounded-xl border transition-all duration-300 bg-slate-900/40 backdrop-blur-sm hover:bg-slate-900/60 ${hoveredIndex === idx
-                      ? 'border-primary/40 shadow-lg shadow-primary/10 translate-x-2'
-                      : 'border-slate-800/50'
-                      }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm transition-all duration-300 ${hoveredIndex === idx
-                        ? 'bg-gradient-to-br from-primary to-secondary text-white'
-                        : 'bg-slate-800/50 text-gray-400'
-                        }`}>
-                        {idx + 1}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <h3 className={`font-bold text-lg mb-1.5 transition-colors ${hoveredIndex === idx ? 'text-white' : 'text-gray-200'
-                          }`}>
-                          {item.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-
-                      <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${hoveredIndex === idx ? 'bg-primary/20' : 'bg-transparent'
-                        }`}>
-                        <CheckCircle2 className={`w-4 h-4 transition-all duration-300 ${hoveredIndex === idx ? 'text-primary opacity-100' : 'text-gray-600 opacity-50'
-                          }`} />
-                      </div>
-                    </div>
-
-                    {hoveredIndex === idx && (
-                      <motion.div
-                        className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary rounded-r-full"
-                        initial={{ opacity: 0, scaleY: 0 }}
-                        animate={{ opacity: 1, scaleY: 1 }}
-                        exit={{ opacity: 0, scaleY: 0 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="mt-12 text-center"
-              >
-                <ShinyButton
-                  href={calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto"
-                >
-                  Accéder au programme complet
-                </ShinyButton>
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
+          <ShinyButton
+            href={calendlyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Accéder au programme complet
+          </ShinyButton>
         </motion.div>
       </div>
     </section>
+  );
+};
+
+const ExpandableModule: React.FC<{ module: Module; index: number; forceOpen: boolean }> = ({ module, index, forceOpen }) => {
+  const [localOpen, setLocalOpen] = useState(false);
+  const isOpen = forceOpen || localOpen;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.04 }}
+      className={`group relative rounded-2xl border transition-all duration-300 overflow-hidden cursor-pointer
+        ${module.isCommunity
+          ? 'border-blue-500/30 bg-blue-500/5 hover:border-blue-500/50 hover:bg-blue-500/10'
+          : module.isBonus
+            ? 'border-amber-500/30 bg-amber-500/5 hover:border-amber-500/50 hover:bg-amber-500/10'
+            : 'border-slate-800/60 bg-slate-900/40 hover:border-slate-700/60 hover:bg-slate-900/60'
+        }`}
+      onClick={() => setLocalOpen(!localOpen)}
+    >
+      <div className="p-5">
+        <div className="flex items-center gap-4">
+          <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-mono text-xs font-bold
+            ${module.isCommunity
+              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+              : module.isBonus
+                ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                : 'bg-slate-800/80 text-gray-400 border border-slate-700/50'
+            }`}>
+            {module.number}
+          </div>
+
+          <div className={`flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center
+            ${module.isCommunity
+              ? 'bg-blue-500/15 text-blue-400'
+              : module.isBonus
+                ? 'bg-amber-500/15 text-amber-400'
+                : 'bg-slate-800/60 text-gray-400 group-hover:text-white transition-colors'
+            }`}>
+            {module.icon}
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-bold text-white text-base leading-tight">{module.title}</h3>
+              {module.isBonus && (
+                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] font-bold rounded-full uppercase tracking-wider border border-amber-500/30">
+                  Bonus
+                </span>
+              )}
+              {module.isCommunity && (
+                <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-[10px] font-bold rounded-full uppercase tracking-wider border border-blue-500/30">
+                  Inclus
+                </span>
+              )}
+            </div>
+            <p className="text-gray-500 text-sm mt-0.5">{module.subtitle}</p>
+          </div>
+
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex-shrink-0 text-gray-600 group-hover:text-gray-400 transition-colors"
+          >
+            <ChevronDown className="w-4 h-4" />
+          </motion.div>
+        </div>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-5 pt-5 border-t border-slate-800/60">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                  {module.items.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-sm text-gray-300">
+                      <div className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0
+                        ${module.isCommunity ? 'bg-blue-400' : module.isBonus ? 'bg-amber-400' : 'bg-primary'}`} />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <div className={`flex items-start gap-2 px-3 py-2.5 rounded-xl text-xs
+                  ${module.isCommunity
+                    ? 'bg-blue-500/10 border border-blue-500/20 text-blue-300'
+                    : module.isBonus
+                      ? 'bg-amber-500/10 border border-amber-500/20 text-amber-300'
+                      : 'bg-primary/5 border border-primary/15 text-gray-300'
+                  }`}>
+                  <span className="font-semibold flex-shrink-0">Objectif :</span>
+                  <span className="ml-1">{module.objective}</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 };
 

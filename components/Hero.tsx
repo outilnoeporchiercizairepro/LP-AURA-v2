@@ -115,11 +115,10 @@ const Hero: React.FC = () => {
         {/* Video Preview */}
         <div ref={videoRef} className="w-full max-w-4xl relative group mb-8">
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-1000"></div>
-          <div className="relative aspect-video rounded-2xl bg-slate-900 border border-white/5 overflow-hidden shadow-2xl">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/5" style={{ paddingBottom: '56.25%', height: 0 }}>
             <iframe
-              style={{ border: 0 }}
-              className="w-full h-full"
-              src="https://www.tella.tv/video/vid_cmlqxus87007704k3d9e8ear2/embed?b=0&title=1&a=1&loop=0&t=0&muted=0&wt=0"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+              src="https://www.tella.tv/video/vid_cmlqxus87007704k3d9e8ear2/embed?b=0&title=0&a=1&loop=0&t=0&muted=0&wt=0"
               title="Vidéo de présentation AURA"
               allowFullScreen
               allowTransparency={true}

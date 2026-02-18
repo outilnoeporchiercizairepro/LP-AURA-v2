@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTracking } from '../contexts/TrackingContext';
 import { ShinyButton } from './ui/ShinyButton';
@@ -16,18 +15,9 @@ const Pricing: React.FC = () => {
     }
     return baseUrl;
   }, [utmSourceLabel]);
-  const features = [
-    "50+ heures de cours structurés, concrets et directement applicables",
-    "Exercices pratiques et projets réels pour construire des systèmes opérationnels",
-    "Coachings de groupe plusieurs fois par semaine",
-    "Réponses rapides aux questions + accompagnement personnalisé",
-    "Communauté active et réactive sur WhatsApp et Skool",
-    "Accès à vie aux replays, mises à jour, templates et ressources prêts à l'emploi"
-  ];
 
   return (
     <section id="pricing" className="py-24 relative overflow-hidden">
-      {/* Glow behind */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -47,58 +37,36 @@ const Pricing: React.FC = () => {
           viewport={{ once: true }}
           className="bg-slate-950/80 backdrop-blur-md border border-slate-800 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden"
         >
-          {/* Top border accent */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
 
-          <h3 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2 flex-wrap">Académie <img src="/aura.png" alt="AURA" className="inline h-8" /></h3>
-          <p className="text-gray-400 mb-8">Une académie complète avec cours, exercices, communauté et accompagnement live.</p>
-
-          <div className="grid md:grid-cols-2 gap-y-4 gap-x-8 text-left max-w-2xl mx-auto mb-10">
-            {features.map((feat, idx) => (
-              <div key={idx} className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-secondary/10 flex items-center justify-center">
-                  <Check className="w-3.5 h-3.5 text-secondary" />
-                </div>
-                <span className="text-gray-300 text-sm md:text-base">{feat}</span>
-              </div>
-            ))}
-          </div>
-
           <div className="bg-slate-900/50 rounded-2xl p-8 mb-8 border border-slate-800/50 text-left">
-            <h4 className="text-xl font-bold text-white mb-4">Un appel de 30 minutes pour faire le point sur ta situation et déterminer si une collaboration est pertinente.</h4>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="px-3 py-1 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-bold uppercase tracking-wider">Gratuit · 15 min</span>
+            </div>
+            <h4 className="text-xl font-bold text-white mb-2">Un appel stratégique de 15 minutes pour analyser ton profil et voir si AURA est fait pour toi.</h4>
+            <p className="text-gray-400 text-sm mb-6">Chaque candidat est évalué individuellement. On prend le temps de comprendre ta situation avant toute chose.</p>
 
             <div className="mb-6">
-              <p className="text-secondary font-semibold mb-4 text-lg">Déroulé de l'appel :</p>
-              <div className="space-y-4">
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
-                    <span className="text-primary font-bold text-sm">1</span>
+              <p className="text-secondary font-semibold mb-4 text-sm uppercase tracking-wider">Déroulé de l'appel :</p>
+              <div className="space-y-3">
+                {[
+                  'Un membre de la team AURA analyse précisément ta situation actuelle.',
+                  'Il te présente AURA, ce que tu vas recevoir et comment cela s\'applique à ton cas.',
+                  'Tu décides si tu veux avancer et si tu es prêt à commencer.',
+                  'Si ton profil correspond et qu\'il reste une place, tu peux rejoindre la communauté immédiatement.',
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-3 items-start">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mt-0.5">
+                      <span className="text-primary font-bold text-xs">{i + 1}</span>
+                    </div>
+                    <p className="text-gray-300 text-sm leading-relaxed">{step}</p>
                   </div>
-                  <p className="text-gray-300 text-sm md:text-base">Un membre de la team AURA analyse précisément ta situation actuelle.</p>
-                </div>
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
-                    <span className="text-primary font-bold text-sm">2</span>
-                  </div>
-                  <p className="text-gray-300 text-sm md:text-base">Il te présente AURA, ce que tu vas recevoir et comment cela s'applique à ton cas.</p>
-                </div>
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
-                    <span className="text-primary font-bold text-sm">3</span>
-                  </div>
-                  <p className="text-gray-300 text-sm md:text-base">Tu décides si tu veux avancer et si tu es prêt à commencer.</p>
-                </div>
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-1">
-                    <span className="text-primary font-bold text-sm">4</span>
-                  </div>
-                  <p className="text-gray-300 text-sm md:text-base">Si ton profil correspond et qu'il reste une place, tu peux rejoindre la communauté immédiatement.</p>
-                </div>
+                ))}
               </div>
             </div>
 
             <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
-              <p className="text-xs md:text-sm text-gray-400 italic">
+              <p className="text-xs text-gray-400 italic">
                 <span className="font-semibold text-secondary">Note :</span> Ce n'est pas un appel de vente déguisé. C'est un échange transparent pour voir si AURA est le bon levier pour ta croissance.
               </p>
             </div>
@@ -110,7 +78,7 @@ const Pricing: React.FC = () => {
             rel="noopener noreferrer"
             className="w-full md:w-auto"
           >
-            Réserver mon appel
+            Réserver mon appel stratégique
           </ShinyButton>
 
           <p className="mt-6 text-xs text-gray-500">

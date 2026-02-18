@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
   const currentMonth = new Date().toLocaleDateString('fr-FR', { month: 'long' });
 
   const calendlyUrl = useMemo(() => {
-    const baseUrl = 'https://calendly.com/aura-academie/30min';
+    const baseUrl = 'https://calendly.com/aura-academie/appel-strategique-ia-15min';
     if (utmSourceLabel) {
       const url = new URL(baseUrl);
       url.searchParams.set('utm_source', utmSourceLabel);

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef, useMemo, useState } from 'react';
-import { Play, BookOpen, CheckCircle, RefreshCw, Users } from 'lucide-react';
+import React, { useRef, useMemo } from 'react';
+import { BookOpen, CheckCircle, RefreshCw, Users } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useTracking } from '../contexts/TrackingContext';
@@ -15,9 +15,6 @@ gsap.registerPlugin(SplitText, useGSAP);
 
 const Hero: React.FC = () => {
   const { utmSourceLabel } = useTracking();
-  const youtubeVideoId = 'ZS2fa-1I0uo';
-  const [isPlaying, setIsPlaying] = useState(false);
-
   const sectionRef = useRef<HTMLElement | null>(null);
   const headerRef = useRef<HTMLHeadingElement | null>(null);
   const paraRef = useRef<HTMLParagraphElement | null>(null);
@@ -119,29 +116,14 @@ const Hero: React.FC = () => {
         <div ref={videoRef} className="w-full max-w-4xl relative group mb-8">
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-1000"></div>
           <div className="relative aspect-video rounded-2xl bg-slate-900 border border-white/5 overflow-hidden shadow-2xl">
-            {isPlaying ? (
-              <iframe
-                className="w-full h-full"
-                src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0`}
-                title="Vidéo de présentation AURA"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div className="relative h-full w-full cursor-pointer group" onClick={() => setIsPlaying(true)}>
-                <img
-                  src={`https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`}
-                  alt="Aperçu vidéo"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition-colors">
-                  <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform duration-500">
-                    <Play className="w-8 h-8 text-white fill-white ml-1" />
-                  </div>
-                  <p className="mt-6 text-xs font-light text-white uppercase tracking-[0.2em]">Play Presentation</p>
-                </div>
-              </div>
-            )}
+            <iframe
+              style={{ border: 0 }}
+              className="w-full h-full"
+              src="https://www.tella.tv/video/vid_cmlqxus87007704k3d9e8ear2/embed?b=0&title=1&a=1&loop=0&t=0&muted=0&wt=0"
+              title="Vidéo de présentation AURA"
+              allowFullScreen
+              allowTransparency={true}
+            />
           </div>
         </div>
 

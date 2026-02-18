@@ -41,19 +41,19 @@ const Pricing: React.FC = () => {
 
           <div className="bg-slate-900/50 rounded-2xl p-8 mb-8 border border-slate-800/50 text-left">
             <div className="flex items-center gap-3 mb-2">
-              <span className="px-3 py-1 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-bold uppercase tracking-wider">Gratuit · 15 min</span>
+              <span className="px-3 py-1 rounded-full bg-secondary/15 border border-secondary/30 text-secondary text-xs font-bold uppercase tracking-wider">Offert · 15 min</span>
             </div>
-            <h4 className="text-xl font-bold text-white mb-2">Un appel stratégique de 15 minutes pour analyser ton profil et voir si AURA est fait pour toi.</h4>
-            <p className="text-gray-400 text-sm mb-6">Chaque candidat est évalué individuellement. On prend le temps de comprendre ta situation avant toute chose.</p>
+            <h4 className="text-xl font-bold text-white mb-2">Un appel stratégique offert pour analyser ton profil et définir tes objectifs avec toi.</h4>
+            <p className="text-gray-400 text-sm mb-6">Cet appel n'est pas accessible à tout le monde. On l'offre aux profils qui comprennent les enjeux de l'IA et qui sont prêts à passer à l'action.</p>
 
             <div className="mb-6">
-              <p className="text-secondary font-semibold mb-4 text-sm uppercase tracking-wider">Déroulé de l'appel :</p>
+              <p className="text-secondary font-semibold mb-4 text-sm uppercase tracking-wider">Ce qu'on fait ensemble :</p>
               <div className="space-y-3">
                 {[
-                  'Un membre de la team AURA analyse précisément ta situation actuelle.',
-                  'Il te présente AURA, ce que tu vas recevoir et comment cela s\'applique à ton cas.',
-                  'Tu décides si tu veux avancer et si tu es prêt à commencer.',
-                  'Si ton profil correspond et qu\'il reste une place, tu peux rejoindre la communauté immédiatement.',
+                  'On analyse ton profil, ta situation actuelle et ce que tu veux construire.',
+                  'On fixe des objectifs concrets et on vérifie que tu comprends les enjeux.',
+                  'On évalue si AURA est le bon cadre pour t\'aider à les atteindre.',
+                  'Si le profil correspond et qu\'il reste une place, tu peux rejoindre immédiatement.',
                 ].map((step, i) => (
                   <div key={i} className="flex gap-3 items-start">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mt-0.5">
@@ -67,7 +67,7 @@ const Pricing: React.FC = () => {
 
             <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
               <p className="text-xs text-gray-400 italic">
-                <span className="font-semibold text-secondary">Note :</span> Ce n'est pas un appel de vente déguisé. C'est un échange transparent pour voir si AURA est le bon levier pour ta croissance.
+                <span className="font-semibold text-secondary">Note :</span> Ce n'est pas un appel de vente déguisé. C'est un échange honnête pour voir si le fit est bon — dans les deux sens.
               </p>
             </div>
           </div>
